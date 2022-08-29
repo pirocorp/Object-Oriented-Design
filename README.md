@@ -1,8 +1,13 @@
-# [Forked from](https://github.com/kamranahmedse/design-patterns-for-humans)
+# [Forked from](https://github.com/anupavanm/csharp-design-patterns-for-humans)
 
-[![Design Patterns For Humans](https://cloud.githubusercontent.com/assets/11269635/23065273/1b7e5938-f515-11e6-8dd3-d0d58de6bb9a.png)](https://github.com/kamranahmedse/design-patterns-for-humans)
+[![Design Patterns For Humans](https://cloud.githubusercontent.com/assets/11269635/23065273/1b7e5938-f515-11e6-8dd3-d0d58de6bb9a.png)](https://github.com/anupavanm/csharp-design-patterns-for-humans)
 
-***
+<h3 align="center">
+Adaptation of <a href="https://github.com/kamranahmedse/design-patterns-for-humans">Design Patterns for Humans</a>  to C#
+</h3>
+<p align="center"><sub>All the explanation for design patterns stays the same, with minor changes.</sub></p>
+
+****
 
 <p align="center">
 🎉 Ultra-simplified explanation to design patterns! 🎉
@@ -10,12 +15,12 @@
 <p align="center">
 A topic that can easily make anyone's mind wobble. Here I try to make them stick in to your mind (and maybe mine) by explaining them in the <i>simplest</i> way possible.
 </p>
+<p align="center">
+You can find full length examples for code snippets used in this article <a href="https://github.com/anupavanm/csharp-design-patterns-for-humans-examples">here.</a>
+</p>
 
-***
-
-<sub>Check out my [blog](http://kamranahmed.info) and say "hi" on [Twitter](https://twitter.com/kamranahmedse).</sub>
-
-Introduction
+****
+🚀 Introduction
 =================
 
 Design patterns are solutions to recurring problems; **guidelines on how to tackle certain problems**. They are not classes, packages or libraries that you can plug into your application and wait for the magic to happen. These are, rather, guidelines on how to tackle certain problems in certain situations.
@@ -29,11 +34,10 @@ Wikipedia describes them as
 ⚠️ Be Careful
 -----------------
 - Design patterns are not a silver bullet to all your problems.
-- Do not try to force them; bad things are supposed to happen, if done so. 
-- Keep in mind that design patterns are solutions **to** problems, not solutions **finding** problems; so don't overthink.
+- Do not try to force them; bad things are supposed to happen, if done so. Keep in mind that design patterns are solutions **to** problems, not solutions **finding** problems; so don't overthink.
 - If used in a correct place in a correct manner, they can prove to be a savior; or else they can result in a horrible mess of a code.
 
-> Also note that the code samples below are in PHP-7, however this shouldn't stop you because the concepts are same anyways.
+> Also note that the code samples below are in C#-7, however this shouldn't stop you because the concepts are same anyways. Plus the **support for other languages is underway**.
 
 Types of Design Patterns
 -----------------
@@ -61,7 +65,7 @@ Wikipedia says
 🏠 Simple Factory
 --------------
 Real world example
-> Consider, you are building a house and you need doors. You can either put on your carpenter clothes, bring some wood, glue, nails and all the tools required to build the door and start building it in your house or you can simply call the factory and get the built door delivered to you so that you don't need to learn anything about the door making or to deal with the mess that comes with making it.
+> Consider, you are building a house and you need doors. It would be a mess if every time you need a door, you put on your carpenter clothes and start making a door in your house. Instead you get it made from a factory.
 
 In plain words
 > Simple factory simply generates an instance for client without exposing any instantiation logic to the client
@@ -72,55 +76,49 @@ Wikipedia says
 **Programmatic Example**
 
 First of all we have a door interface and the implementation
-```php
-interface Door
+```C#
+public interface IDoor
 {
-    public function getWidth(): float;
-    public function getHeight(): float;
+    int GetHeight();
+    int GetWidth();
 }
 
-class WoodenDoor implements Door
+public class WoodenDoor : IDoor
 {
-    protected $width;
-    protected $height;
+    private int Height { get; set; }
+    private int Width { get; set; }
 
-    public function __construct(float $width, float $height)
+    public WoodenDoor(int height, int width)
     {
-        $this->width = $width;
-        $this->height = $height;
+        this.Height = height;
+        this.Width = width;
     }
 
-    public function getWidth(): float
+    public int GetHeight()
     {
-        return $this->width;
+        return this.Height;
     }
-
-    public function getHeight(): float
+    public int GetWidth()
     {
-        return $this->height;
+        return this.Width;
     }
 }
 ```
 Then we have our door factory that makes the door and returns it
-```php
-class DoorFactory
+```C#
+public static class DoorFactory
 {
-    public static function makeDoor($width, $height): Door
+    public static IDoor MakeDoor(int height, int width)
     {
-        return new WoodenDoor($width, $height);
+        return new WoodenDoor(height, width);
     }
 }
 ```
 And then it can be used as
-```php
-// Make me a door of 100x200
-$door = DoorFactory::makeDoor(100, 200);
-
-echo 'Width: ' . $door->getWidth();
-echo 'Height: ' . $door->getHeight();
-
-// Make me a door of 50x100
-$door2 = DoorFactory::makeDoor(50, 100);
+```C#
+var door = DoorFactory.MakeDoor(80, 30);
+Console.WriteLine($"Height of Door : {door.GetHeight()}");
+Console.WriteLine($"Width of Door : {door.GetWidth()}");
 ```
 
 **When to Use?**
@@ -143,72 +141,72 @@ Wikipedia says
 
 Taking our hiring manager example above. First of all we have an interviewer interface and some implementations for it
 
-```php
-interface Interviewer
+```C#
+interface IInterviewer
 {
-    public function askQuestions();
+    void AskQuestions();
 }
 
-class Developer implements Interviewer
+class Developer : IInterviewer
 {
-    public function askQuestions()
+    public void AskQuestions()
     {
-        echo 'Asking about design patterns!';
+        Console.WriteLine("Asking about design patterns!");
     }
 }
 
-class CommunityExecutive implements Interviewer
+class CommunityExecutive : IInterviewer
 {
-    public function askQuestions()
+    public void AskQuestions()
     {
-        echo 'Asking about community building';
+        Console.WriteLine("Asking about community building!");
     }
 }
 ```
 
 Now let us create our `HiringManager`
 
-```php
+```C#
 abstract class HiringManager
 {
-
     // Factory method
-    abstract protected function makeInterviewer(): Interviewer;
-
-    public function takeInterview()
+    abstract protected IInterviewer MakeInterviewer();
+    public void TakeInterview()
     {
-        $interviewer = $this->makeInterviewer();
-        $interviewer->askQuestions();
+        var interviewer = this.MakeInterviewer();
+        interviewer.AskQuestions();
     }
 }
 
 ```
 Now any child can extend it and provide the required interviewer
-```php
-class DevelopmentManager extends HiringManager
+```C#
+class DevelopmentManager : HiringManager
 {
-    protected function makeInterviewer(): Interviewer
+    protected override IInterviewer MakeInterviewer()
     {
         return new Developer();
     }
 }
 
-class MarketingManager extends HiringManager
+class MarketingManager : HiringManager
 {
-    protected function makeInterviewer(): Interviewer
+    protected override IInterviewer MakeInterviewer()
     {
         return new CommunityExecutive();
     }
 }
+
 ```
 and then it can be used as
 
-```php
-$devManager = new DevelopmentManager();
-$devManager->takeInterview(); // Output: Asking about design patterns
+```C#
+var devManager = new DevelopmentManager();
+devManager.TakeInterview(); //Output : Asking about design patterns!
 
-$marketingManager = new MarketingManager();
-$marketingManager->takeInterview(); // Output: Asking about community building.
+var marketingManager = new MarketingManager();
+marketingManager.TakeInterview();//Output : Asking about community building!
+
 ```
 
 **When to use?**
@@ -231,107 +229,105 @@ Wikipedia says
 
 Translating the door example above. First of all we have our `Door` interface and some implementation for it
 
-```php
-interface Door
+```C#
+interface IDoor {
+
+  void GetDescription();
+
+}
+class WoodenDoor : IDoor
 {
-    public function getDescription();
+  public void GetDescription()
+  {
+    Console.WriteLine("I am a wooden door");
+  }
 }
 
-class WoodenDoor implements Door
+class IronDoor : IDoor
 {
-    public function getDescription()
-    {
-        echo 'I am a wooden door';
-    }
-}
-
-class IronDoor implements Door
-{
-    public function getDescription()
-    {
-        echo 'I am an iron door';
-    }
+  public void GetDescription()
+  {
+    Console.WriteLine("I am a iron door");
+  }
 }
 ```
 Then we have some fitting experts for each door type
 
-```php
-interface DoorFittingExpert
+```C#
+interface IDoorFittingExpert
 {
-    public function getDescription();
+  void GetDescription();
 }
 
-class Welder implements DoorFittingExpert
+class Welder : IDoorFittingExpert
 {
-    public function getDescription()
-    {
-        echo 'I can only fit iron doors';
-    }
+  public void GetDescription()
+  {
+    Console.WriteLine("I can only fit iron doors");
+  }
 }
 
-class Carpenter implements DoorFittingExpert
+class Carpenter : IDoorFittingExpert
 {
-    public function getDescription()
-    {
-        echo 'I can only fit wooden doors';
-    }
+  public void GetDescription()
+  {
+    Console.WriteLine("I can only fit wooden doors");
+  }
 }
 ```
 
 Now we have our abstract factory that would let us make family of related objects i.e. wooden door factory would create a wooden door and wooden door fitting expert and iron door factory would create an iron door and iron door fitting expert
-```php
-interface DoorFactory
-{
-    public function makeDoor(): Door;
-    public function makeFittingExpert(): DoorFittingExpert;
+```C#
+interface IDoorFactory {
+  IDoor MakeDoor();
+  IDoorFittingExpert MakeFittingExpert();
 }
 
 // Wooden factory to return carpenter and wooden door
-class WoodenDoorFactory implements DoorFactory
+class WoodenDoorFactory : IDoorFactory
 {
-    public function makeDoor(): Door
-    {
-        return new WoodenDoor();
-    }
+  public IDoor MakeDoor()
+  {
+    return new WoodenDoor();
+  }
 
-    public function makeFittingExpert(): DoorFittingExpert
-    {
-        return new Carpenter();
-    }
+  public IDoorFittingExpert MakeFittingExpert()
+  {
+    return new Carpenter();
+  }
 }
 
 // Iron door factory to get iron door and the relevant fitting expert
-class IronDoorFactory implements DoorFactory
+class IronDoorFactory : IDoorFactory
 {
-    public function makeDoor(): Door
-    {
-        return new IronDoor();
-    }
+  public IDoor MakeDoor()
+  {
+    return new IronDoor();
+  }
 
-    public function makeFittingExpert(): DoorFittingExpert
-    {
-        return new Welder();
-    }
+  public IDoorFittingExpert MakeFittingExpert()
+  {
+    return new Welder();
+  }
 }
 ```
 And then it can be used as
-```php
-$woodenFactory = new WoodenDoorFactory();
+```C#
+var woodenDoorFactory = new WoodenDoorFactory();
 
-$door = $woodenFactory->makeDoor();
-$expert = $woodenFactory->makeFittingExpert();
+var woodenDoor = woodenDoorFactory.MakeDoor();
+var woodenDoorFittingExpert = woodenDoorFactory.MakeFittingExpert();
 
-$door->getDescription();  // Output: I am a wooden door
-$expert->getDescription(); // Output: I can only fit wooden doors
+woodenDoor.GetDescription(); //Output : I am a wooden door
+woodenDoorFittingExpert.GetDescription();//Output : I can only fit woooden doors
 
-// Same for Iron Factory
-$ironFactory = new IronDoorFactory();
+var ironDoorFactory = new IronDoorFactory();
 
-$door = $ironFactory->makeDoor();
-$expert = $ironFactory->makeFittingExpert();
+var ironDoor = ironDoorFactory.MakeDoor();
+var ironDoorFittingExpert = ironDoorFactory.MakeFittingExpert();
 
-$door->getDescription();  // Output: I am an iron door
-$expert->getDescription(); // Output: I can only fit iron doors
+ironDoor.GetDescription();//Output : I am a iron door
+ironDoorFittingExpert.GetDescription();//Output : I can only fit iron doors
 ```
 
 As you can see the wooden door factory has encapsulated the `carpenter` and the `wooden door` also iron door factory has encapsulated the `iron door` and `welder`. And thus it had helped us make sure that for each of the created door, we do not get a wrong fitting expert.   
@@ -353,8 +349,8 @@ Wikipedia says
 
 Having said that let me add a bit about what telescoping constructor anti-pattern is. At one point or the other we have all seen a constructor like below:
 
-```php
-public function __construct($size, $cheese = true, $pepperoni = true, $tomato = false, $lettuce = true)
+```C#
+public Burger(int size, bool cheese, bool pepperoni, bool lettuce, bool tomato)
 {
 }
 ```
@@ -365,82 +361,87 @@ As you can see; the number of constructor parameters can quickly get out of hand
 
 The sane alternative is to use the builder pattern. First of all we have our burger that we want to make
 
-```php
+```C#
 class Burger
 {
-    protected $size;
+  private int mSize;
+  private bool mCheese;
+  private bool mPepperoni;
+  private bool mLettuce;
+  private bool mTomato;
 
-    protected $cheese = false;
-    protected $pepperoni = false;
-    protected $lettuce = false;
-    protected $tomato = false;
+  public Burger(BurgerBuilder builder)
+  {
+    this.mSize = builder.Size;
+    this.mCheese = builder.Cheese;
+    this.mPepperoni = builder.Pepperoni;
+    this.mLettuce = builder.Lettuce;
+    this.mTomato = builder.Tomato;
+  }
 
-    public function __construct(BurgerBuilder $builder)
-    {
-        $this->size = $builder->size;
-        $this->cheese = $builder->cheese;
-        $this->pepperoni = $builder->pepperoni;
-        $this->lettuce = $builder->lettuce;
-        $this->tomato = $builder->tomato;
-    }
+  public string GetDescription()
+  {
+    var sb = new StringBuilder();
+    sb.Append($"This is {this.mSize} inch Burger. ");
+    return sb.ToString();
+  }
 }
 ```
 
 And then we have the builder
 
-```php
-class BurgerBuilder
-{
-    public $size;
+```C#
+class BurgerBuilder {
+  public int Size;
+  public bool Cheese;
+  public bool Pepperoni;
+  public bool Lettuce;
+  public bool Tomato;
 
-    public $cheese = false;
-    public $pepperoni = false;
-    public $lettuce = false;
-    public $tomato = false;
+  public BurgerBuilder(int size)
+  {
+    this.Size = size;
+  }
 
-    public function __construct(int $size)
-    {
-        $this->size = $size;
-    }
+  public BurgerBuilder AddCheese()
+  {
+    this.Cheese = true;
+    return this;
+  }
 
-    public function addPepperoni()
-    {
-        $this->pepperoni = true;
-        return $this;
-    }
+  public BurgerBuilder AddPepperoni()
+  {
+    this.Pepperoni = true;
+    return this;
+  }
 
-    public function addLettuce()
-    {
-        $this->lettuce = true;
-        return $this;
-    }
+  public BurgerBuilder AddLettuce()
+  {
+    this.Lettuce = true;
+    return this;
+  }
 
-    public function addCheese()
-    {
-        $this->cheese = true;
-        return $this;
-    }
+  public BurgerBuilder AddTomato()
+  {
+    this.Tomato = true;
+    return this;
+  }
 
-    public function addTomato()
-    {
-        $this->tomato = true;
-        return $this;
-    }
-
-    public function build(): Burger
-    {
-        return new Burger($this);
-    }
+  public Burger Build()
+  {
+    return new Burger(this);
+  }
 }
 ```
 And then it can be used as:
 
-```php
-$burger = (new BurgerBuilder(14))
-                    ->addPepperoni()
-                    ->addLettuce()
-                    ->addTomato()
-                    ->build();
+```C#
+var burger = new BurgerBuilder(4).AddCheese()
+                                .AddPepperoni()
+                                .AddLettuce()
+                                .AddTomato()
+                                .Build();
+Console.WriteLine(burger.GetDescription());
 ```
 
 **When to use?**
@@ -462,55 +463,39 @@ In short, it allows you to create a copy of an existing object and modify it to 
 
 **Programmatic Example**
 
-In PHP, it can be easily done using `clone`
+In C#, it can be easily done using `MemberwiseClone()`
 
-```php
+```C#
 class Sheep
 {
-    protected $name;
-    protected $category;
+  public string Name { get; set; }
 
-    public function __construct(string $name, string $category = 'Mountain Sheep')
-    {
-        $this->name = $name;
-        $this->category = $category;
-    }
+  public string Category { get; set; }
 
-    public function setName(string $name)
-    {
-        $this->name = $name;
-    }
+  public Sheep(string name, string category)
+  {
+    Name = name;
+    Category = category;
+  }
 
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setCategory(string $category)
-    {
-        $this->category = $category;
-    }
-
-    public function getCategory()
-    {
-        return $this->category;
-    }
+  public Sheep Clone()
+  {
+    return MemberwiseClone() as Sheep;
+  }
 }
 ```
 Then it can be cloned like below
-```php
-$original = new Sheep('Jolly');
-echo $original->getName(); // Jolly
-echo $original->getCategory(); // Mountain Sheep
+```C#
+var original = new Sheep("Jolly", "Mountain Sheep");
+Console.WriteLine(original.Name); // Jolly
+Console.WriteLine(original.Category); // Mountain Sheep
 
-// Clone and modify what is required
-$cloned = clone $original;
-$cloned->setName('Dolly');
-echo $cloned->getName(); // Dolly
-echo $cloned->getCategory(); // Mountain sheep
+var cloned = original.Clone();
+cloned.Name = "Dolly";
+Console.WriteLine(cloned.Name); // Dolly
+Console.WriteLine(cloned.Category); // Mountain Sheep
+Console.WriteLine(original.Name); // Jolly
 ```
-
-Also you could use the magic method `__clone` to modify the cloning behavior.
 
 **When to use?**
 
@@ -532,42 +517,32 @@ Singleton pattern is actually considered an anti-pattern and overuse of it shoul
 **Programmatic Example**
 
 To create a singleton, make the constructor private, disable cloning, disable extension and create a static variable to house the instance
-```php
-final class President
+```C#
+public class President
 {
-    private static $instance;
+  static President instance;
+  // Private constructor
+  private President()
+  {
+    //Hiding the Constructor
+  }
 
-    private function __construct()
-    {
-        // Hide the constructor
+  // Public constructor
+  public static President GetInstance()
+  {
+    if (instance == null) {
+      instance = new President();
     }
-
-    public static function getInstance(): President
-    {
-        if (!self::$instance) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
-
-    private function __clone()
-    {
-        // Disable cloning
-    }
-
-    private function __wakeup()
-    {
-        // Disable unserialize
-    }
+    return instance;
+  }
 }
 ```
 Then in order to use
-```php
-$president1 = President::getInstance();
-$president2 = President::getInstance();
+```C#
+President a = President.GetInstance();
+President b = President.GetInstance();
 
-var_dump($president1 === $president2); // true
+Console.WriteLine(a == b); //Output : true
 ```
 
 Structural Design Patterns
@@ -605,72 +580,72 @@ Consider a game where there is a hunter and he hunts lions.
 
 First we have an interface `Lion` that all types of lions have to implement
 
-```php
-interface Lion
+```C#
+interface ILion
 {
-    public function roar();
+  void Roar();
 }
 
-class AfricanLion implements Lion
+class AfricanLion : ILion
 {
-    public function roar()
-    {
-    }
+  public void Roar()
+  {
+
+  }
 }
 
-class AsianLion implements Lion
+class AsiaLion : ILion
 {
-    public function roar()
-    {
-    }
+  public void Roar()
+  {
+
+  }
 }
 ```
 And hunter expects any implementation of `Lion` interface to hunt.
-```php
+```C#
 class Hunter
 {
-    public function hunt(Lion $lion)
-    {
-        $lion->roar();
-    }
+  public void Hunt(ILion lion)
+  {
+
+  }
 }
 ```
 
 Now let's say we have to add a `WildDog` in our game so that hunter can hunt that also. But we can't do that directly because dog has a different interface. To make it compatible for our hunter, we will have to create an adapter that is compatible
 
-```php
+```C#
 // This needs to be added to the game
 class WildDog
 {
-    public function bark()
-    {
-    }
+  public void bark()
+  {
+  }
 }
 
 // Adapter around wild dog to make it compatible with our game
-class WildDogAdapter implements Lion
+class WildDogAdapter : ILion
 {
-    protected $dog;
-
-    public function __construct(WildDog $dog)
-    {
-        $this->dog = $dog;
-    }
-
-    public function roar()
-    {
-        $this->dog->bark();
-    }
+  private WildDog mDog;
+  public WildDogAdapter(WildDog dog)
+  {
+    this.mDog = dog;
+  }
+  public void Roar()
+  {
+    mDog.bark();
+  }
 }
 ```
 And now the `WildDog` can be used in our game using `WildDogAdapter`.
 
-```php
-$wildDog = new WildDog();
-$wildDogAdapter = new WildDogAdapter($wildDog);
+```C#
+var wildDog = new WildDog();
+var wildDogAdapter = new WildDogAdapter(wildDog);
 
-$hunter = new Hunter();
-$hunter->hunt($wildDogAdapter);
+var hunter = new Hunter();
+hunter.Hunt(wildDogAdapter);
 ```
 
 🚡 Bridge
@@ -690,82 +665,84 @@ Wikipedia says
 
 Translating our WebPage example from above. Here we have the `WebPage` hierarchy
 
-```php
-interface WebPage
+```C#
+interface IWebPage
 {
-    public function __construct(Theme $theme);
-    public function getContent();
+  string GetContent();
 }
 
-class About implements WebPage
+class About : IWebPage
 {
-    protected $theme;
+  protected ITheme theme;
 
-    public function __construct(Theme $theme)
-    {
-        $this->theme = $theme;
-    }
+  public About(ITheme theme)
+  {
+    this.theme = theme;
+  }
 
-    public function getContent()
-    {
-        return "About page in " . $this->theme->getColor();
-    }
+  public string GetContent()
+  {
+    return $"About page in {theme.GetColor()}";
+  }
 }
 
-class Careers implements WebPage
+class Careers : IWebPage
 {
-    protected $theme;
+  protected ITheme theme;
 
-    public function __construct(Theme $theme)
-    {
-        $this->theme = $theme;
-    }
+  public Careers(ITheme theme)
+  {
+    this.theme = theme;
+  }
 
-    public function getContent()
-    {
-        return "Careers page in " . $this->theme->getColor();
-    }
+  public string GetContent()
+  {
+    return $"Careers page in {theme.GetColor()}";
+  }
 }
 ```
 And the separate theme hierarchy
-```php
+```C#
 
-interface Theme
+interface ITheme
 {
-    public function getColor();
+  string GetColor();
 }
 
-class DarkTheme implements Theme
+class DarkTheme : ITheme
 {
-    public function getColor()
-    {
-        return 'Dark Black';
-    }
+  public string GetColor()
+  {
+    return "Dark Black";
+  }
 }
-class LightTheme implements Theme
+
+class LightTheme : ITheme
 {
-    public function getColor()
-    {
-        return 'Off white';
-    }
+  public string GetColor()
+  {
+    return "Off White";
+  }
 }
-class AquaTheme implements Theme
+
+class AquaTheme : ITheme
 {
-    public function getColor()
-    {
-        return 'Light blue';
-    }
+  public string GetColor()
+  {
+    return "Light blue";
+  }
 }
 ```
 And both the hierarchies
-```php
-$darkTheme = new DarkTheme();
+```C#
+var darkTheme = new DarkTheme();
+var lightTheme = new LightTheme();
 
-$about = new About($darkTheme);
-$careers = new Careers($darkTheme);
+var about= new About(darkTheme);
+var careers = new Careers(lightTheme);
 
-echo $about->getContent(); // "About page in Dark Black";
-echo $careers->getContent(); // "Careers page in Dark Black";
+Console.WriteLine(about.GetContent()); //Output: About page in Dark Black
+Console.WriteLine(careers.GetContent()); //Output: Careers page in Off White
 ```
 
 🌿 Composite
@@ -784,121 +761,112 @@ Wikipedia says
 
 Taking our employees example from above. Here we have different employee types
 
-```php
-interface Employee
+```C#
+interface IEmployee
 {
-    public function __construct(string $name, float $salary);
-    public function getName(): string;
-    public function setSalary(float $salary);
-    public function getSalary(): float;
-    public function getRoles(): array;
+  float GetSalary();
+  string GetRole();
+  string GetName();
 }
 
-class Developer implements Employee
+
+class Developer : IEmployee
 {
-    protected $salary;
-    protected $name;
-    protected $roles;
-    
-    public function __construct(string $name, float $salary)
-    {
-        $this->name = $name;
-        $this->salary = $salary;
-    }
+  private string mName;
+  private float mSalary;
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
+  public Developer(string name, float salary)
+  {
+    this.mName = name;
+    this.mSalary = salary;
+  }
 
-    public function setSalary(float $salary)
-    {
-        $this->salary = $salary;
-    }
+  public float GetSalary()
+  {
+    return this.mSalary;
+  }
 
-    public function getSalary(): float
-    {
-        return $this->salary;
-    }
+  public string GetRole()
+  {
+    return "Developer";
+  }
 
-    public function getRoles(): array
-    {
-        return $this->roles;
-    }
+  public string GetName()
+  {
+    return this.mName;
+  }
 }
 
-class Designer implements Employee
+class Designer : IEmployee
 {
-    protected $salary;
-    protected $name;
-    protected $roles;
+  private string mName;
+  private float mSalary;
 
-    public function __construct(string $name, float $salary)
-    {
-        $this->name = $name;
-        $this->salary = $salary;
-    }
+  public Designer(string name, float salary)
+  {
+    this.mName = name;
+    this.mSalary = salary;
+  }
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
+  public float GetSalary()
+  {
+    return this.mSalary;
+  }
 
-    public function setSalary(float $salary)
-    {
-        $this->salary = $salary;
-    }
+  public string GetRole()
+  {
+    return "Designer";
+  }
 
-    public function getSalary(): float
-    {
-        return $this->salary;
-    }
-
-    public function getRoles(): array
-    {
-        return $this->roles;
-    }
+  public string GetName()
+  {
+    return this.mName;
+  }
 }
 ```
 
 Then we have an organization which consists of several different types of employees
 
-```php
+```C#
 class Organization
 {
-    protected $employees;
+  protected List<IEmployee> employees;
 
-    public function addEmployee(Employee $employee)
-    {
-        $this->employees[] = $employee;
+  public Organization()
+  {
+    employees = new List<IEmployee>();
+  }
+
+  public void AddEmployee(IEmployee employee)
+  {
+    employees.Add(employee);
+  }
+
+  public float GetNetSalaries()
+  {
+    float netSalary = 0;
+
+    foreach (var e in employees) {
+      netSalary += e.GetSalary();
     }
-
-    public function getNetSalaries(): float
-    {
-        $netSalary = 0;
-
-        foreach ($this->employees as $employee) {
-            $netSalary += $employee->getSalary();
-        }
-
-        return $netSalary;
-    }
+    return netSalary;
+  }
 }
 ```
 
 And then it can be used as
 
-```php
-// Prepare the employees
-$john = new Developer('John Doe', 12000);
-$jane = new Designer('Jane Doe', 15000);
+```C#
+//Arrange Employees, Organization and add employees
+var developer = new Developer("John", 5000);
+var designer = new Designer("Arya", 5000);
 
-// Add them to organization
-$organization = new Organization();
-$organization->addEmployee($john);
-$organization->addEmployee($jane);
+var organization = new Organization();
+organization.AddEmployee(developer);
+organization.AddEmployee(designer);
 
-echo "Net salaries: " . $organization->getNetSalaries(); // Net Salaries: 27000
+Console.WriteLine($"Net Salary of Employees in Organization is {organization.GetNetSalaries():c}");
+//Ouptut: Net Salary of Employees in Organization is $10000.00
 ```
 
 ☕ Decorator
@@ -918,107 +886,105 @@ Wikipedia says
 
 Lets take coffee for example. First of all we have a simple coffee implementing the coffee interface
 
-```php
-interface Coffee
+```C#
+interface ICoffee
 {
-    public function getCost();
-    public function getDescription();
+  int GetCost();
+  string GetDescription();
 }
 
-class SimpleCoffee implements Coffee
+class SimpleCoffee : ICoffee
 {
-    public function getCost()
-    {
-        return 10;
-    }
+  public int GetCost()
+  {
+    return 5;
+  }
 
-    public function getDescription()
-    {
-        return 'Simple coffee';
-    }
+  public string GetDescription()
+  {
+    return "Simple Coffee";
+  }
 }
 ```
 We want to make the code extensible to allow options to modify it if required. Lets make some add-ons (decorators)
-```php
-class MilkCoffee implements Coffee
+```C#
+class MilkCoffee : ICoffee
 {
-    protected $coffee;
+  private readonly ICoffee mCoffee;
 
-    public function __construct(Coffee $coffee)
-    {
-        $this->coffee = $coffee;
-    }
+  public MilkCoffee(ICoffee coffee)
+  {
+    mCoffee = coffee ?? throw new ArgumentNullException("coffee", "coffee should not be null");
+  }
+  public int GetCost()
+  {
+    return mCoffee.GetCost() + 1;
+  }
 
-    public function getCost()
-    {
-        return $this->coffee->getCost() + 2;
-    }
-
-    public function getDescription()
-    {
-        return $this->coffee->getDescription() . ', milk';
-    }
+  public string GetDescription()
+  {
+    return String.Concat(mCoffee.GetDescription(), ", milk");
+  }
 }
 
-class WhipCoffee implements Coffee
+class WhipCoffee : ICoffee
 {
-    protected $coffee;
+  private readonly ICoffee mCoffee;
 
-    public function __construct(Coffee $coffee)
-    {
-        $this->coffee = $coffee;
-    }
+  public WhipCoffee(ICoffee coffee)
+  {
+    mCoffee = coffee ?? throw new ArgumentNullException("coffee", "coffee should not be null");
+  }
+  public int GetCost()
+  {
+    return mCoffee.GetCost() + 1;
+  }
 
-    public function getCost()
-    {
-        return $this->coffee->getCost() + 5;
-    }
-
-    public function getDescription()
-    {
-        return $this->coffee->getDescription() . ', whip';
-    }
+  public string GetDescription()
+  {
+    return String.Concat(mCoffee.GetDescription(), ", whip");
+  }
 }
 
-class VanillaCoffee implements Coffee
+class VanillaCoffee : ICoffee
 {
-    protected $coffee;
+  private readonly ICoffee mCoffee;
 
-    public function __construct(Coffee $coffee)
-    {
-        $this->coffee = $coffee;
-    }
+  public VanillaCoffee(ICoffee coffee)
+  {
+    mCoffee = coffee ?? throw new ArgumentNullException("coffee", "coffee should not be null");
+  }
+  public int GetCost()
+  {
+    return mCoffee.GetCost() + 1;
+  }
 
-    public function getCost()
-    {
-        return $this->coffee->getCost() + 3;
-    }
-
-    public function getDescription()
-    {
-        return $this->coffee->getDescription() . ', vanilla';
-    }
+  public string GetDescription()
+  {
+    return String.Concat(mCoffee.GetDescription(), ", vanilla");
+  }
 }
+
 ```
 
 Lets make a coffee now
 
-```php
-$someCoffee = new SimpleCoffee();
-echo $someCoffee->getCost(); // 10
-echo $someCoffee->getDescription(); // Simple Coffee
+```C#
+var myCoffee = new SimpleCoffee();
+Console.WriteLine($"{myCoffee.GetCost():c}"); // $ 5.00
+Console.WriteLine(myCoffee.GetDescription()); // Simple Coffee
 
-$someCoffee = new MilkCoffee($someCoffee);
-echo $someCoffee->getCost(); // 12
-echo $someCoffee->getDescription(); // Simple Coffee, milk
+var milkCoffee = new MilkCoffee(myCoffee);
+Console.WriteLine($"{milkCoffee.GetCost():c}"); // $ 6.00
+Console.WriteLine(milkCoffee.GetDescription()); // Simple Coffee, milk
 
-$someCoffee = new WhipCoffee($someCoffee);
-echo $someCoffee->getCost(); // 17
-echo $someCoffee->getDescription(); // Simple Coffee, milk, whip
+var whipCoffee = new WhipCoffee(milkCoffee);
+Console.WriteLine($"{whipCoffee.GetCost():c}"); // $ 7.00
+Console.WriteLine(whipCoffee.GetDescription()); // Simple Coffee, milk, whip
 
-$someCoffee = new VanillaCoffee($someCoffee);
-echo $someCoffee->getCost(); // 20
-echo $someCoffee->getDescription(); // Simple Coffee, milk, whip, vanilla
+var vanillaCoffee = new VanillaCoffee(whipCoffee);
+Console.WriteLine($"{vanillaCoffee.GetCost():c}"); // $ 8.00
+Console.WriteLine(vanillaCoffee.GetDescription()); // Simple Coffee, milk, whip, vanilla
 ```
 
 📦 Facade
@@ -1037,77 +1003,79 @@ Wikipedia says
 
 Taking our computer example from above. Here we have the computer class
 
-```php
+```C#
 class Computer
 {
-    public function getElectricShock()
-    {
-        echo "Ouch!";
-    }
+  public void GetElectricShock()
+  {
+    Console.Write("Ouch!");
+  }
 
-    public function makeSound()
-    {
-        echo "Beep beep!";
-    }
+  public void MakeSound()
+  {
+    Console.Write("Beep beep!");
+  }
 
-    public function showLoadingScreen()
-    {
-        echo "Loading..";
-    }
+  public void ShowLoadingScreen()
+  {
+    Console.Write("Loading..");
+  }
 
-    public function bam()
-    {
-        echo "Ready to be used!";
-    }
+  public void Bam()
+  {
+    Console.Write("Ready to be used!");
+  }
 
-    public function closeEverything()
-    {
-        echo "Bup bup bup buzzzz!";
-    }
+  public void CloseEverything()
+  {
+    Console.Write("Bup bup bup buzzzz!");
+  }
 
-    public function sooth()
-    {
-        echo "Zzzzz";
-    }
+  public void Sooth()
+  {
+    Console.Write("Zzzzz");
+  }
 
-    public function pullCurrent()
-    {
-        echo "Haaah!";
-    }
+  public void PullCurrent()
+  {
+    Console.Write("Haaah!");
+  }
 }
 ```
 Here we have the facade
-```php
+```C#
 class ComputerFacade
 {
-    protected $computer;
+  private readonly Computer mComputer;
 
-    public function __construct(Computer $computer)
-    {
-        $this->computer = $computer;
-    }
+  public ComputerFacade(Computer computer)
+  {
+    this.mComputer = computer ?? throw new ArgumentNullException("computer", "computer cannot be null");
+  }
 
-    public function turnOn()
-    {
-        $this->computer->getElectricShock();
-        $this->computer->makeSound();
-        $this->computer->showLoadingScreen();
-        $this->computer->bam();
-    }
+  public void TurnOn()
+  {
+    mComputer.GetElectricShock();
+    mComputer.MakeSound();
+    mComputer.ShowLoadingScreen();
+    mComputer.Bam();
+  }
 
-    public function turnOff()
-    {
-        $this->computer->closeEverything();
-        $this->computer->pullCurrent();
-        $this->computer->sooth();
-    }
+  public void TurnOff()
+  {
+    mComputer.CloseEverything();
+    mComputer.PullCurrent();
+    mComputer.Sooth();
+  }
 }
 ```
 Now to use the facade
-```php
-$computer = new ComputerFacade(new Computer());
-$computer->turnOn(); // Ouch! Beep beep! Loading.. Ready to be used!
-$computer->turnOff(); // Bup bup buzzz! Haah! Zzzzz
+```C#
+var computer = new ComputerFacade(new Computer());
+computer.TurnOn(); // Ouch! Beep beep! Loading.. Ready to be used!
+Console.WriteLine();
+computer.TurnOff();  // Bup bup buzzz! Haah! Zzzzz
+Console.ReadLine();
 ```
 
 🍃 Flyweight
@@ -1126,7 +1094,7 @@ Wikipedia says
 
 Translating our tea example from above. First of all we have tea types and tea maker
 
-```php
+```C#
 // Anything that will be cached is flyweight.
 // Types of tea here will be flyweights.
 class KarakTea
@@ -1136,56 +1104,57 @@ class KarakTea
 // Acts as a factory and saves the tea
 class TeaMaker
 {
-    protected $availableTea = [];
+  private Dictionary<string,KarakTea> mAvailableTea = new Dictionary<string,KarakTea>();
 
-    public function make($preference)
+  public KarakTea Make(string preference)
+  {
+    if (!mAvailableTea.ContainsKey(preference))
     {
-        if (empty($this->availableTea[$preference])) {
-            $this->availableTea[$preference] = new KarakTea();
-        }
-
-        return $this->availableTea[$preference];
+      mAvailableTea[preference] = new KarakTea();
     }
+
+    return mAvailableTea[preference];
+  }
 }
 ```
 
 Then we have the `TeaShop` which takes orders and serves them
 
-```php
+```C#
 class TeaShop
 {
-    protected $orders;
-    protected $teaMaker;
+  private Dictionary<int,KarakTea> mOrders = new Dictionary<int,KarakTea>();
+  private readonly TeaMaker mTeaMaker;
 
-    public function __construct(TeaMaker $teaMaker)
-    {
-        $this->teaMaker = $teaMaker;
-    }
+  public TeaShop(TeaMaker teaMaker)
+  {
+    mTeaMaker = teaMaker ?? throw new ArgumentNullException("teaMaker", "teaMaker cannot be null");
+  }
 
-    public function takeOrder(string $teaType, int $table)
-    {
-        $this->orders[$table] = $this->teaMaker->make($teaType);
-    }
+  public void TakeOrder(string teaType, int table)
+  {
+    mOrders[table] = mTeaMaker.Make(teaType);
+  }
 
-    public function serve()
-    {
-        foreach ($this->orders as $table => $tea) {
-            echo "Serving tea to table# " . $table;
-        }
+  public void Serve()
+  {
+    foreach(var table  in mOrders.Keys){
+      Console.WriteLine($"Serving Tea to table # {table}");
     }
+  }
 }
 ```
 And it can be used as below
 
-```php
-$teaMaker = new TeaMaker();
-$shop = new TeaShop($teaMaker);
+```C#
+var teaMaker = new TeaMaker();
+var teaShop = new TeaShop(teaMaker);
 
-$shop->takeOrder('less sugar', 1);
-$shop->takeOrder('more milk', 2);
-$shop->takeOrder('without sugar', 5);
+teaShop.TakeOrder("less sugar", 1);
+teaShop.TakeOrder("more milk", 2);
+teaShop.TakeOrder("without sugar", 5);
 
-$shop->serve();
+teaShop.Serve();
 // Serving tea to table# 1
 // Serving tea to table# 2
 // Serving tea to table# 5
@@ -1206,64 +1175,67 @@ Wikipedia says
 
 Taking our security door example from above. Firstly we have the door interface and an implementation of door
 
-```php
-interface Door
+```C#
+interface IDoor
 {
-    public function open();
-    public function close();
+  void Open();
+  void Close();
 }
 
-class LabDoor implements Door
+class LabDoor : IDoor
 {
-    public function open()
-    {
-        echo "Opening lab door";
-    }
+  public void Close()
+  {
+    Console.WriteLine("Closing lab door");
+  }
 
-    public function close()
-    {
-        echo "Closing the lab door";
-    }
+  public void Open()
+  {
+    Console.WriteLine("Opening lab door");
+  }
 }
 ```
 Then we have a proxy to secure any doors that we want
-```php
-class SecuredDoor implements Door
+```C#
+class SecuredDoor : IDoor
 {
-    protected $door;
+  private IDoor mDoor;
 
-    public function __construct(Door $door)
-    {
-        $this->door = $door;
-    }
+  public SecuredDoor(IDoor door)
+  {
+    mDoor = door ?? throw new ArgumentNullException("door", "door can not be null");
+  }
 
-    public function open($password)
+  public void Open(string password)
+  {
+    if (Authenticate(password))
     {
-        if ($this->authenticate($password)) {
-            $this->door->open();
-        } else {
-            echo "Big no! It ain't possible.";
-        }
+      mDoor.Open();
     }
+    else
+    {
+      Console.WriteLine("Big no! It ain't possible.");
+    }
+  }
 
-    public function authenticate($password)
-    {
-        return $password === '$ecr@t';
-    }
+  private bool Authenticate(string password)
+  {
+    return password == "$ecr@t";
+  }
 
-    public function close()
-    {
-        $this->door->close();
-    }
+  public void Close()
+  {
+    mDoor.Close();
+  }
 }
 ```
 And here is how it can be used
-```php
-$door = new SecuredDoor(new LabDoor());
-$door->open('invalid'); // Big no! It ain't possible.
+```C#
+var door = new SecuredDoor(new LabDoor());
+door.Open("invalid"); // Big no! It ain't possible.
 
-$door->open('$ecr@t'); // Opening lab door
-$door->close(); // Closing lab door
+door.Open("$ecr@t"); // Opening lab door
+door.Close(); // Closing lab door
 ```
 Yet another example would be some sort of data-mapper implementation. For example, I recently made an ODM (Object Data Mapper) for MongoDB using this pattern where I wrote a proxy around mongo classes while utilizing the magic method `__call()`. All the method calls were proxied to the original mongo class and result retrieved was returned as it is but in case of `find` or `findOne` data was mapped to the required class objects and the object was returned instead of `Cursor`.
 
@@ -1303,86 +1275,82 @@ Wikipedia says
 
 Translating our account example above. First of all we have a base account having the logic for chaining the accounts together and some accounts
 
-```php
+```C#
 abstract class Account
 {
-    protected $successor;
-    protected $balance;
+  private Account mSuccessor;
+  protected decimal mBalance;
 
-    public function setNext(Account $account)
-    {
-        $this->successor = $account;
-    }
+  public void SetNext(Account account)
+  {
+    mSuccessor = account;
+  }
 
-    public function pay(float $amountToPay)
+  public void Pay(decimal amountTopay)
+  {
+    if (CanPay(amountTopay))
     {
-        if ($this->canPay($amountToPay)) {
-            echo sprintf('Paid %s using %s' . PHP_EOL, $amountToPay, get_called_class());
-        } elseif ($this->successor) {
-            echo sprintf('Cannot pay using %s. Proceeding ..' . PHP_EOL, get_called_class());
-            $this->successor->pay($amountToPay);
-        } else {
-            throw new Exception('None of the accounts have enough balance');
-        }
+      Console.WriteLine($"Paid {amountTopay:c} using {this.GetType().Name}.");
     }
-
-    public function canPay($amount): bool
+    else if (this.mSuccessor != null)
     {
-        return $this->balance >= $amount;
+      Console.WriteLine($"Cannot pay using {this.GetType().Name}. Proceeding..");
+      mSuccessor.Pay(amountTopay);
     }
+    else
+    {
+      throw new Exception("None of the accounts have enough balance");
+    }
+  }
+  private bool CanPay(decimal amount)
+  {
+    return mBalance >= amount;
+  }
 }
 
-class Bank extends Account
+class Bank : Account
 {
-    protected $balance;
-
-    public function __construct(float $balance)
-    {
-        $this->balance = $balance;
-    }
+  public Bank(decimal balance)
+  {
+    this.mBalance = balance;
+  }
 }
 
-class Paypal extends Account
+class Paypal : Account
 {
-    protected $balance;
-
-    public function __construct(float $balance)
-    {
-        $this->balance = $balance;
-    }
+  public Paypal(decimal balance)
+  {
+    this.mBalance = balance;
+  }
 }
 
-class Bitcoin extends Account
+class Bitcoin : Account
 {
-    protected $balance;
-
-    public function __construct(float $balance)
-    {
-        $this->balance = $balance;
-    }
+  public Bitcoin(decimal balance)
+  {
+    this.mBalance = balance;
+  }
 }
 ```
 
 Now let's prepare the chain using the links defined above (i.e. Bank, Paypal, Bitcoin)
 
-```php
+```C#
 // Let's prepare a chain like below
 //      $bank->$paypal->$bitcoin
 //
 // First priority bank
 //      If bank can't pay then paypal
 //      If paypal can't pay then bit coin
+var bank = new Bank(100);          // Bank with balance 100
+var paypal = new Paypal(200);      // Paypal with balance 200
+var bitcoin = new Bitcoin(300);    // Bitcoin with balance 300
 
-$bank = new Bank(100);          // Bank with balance 100
-$paypal = new Paypal(200);      // Paypal with balance 200
-$bitcoin = new Bitcoin(300);    // Bitcoin with balance 300
-
-$bank->setNext($paypal);
-$paypal->setNext($bitcoin);
+bank.SetNext(paypal);
+paypal.SetNext(bitcoin);
 
 // Let's try to pay using the first priority i.e. bank
-$bank->pay(259);
-
+bank.Pay(259);
 // Output will be
 // ==============
 // Cannot pay using bank. Proceeding ..
@@ -1406,102 +1374,104 @@ Wikipedia says
 **Programmatic Example**
 
 First of all we have the receiver that has the implementation of every action that could be performed
-```php
+```C#
 // Receiver
 class Bulb
 {
-    public function turnOn()
-    {
-        echo "Bulb has been lit";
-    }
+  public void TurnOn()
+  {
+    Console.WriteLine("Bulb has been lit");
+  }
 
-    public function turnOff()
-    {
-        echo "Darkness!";
-    }
+  public void TurnOff()
+  {
+    Console.WriteLine("Darkness!");
+  }
 }
 ```
 then we have an interface that each of the commands are going to implement and then we have a set of commands
-```php
-interface Command
+```C#
+interface ICommand
 {
-    public function execute();
-    public function undo();
-    public function redo();
+  void Execute();
+  void Undo();
+  void Redo();
 }
 
 // Command
-class TurnOn implements Command
+class TurnOn : ICommand
 {
-    protected $bulb;
+  private Bulb mBulb;
 
-    public function __construct(Bulb $bulb)
-    {
-        $this->bulb = $bulb;
-    }
+  public TurnOn(Bulb bulb)
+  {
+    mBulb = bulb ?? throw new ArgumentNullException("Bulb", "Bulb cannot be null");
+  }
 
-    public function execute()
-    {
-        $this->bulb->turnOn();
-    }
+  public void Execute()
+  {
+    mBulb.TurnOn();
+  }
 
-    public function undo()
-    {
-        $this->bulb->turnOff();
-    }
+  public void Undo()
+  {
+    mBulb.TurnOff();
+  }
 
-    public function redo()
-    {
-        $this->execute();
-    }
+  public void Redo()
+  {
+    Execute();
+  }
 }
 
-class TurnOff implements Command
+class TurnOff : ICommand
 {
-    protected $bulb;
+  private Bulb mBulb;
 
-    public function __construct(Bulb $bulb)
-    {
-        $this->bulb = $bulb;
-    }
+  public TurnOff(Bulb bulb)
+  {
+    mBulb = bulb ?? throw new ArgumentNullException("Bulb", "Bulb cannot be null");
+  }
 
-    public function execute()
-    {
-        $this->bulb->turnOff();
-    }
+  public void Execute()
+  {
+    mBulb.TurnOff();
+  }
 
-    public function undo()
-    {
-        $this->bulb->turnOn();
-    }
+  public void Undo()
+  {
+    mBulb.TurnOn();
+  }
 
-    public function redo()
-    {
-        $this->execute();
-    }
+  public void Redo()
+  {
+    Execute();
+  }
 }
 ```
 Then we have an `Invoker` with whom the client will interact to process any commands
-```php
+```C#
 // Invoker
 class RemoteControl
 {
-    public function submit(Command $command)
-    {
-        $command->execute();
-    }
+  public void Submit(ICommand command)
+  {
+    command.Execute();
+  }
 }
 ```
 Finally let's see how we can use it in our client
-```php
-$bulb = new Bulb();
+```C#
+  var bulb = new Bulb();
 
-$turnOn = new TurnOn($bulb);
-$turnOff = new TurnOff($bulb);
+  var turnOn = new TurnOn(bulb);
+  var turnOff = new TurnOff(bulb);
 
-$remote = new RemoteControl();
-$remote->submit($turnOn); // Bulb has been lit!
-$remote->submit($turnOff); // Darkness!
+  var remote = new RemoteControl();
+  remote.Submit(turnOn); // Bulb has been lit!
+  remote.Submit(turnOff); // Darkness!
+
+  Console.ReadLine();
 ```
 
 Command pattern can also be used to implement a transaction based system. Where you keep maintaining the history of commands as soon as you execute them. If the final command is successfully executed, all good otherwise just iterate through the history and keep executing the `undo` on all the executed commands.
@@ -1510,7 +1480,7 @@ Command pattern can also be used to implement a transaction based system. Where 
 --------
 
 Real world example
-> An old radio set will be a good example of iterator, where user could start at some channel and then use next or previous buttons to go through the respective channels. Or take an example of MP3 player or a TV set where you could press the next and previous buttons to go through the consecutive channels or in other words they all provide an interface to iterate through the respective channels, songs or radio stations.  
+> An old radio set will be a good example of iterator, where user could start at some channel and then use next or previous buttons to go through the respective channels. Or take an example of MP3 player or a TV set where you could press the next and previous buttons to go through the consecutive channels or in other words they all provide an interface to iterate through the respective channels, songs or radio stations.
 
 In plain words
 > It presents a way to access the elements of an object without exposing the underlying presentation.
@@ -1520,96 +1490,88 @@ Wikipedia says
 
 **Programmatic example**
 
-In PHP it is quite easy to implement using SPL (Standard PHP Library). Translating our radio stations example from above. First of all we have `RadioStation`
+In C# it can be done by implementing IEnumerable<T>. Translating our radio statiIons example from above. First of all we have `RadioStation`
 
-```php
+```C#
 class RadioStation
 {
-    protected $frequency;
+  private float mFrequency;
 
-    public function __construct(float $frequency)
-    {
-        $this->frequency = $frequency;
-    }
+  public RadioStation(float frequency)
+  {
+    mFrequency = frequency;
+  }
 
-    public function getFrequency(): float
-    {
-        return $this->frequency;
-    }
+  public float GetFrequecy()
+  {
+    return mFrequency;
+  }
+
 }
+
 ```
 Then we have our iterator
 
-```php
-use Countable;
-use Iterator;
-
-class StationList implements Countable, Iterator
+```C#
+class StationList : IEnumerable<RadioStation>
 {
-    /** @var RadioStation[] $stations */
-    protected $stations = [];
+  List<RadioStation> mStations = new List<RadioStation>();
 
-    /** @var int $counter */
-    protected $counter;
+  public RadioStation this[int index]
+  {
+    get { return mStations[index]; }
+    set { mStations.Insert(index, value); }
+  }
 
-    public function addStation(RadioStation $station)
+  public void Add(RadioStation station)
+  {
+    mStations.Add(station);
+  }
+
+  public void Remove(RadioStation station)
+  {
+    mStations.Remove(station);
+  }
+
+  public IEnumerator<RadioStation> GetEnumerator()
+  {
+    return this.GetEnumerator();
+  }
+
+  IEnumerator IEnumerable.GetEnumerator()
+  {
+    //Use can switch to this internal collection if you do not want to transform
+    //return mStations.GetEnumerator();
+
+    //use this if you want to transform the object before rendering
+    foreach (var x in mStations)
     {
-        $this->stations[] = $station;
+      yield return x;
     }
-
-    public function removeStation(RadioStation $toRemove)
-    {
-        $toRemoveFrequency = $toRemove->getFrequency();
-        $this->stations = array_filter($this->stations, function (RadioStation $station) use ($toRemoveFrequency) {
-            return $station->getFrequency() !== $toRemoveFrequency;
-        });
-    }
-
-    public function count(): int
-    {
-        return count($this->stations);
-    }
-
-    public function current(): RadioStation
-    {
-        return $this->stations[$this->counter];
-    }
-
-    public function key()
-    {
-        return $this->counter;
-    }
-
-    public function next()
-    {
-        $this->counter++;
-    }
-
-    public function rewind()
-    {
-        $this->counter = 0;
-    }
-
-    public function valid(): bool
-    {
-        return isset($this->stations[$this->counter]);
-    }
+  }
 }
 ```
 And then it can be used as
-```php
-$stationList = new StationList();
+```C#
+var stations = new StationList();
+var station1 = new RadioStation(89);
+stations.Add(station1);
 
-$stationList->addStation(new RadioStation(89));
-$stationList->addStation(new RadioStation(101));
-$stationList->addStation(new RadioStation(102));
-$stationList->addStation(new RadioStation(103.2));
+var station2 = new RadioStation(101);
+stations.Add(station2);
 
-foreach($stationList as $station) {
-    echo $station->getFrequency() . PHP_EOL;
+var station3 = new RadioStation(102);
+stations.Add(station3);
+
+foreach(var x in stations)
+{
+  Console.Write(x.GetFrequecy());
 }
 
-$stationList->removeStation(new RadioStation(89)); // Will remove station 89
+var q = stations.Where(x => x.GetFrequecy() == 89).FirstOrDefault();
+Console.WriteLine(q.GetFrequecy());
+
+Console.ReadLine();
 ```
 
 👽 Mediator
@@ -1630,58 +1592,58 @@ Here is the simplest example of a chat room (i.e. mediator) with users (i.e. col
 
 First of all, we have the mediator i.e. the chat room
 
-```php
-interface ChatRoomMediator 
+```C#
+interface IChatRoomMediator
 {
-    public function showMessage(User $user, string $message);
+  void ShowMessage(User user, string message);
 }
 
-// Mediator
-class ChatRoom implements ChatRoomMediator
+//Mediator
+class ChatRoom : IChatRoomMediator
 {
-    public function showMessage(User $user, string $message)
-    {
-        $time = date('M d, y H:i');
-        $sender = $user->getName();
-
-        echo $time . '[' . $sender . ']:' . $message;
-    }
+  public void ShowMessage(User user, string message)
+  {
+    Console.WriteLine($"{DateTime.Now.ToString("MMMM dd, H:mm")} [{user.GetName()}]:{message}");
+  }
 }
 ```
 
 Then we have our users i.e. colleagues
-```php
-class User {
-    protected $name;
-    protected $chatMediator;
+```C#
+class User
+{
+  private string mName;
+  private IChatRoomMediator mChatRoom;
 
-    public function __construct(string $name, ChatRoomMediator $chatMediator) {
-        $this->name = $name;
-        $this->chatMediator = $chatMediator;
-    }
+  public User(string name, IChatRoomMediator chatroom)
+  {
+    mChatRoom = chatroom;
+    mName = name;
+  }
 
-    public function getName() {
-        return $this->name;
-    }
+  public string GetName()
+  {
+    return mName;
+  }
 
-    public function send($message) {
-        $this->chatMediator->showMessage($this, $message);
-    }
+  public void Send(string message)
+  {
+    mChatRoom.ShowMessage(this, message);
+  }
 }
 ```
 And the usage
-```php
-$mediator = new ChatRoom();
+```C#
+var mediator = new ChatRoom();
 
-$john = new User('John Doe', $mediator);
-$jane = new User('Jane Doe', $mediator);
+var john = new User("John", mediator);
+var jane = new User("Jane", mediator);
 
-$john->send('Hi there!');
-$jane->send('Hey!');
+john.Send("Hi there!");
+jane.Send("Hey!");
 
-// Output will be
-// Feb 14, 10:58 [John]: Hi there!
-// Feb 14, 10:58 [Jane]: Hey!
+//April 14, 20:05[John]:Hi there!
+//April 14, 20:05[Jane]:Hey!
 ```
 
 💾 Memento
@@ -1703,74 +1665,87 @@ Lets take an example of text editor which keeps saving the state from time to ti
 
 First of all we have our memento object that will be able to hold the editor state
 
-```php
+```C#
 class EditorMemento
 {
-    protected $content;
+  private string mContent;
 
-    public function __construct(string $content)
-    {
-        $this->content = $content;
-    }
+  public EditorMemento(string content)
+  {
+    mContent = content;
+  }
 
-    public function getContent()
+  public string Content
+  {
+    get
     {
-        return $this->content;
+      return mContent;
     }
+  }
 }
 ```
 
 Then we have our editor i.e. originator that is going to use memento object
 
-```php
-class Editor
-{
-    protected $content = '';
+```C#
+class Editor {
 
-    public function type(string $words)
-    {
-        $this->content = $this->content . ' ' . $words;
-    }
+  private string mContent = string.Empty;
+  private EditorMemento memento;
 
-    public function getContent()
-    {
-        return $this->content;
-    }
+  public Editor()
+  {
+    memento = new EditorMemento(string.Empty);
+  }
 
-    public function save()
-    {
-        return new EditorMemento($this->content);
-    }
+  public void Type(string words)
+  {
+    mContent = String.Concat(mContent," ", words);
+  }
 
-    public function restore(EditorMemento $memento)
+  public string Content
+  {
+    get
     {
-        $this->content = $memento->getContent();
+      return mContent;
     }
+  }
+
+  public void Save()
+  {
+    memento = new EditorMemento(mContent);
+  }
+
+  public void Restore()
+  {
+    mContent = memento.Content;
+  }
 }
 ```
 
 And then it can be used as
 
-```php
-$editor = new Editor();
+```C#
+var editor = new Editor();
 
-// Type some stuff
-$editor->type('This is the first sentence.');
-$editor->type('This is second.');
+//Type some stuff
+editor.Type("This is the first sentence.");
+editor.Type("This is second.");
 
 // Save the state to restore to : This is the first sentence. This is second.
-$saved = $editor->save();
+editor.Save();
 
-// Type some more
-$editor->type('And this is third.');
+//Type some more
+editor.Type("This is third.");
 
-// Output: Content before Saving
-echo $editor->getContent(); // This is the first sentence. This is second. And this is third.
+//Output the content
+Console.WriteLine(editor.Content); // This is the first sentence. This is second. This is third.
 
-// Restoring to last saved state
-$editor->restore($saved);
+//Restoring to last saved state
+editor.Restore();
 
-$editor->getContent(); // This is the first sentence. This is second.
+Console.Write(editor.Content); // This is the first sentence. This is second
+
 ```
 
 😎 Observer
@@ -1787,79 +1762,119 @@ Wikipedia says
 **Programmatic example**
 
 Translating our example from above. First of all we have job seekers that need to be notified for a job posting
-```php
+```C#
 class JobPost
 {
-    protected $title;
+  public string Title { get; private set; }
 
-    public function __construct(string $title)
-    {
-        $this->title = $title;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
+  public JobPost(string title)
+  {
+    Title = title;
+  }
 }
-
-class JobSeeker implements Observer
+class JobSeeker : IObserver<JobPost>
 {
-    protected $name;
+  public string Name { get; private set; }
 
-    public function __construct(string $name)
-    {
-        $this->name = $name;
-    }
+  public JobSeeker(string name)
+  {
+    Name = name;
+  }
 
-    public function onJobPosted(JobPost $job)
-    {
-        // Do something with the job posting
-        echo 'Hi ' . $this->name . '! New job posted: '. $job->getTitle();
-    }
+  //Method is not being called by JobPostings class currently
+  public void OnCompleted()
+  {
+    //No Implementation
+  }
+
+  //Method is not being called by JobPostings class currently
+  public void OnError(Exception error)
+  {
+    //No Implementation
+  }
+
+  public void OnNext(JobPost value)
+  {
+    Console.WriteLine($"Hi {Name} ! New job posted: {value.Title}");
+  }
 }
 ```
 Then we have our job postings to which the job seekers will subscribe
-```php
-class EmploymentAgency implements Observable
+```C#
+class JobPostings : IObservable<JobPost>
 {
-    protected $observers = [];
+  private List<IObserver<JobPost>> mObservers;
+  private List<JobPost> mJobPostings;
 
-    protected function notify(JobPost $jobPosting)
-    {
-        foreach ($this->observers as $observer) {
-            $observer->onJobPosted($jobPosting);
-        }
-    }
+  public JobPostings()
+  {
+    mObservers = new List<IObserver<JobPost>>();
+    mJobPostings = new List<JobPost>();
+  }
 
-    public function attach(Observer $observer)
+  public IDisposable Subscribe(IObserver<JobPost> observer)
+  {
+    // Check whether observer is already registered. If not, add it
+    if (!mObservers.Contains(observer))
     {
-        $this->observers[] = $observer;
+      mObservers.Add(observer);
     }
+    return new Unsubscriber<JobPost>(mObservers, observer);
+  }
 
-    public function addJob(JobPost $jobPosting)
+  private void Notify(JobPost jobPost)
+  {
+    foreach(var observer in mObservers)
     {
-        $this->notify($jobPosting);
+      observer.OnNext(jobPost);
     }
+  }
+
+  public void AddJob(JobPost jobPost)
+  {
+    mJobPostings.Add(jobPost);
+    Notify(jobPost);
+  }
+
+}
+
+internal class Unsubscriber<JobPost> : IDisposable
+{
+  private List<IObserver<JobPost>> mObservers;
+  private IObserver<JobPost> mObserver;
+
+  internal Unsubscriber(List<IObserver<JobPost>> observers, IObserver<JobPost> observer)
+  {
+    this.mObservers = observers;
+    this.mObserver = observer;
+  }
+
+  public void Dispose()
+  {
+    if (mObservers.Contains(mObserver))
+      mObservers.Remove(mObserver);
+  }
 }
 ```
 Then it can be used as
-```php
-// Create subscribers
-$johnDoe = new JobSeeker('John Doe');
-$janeDoe = new JobSeeker('Jane Doe');
+```C#
+//Create Subscribers
+var johnDoe = new JobSeeker("John Doe");
+var janeDoe = new JobSeeker("Jane Doe");
 
-// Create publisher and attach subscribers
-$jobPostings = new EmploymentAgency();
-$jobPostings->attach($johnDoe);
-$jobPostings->attach($janeDoe);
+//Create publisher and attch subscribers
+var jobPostings = new JobPostings();
+jobPostings.Subscribe(johnDoe);
+jobPostings.Subscribe(janeDoe);
 
-// Add a new job and see if subscribers get notified
-$jobPostings->addJob(new JobPost('Software Engineer'));
+//Add a new job and see if subscribers get notified
+jobPostings.AddJob(new JobPost("Software Engineer"));
 
-// Output
+//Output
 // Hi John Doe! New job posted: Software Engineer
 // Hi Jane Doe! New job posted: Software Engineer
+
+Console.ReadLine();
 ```
 
 🏃 Visitor
@@ -1877,128 +1892,130 @@ Wikipedia says
 
 Let's take an example of a zoo simulation where we have several different kinds of animals and we have to make them Sound. Let's translate this using visitor pattern
 
-```php
+```C#
 // Visitee
-interface Animal
+interface IAnimal
 {
-    public function accept(AnimalOperation $operation);
+  void Accept(IAnimalOperation operation);
 }
 
 // Visitor
-interface AnimalOperation
+interface IAnimalOperation
 {
-    public function visitMonkey(Monkey $monkey);
-    public function visitLion(Lion $lion);
-    public function visitDolphin(Dolphin $dolphin);
+  void VisitMonkey(Monkey monkey);
+  void VisitLion(Lion lion);
+  void VisitDolphin(Dolphin dolphin);
 }
 ```
 Then we have our implementations for the animals
-```php
-class Monkey implements Animal
+```C#
+class Monkey : IAnimal
 {
-    public function shout()
-    {
-        echo 'Ooh oo aa aa!';
-    }
+  public void Shout()
+  {
+    Console.WriteLine("Oooh o aa aa!");
+  }
 
-    public function accept(AnimalOperation $operation)
-    {
-        $operation->visitMonkey($this);
-    }
+  public void Accept(IAnimalOperation operation)
+  {
+      operation.VisitMonkey(this);
+  }
 }
 
-class Lion implements Animal
+class Lion : IAnimal
 {
-    public function roar()
-    {
-        echo 'Roaaar!';
-    }
+  public void Roar()
+  {
+    Console.WriteLine("Roaar!");
+  }
 
-    public function accept(AnimalOperation $operation)
-    {
-        $operation->visitLion($this);
-    }
+  public void Accept(IAnimalOperation operation)
+  {
+      operation.VisitLion(this);
+  }
 }
 
-class Dolphin implements Animal
+class Dolphin : IAnimal
 {
-    public function speak()
-    {
-        echo 'Tuut tuttu tuutt!';
-    }
+  public void Speak()
+  {
+    Console.WriteLine("Tuut tittu tuutt!");
+  }
 
-    public function accept(AnimalOperation $operation)
-    {
-        $operation->visitDolphin($this);
-    }
+  public void Accept(IAnimalOperation operation)
+  {
+      operation.VisitDolphin(this);
+  }
 }
 ```
 Let's implement our visitor
-```php
-class Speak implements AnimalOperation
+```C#
+class Speak : IAnimalOperation
 {
-    public function visitMonkey(Monkey $monkey)
-    {
-        $monkey->shout();
-    }
+  public void VisitDolphin(Dolphin dolphin)
+  {
+    dolphin.Speak();
+  }
 
-    public function visitLion(Lion $lion)
-    {
-        $lion->roar();
-    }
+  public void VisitLion(Lion lion)
+  {
+    lion.Roar();
+  }
 
-    public function visitDolphin(Dolphin $dolphin)
-    {
-        $dolphin->speak();
-    }
+  public void VisitMonkey(Monkey monkey)
+  {
+    monkey.Shout();
+  }
 }
 ```
 
 And then it can be used as
-```php
-$monkey = new Monkey();
-$lion = new Lion();
-$dolphin = new Dolphin();
+```C#
+var monkey = new Monkey();
+var lion = new Lion();
+var dolphin = new Dolphin();
 
-$speak = new Speak();
+var speak = new Speak();
 
-$monkey->accept($speak);    // Ooh oo aa aa!    
-$lion->accept($speak);      // Roaaar!
-$dolphin->accept($speak);   // Tuut tutt tuutt!
+monkey.Accept(speak);    // Ooh oo aa aa!
+lion.Accept(speak);      // Roaaar!
+dolphin.Accept(speak);   // Tuut tutt tuutt!
+
 ```
 We could have done this simply by having an inheritance hierarchy for the animals but then we would have to modify the animals whenever we would have to add new actions to animals. But now we will not have to change them. For example, let's say we are asked to add the jump behavior to the animals, we can simply add that by creating a new visitor i.e.
 
-```php
-class Jump implements AnimalOperation
+```C#
+class Jump : IAnimalOperation
 {
-    public function visitMonkey(Monkey $monkey)
-    {
-        echo 'Jumped 20 feet high! on to the tree!';
-    }
+  public void VisitDolphin(Dolphin dolphin)
+  {
+    Console.WriteLine("Walked on water a little and disappeared!");
+  }
 
-    public function visitLion(Lion $lion)
-    {
-        echo 'Jumped 7 feet! Back on the ground!';
-    }
+  public void VisitLion(Lion lion)
+  {
+    Console.WriteLine("Jumped 7 feet! Back on the ground!");
+  }
 
-    public function visitDolphin(Dolphin $dolphin)
-    {
-        echo 'Walked on water a little and disappeared';
-    }
+  public void VisitMonkey(Monkey monkey)
+  {
+    Console.WriteLine("Jumped 20 feet high! on to the tree!");
+  }
 }
 ```
 And for the usage
-```php
-$jump = new Jump();
+```C#
+var jump = new Jump();
 
-$monkey->accept($speak);   // Ooh oo aa aa!
-$monkey->accept($jump);    // Jumped 20 feet high! on to the tree!
+monkey.Accept(speak);   // Ooh oo aa aa!
+monkey.Accept(jump);    // Jumped 20 feet high! on to the tree!
 
-$lion->accept($speak);     // Roaaar!
-$lion->accept($jump);      // Jumped 7 feet! Back on the ground!
+lion.Accept(speak);     // Roaaar!
+lion.Accept(jump);      // Jumped 7 feet! Back on the ground!
 
-$dolphin->accept($speak);  // Tuut tutt tuutt!
-$dolphin->accept($jump);   // Walked on water a little and disappeared
+dolphin.Accept(speak);  // Tuut tutt tuutt!
+dolphin.Accept(jump);   // Walked on water a little and disappeared
+
 ```
 
 💡 Strategy
@@ -2017,61 +2034,57 @@ Wikipedia says
 
 Translating our example from above. First of all we have our strategy interface and different strategy implementations
 
-```php
-interface SortStrategy
+```C#
+interface ISortStrategy
 {
-    public function sort(array $dataset): array;
+  List<int> Sort(List<int> dataset);
 }
 
-class BubbleSortStrategy implements SortStrategy
+class BubbleSortStrategy : ISortStrategy
 {
-    public function sort(array $dataset): array
-    {
-        echo "Sorting using bubble sort";
-
-        // Do sorting
-        return $dataset;
-    }
+  public List<int> Sort(List<int> dataset)
+  {
+    Console.WriteLine("Sorting using Bubble Sort !");
+    return dataset;
+  }
 }
 
-class QuickSortStrategy implements SortStrategy
+class QuickSortStrategy : ISortStrategy
 {
-    public function sort(array $dataset): array
-    {
-        echo "Sorting using quick sort";
-
-        // Do sorting
-        return $dataset;
-    }
+  public List<int> Sort(List<int> dataset)
+  {
+    Console.WriteLine("Sorting using Quick Sort !");
+    return dataset;
+  }
 }
 ```
 
 And then we have our client that is going to use any strategy
-```php
+```C#
 class Sorter
 {
-    protected $sorter;
+  private readonly ISortStrategy mSorter;
 
-    public function __construct(SortStrategy $sorter)
-    {
-        $this->sorter = $sorter;
-    }
+  public Sorter(ISortStrategy sorter)
+  {
+    mSorter = sorter;
+  }
 
-    public function sort(array $dataset): array
-    {
-        return $this->sorter->sort($dataset);
-    }
+  public List<int> Sort(List<int> unSortedList)
+  {
+    return mSorter.Sort(unSortedList);
+  }
 }
 ```
 And it can be used as
-```php
-$dataset = [1, 5, 4, 3, 2, 8];
+```C#
+var unSortedList = new List<int> { 1, 10, 2, 16, 19 };
 
-$sorter = new Sorter(new BubbleSortStrategy());
-$sorter->sort($dataset); // Output : Sorting using bubble sort
+var sorter = new Sorter(new BubbleSortStrategy());
+sorter.Sort(unSortedList); // // Output : Sorting using Bubble Sort !
 
-$sorter = new Sorter(new QuickSortStrategy());
-$sorter->sort($dataset); // Output : Sorting using quick sort
+sorter = new Sorter(new QuickSortStrategy());
+sorter.Sort(unSortedList); // // Output : Sorting using Quick Sort !
 ```
 
 💢 State
@@ -2092,73 +2105,75 @@ Let's take an example of text editor, it lets you change the state of text that 
 
 First of all we have our state interface and some state implementations
 
-```php
-interface WritingState
-{
-    public function write(string $words);
+```C#
+interface IWritingState {
+
+  void Write(string words);
+
 }
 
-class UpperCase implements WritingState
+class UpperCase : IWritingState
 {
-    public function write(string $words)
-    {
-        echo strtoupper($words);
-    }
+  public void Write(string words)
+  {
+    Console.WriteLine(words.ToUpper());
+  }
 }
 
-class LowerCase implements WritingState
+class LowerCase : IWritingState
 {
-    public function write(string $words)
-    {
-        echo strtolower($words);
-    }
+  public void Write(string words)
+  {
+    Console.WriteLine(words.ToLower());
+  }
 }
 
-class DefaultText implements WritingState
+class DefaultText : IWritingState
 {
-    public function write(string $words)
-    {
-        echo $words;
-    }
+  public void Write(string words)
+  {
+    Console.WriteLine(words);
+  }
 }
 ```
 Then we have our editor
-```php
-class TextEditor
-{
-    protected $state;
+```C#
+class TextEditor {
 
-    public function __construct(WritingState $state)
-    {
-        $this->state = $state;
-    }
+  private IWritingState mState;
 
-    public function setState(WritingState $state)
-    {
-        $this->state = $state;
-    }
+  public TextEditor()
+  {
+    mState = new DefaultText();
+  }
 
-    public function type(string $words)
-    {
-        $this->state->write($words);
-    }
+  public void SetState(IWritingState state)
+  {
+    mState = state;
+  }
+
+  public void Type(string words)
+  {
+    mState.Write(words);
+  }
+
 }
 ```
 And then it can be used as
-```php
-$editor = new TextEditor(new DefaultText());
+```C#
+var editor = new TextEditor();
 
-$editor->type('First line');
+editor.Type("First line");
 
-$editor->setState(new UpperCase());
+editor.SetState(new UpperCase());
 
-$editor->type('Second line');
-$editor->type('Third line');
+editor.Type("Second Line");
+editor.Type("Third Line");
 
-$editor->setState(new LowerCase());
+editor.SetState(new LowerCase());
 
-$editor->type('Fourth line');
-$editor->type('Fifth line');
+editor.Type("Fourth Line");
+editor.Type("Fifthe Line");
 
 // Output:
 // First line
@@ -2191,80 +2206,81 @@ Wikipedia says
 Imagine we have a build tool that helps us test, lint, build, generate build reports (i.e. code coverage reports, linting report etc) and deploy our app on the test server.
 
 First of all we have our base class that specifies the skeleton for the build algorithm
-```php
+```C#
 abstract class Builder
 {
-
     // Template method
-    final public function build()
+    public void Build()
     {
-        $this->test();
-        $this->lint();
-        $this->assemble();
-        $this->deploy();
+      Test();
+      Lint();
+      Assemble();
+      Deploy();
     }
 
-    abstract public function test();
-    abstract public function lint();
-    abstract public function assemble();
-    abstract public function deploy();
+    abstract public void Test();
+    abstract public void Lint();
+    abstract public void Assemble();
+    abstract public void Deploy();
 }
 ```
 
 Then we can have our implementations
 
-```php
-class AndroidBuilder extends Builder
+```C#
+class AndroidBuilder : Builder
 {
-    public function test()
-    {
-        echo 'Running android tests';
-    }
+  public override void Assemble()
+  {
+    Console.WriteLine("Assembling the android build");
+  }
 
-    public function lint()
-    {
-        echo 'Linting the android code';
-    }
+  public override void Deploy()
+  {
+    Console.WriteLine("Deploying android build to server");
+  }
 
-    public function assemble()
-    {
-        echo 'Assembling the android build';
-    }
+  public override void Lint()
+  {
+    Console.WriteLine("Linting the android code");
+  }
 
-    public function deploy()
-    {
-        echo 'Deploying android build to server';
-    }
+  public override void Test()
+  {
+    Console.WriteLine("Running android tests");
+  }
 }
 
-class IosBuilder extends Builder
+
+class IosBuilder : Builder
 {
-    public function test()
-    {
-        echo 'Running ios tests';
-    }
+  public override void Assemble()
+  {
+    Console.WriteLine("Assembling the ios build");
+  }
 
-    public function lint()
-    {
-        echo 'Linting the ios code';
-    }
+  public override void Deploy()
+  {
+    Console.WriteLine("Deploying ios build to server");
+  }
 
-    public function assemble()
-    {
-        echo 'Assembling the ios build';
-    }
+  public override void Lint()
+  {
+    Console.WriteLine("Linting the ios code");
+  }
 
-    public function deploy()
-    {
-        echo 'Deploying ios build to server';
-    }
+  public override void Test()
+  {
+    Console.WriteLine("Running ios tests");
+  }
 }
+
 ```
 And then it can be used as
 
-```php
-$androidBuilder = new AndroidBuilder();
-$androidBuilder->build();
+```C#
+var androidBuilder = new AndroidBuilder();
+androidBuilder.Build();
 
 // Output:
 // Running android tests
@@ -2272,8 +2288,8 @@ $androidBuilder->build();
 // Assembling the android build
 // Deploying android build to server
 
-$iosBuilder = new IosBuilder();
-$iosBuilder->build();
+var iosBuilder = new IosBuilder();
+iosBuilder.Build();
 
 // Output:
 // Running ios tests
@@ -2291,8 +2307,9 @@ And that about wraps it up. I will continue to improve this, so you might want t
 - Report issues
 - Open pull request with improvements
 - Spread the word
-- Reach out with any feedback [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/kamranahmedse.svg?style=social&label=Follow%20%40kamranahmedse)](https://twitter.com/kamranahmedse)
+- Contact me on <a href="https://twitter.com/anupavanm">Twitter</a> 
 
 ## License
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+
