@@ -43,7 +43,7 @@ Wikipedia describes them as
 Types of Design Patterns
 -----------------
 
-* [Creational]("02.%20Design%20Patterns%20-%20Creational%20Patterns")
+* [Creational](02.%20Design%20Patterns%20-%20Creational%20Patterns)
 * [Structural](#structural-design-patterns)
 * [Behavioral](#behavioral-design-patterns)
 
