@@ -5,19 +5,21 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "01. Singleton", "01. Singleton\01. Singleton.csproj", "{4A802BBB-1C5C-4EA8-BB60-0D235C151FA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02. Simple Factory", "02. Simple Factory\02. Simple Factory.csproj", "{E1AF8F6C-50AE-421B-BBF7-BC9D61134F69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02. Simple Factory", "02. Simple Factory\02. Simple Factory.csproj", "{E1AF8F6C-50AE-421B-BBF7-BC9D61134F69}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02F78DAB-E5DC-4F85-B1E7-63338432BEBC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02. Simple Factory.Tests", "Tests\02. Simple Factory.Tests\02. Simple Factory.Tests.csproj", "{C6A4687B-7338-4386-ADC6-052E1153B72C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03. Factory Method", "03. Factory Method\03. Factory Method.csproj", "{613979CF-BB46-4F51-9E7A-2D3B4EBD85A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "03. Factory Method", "03. Factory Method\03. Factory Method.csproj", "{613979CF-BB46-4F51-9E7A-2D3B4EBD85A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04. Abstract Factory", "04. Abstract Factory\04. Abstract Factory.csproj", "{B2715D8C-123C-4B12-8DF4-EAAFF77E54CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "04. Abstract Factory", "04. Abstract Factory\04. Abstract Factory.csproj", "{B2715D8C-123C-4B12-8DF4-EAAFF77E54CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05. Builder", "05. Builder\05. Builder.csproj", "{3DA77748-1D6A-4CA9-99A5-1A7E7B204BED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "05. Builder", "05. Builder\05. Builder.csproj", "{3DA77748-1D6A-4CA9-99A5-1A7E7B204BED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06. Prototype", "06. Prototype\06. Prototype.csproj", "{D3F31678-317A-4B37-86A8-697FFF6D1F4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "06. Prototype", "06. Prototype\06. Prototype.csproj", "{D3F31678-317A-4B37-86A8-697FFF6D1F4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "07. ObjectPool", "07. ObjectPool\07. ObjectPool.csproj", "{966C3549-D84A-4A8D-A99A-E93A6E9B6FEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{D3F31678-317A-4B37-86A8-697FFF6D1F4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3F31678-317A-4B37-86A8-697FFF6D1F4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3F31678-317A-4B37-86A8-697FFF6D1F4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{966C3549-D84A-4A8D-A99A-E93A6E9B6FEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{966C3549-D84A-4A8D-A99A-E93A6E9B6FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{966C3549-D84A-4A8D-A99A-E93A6E9B6FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{966C3549-D84A-4A8D-A99A-E93A6E9B6FEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
