@@ -15,7 +15,7 @@ using static ErrorMessages;
 /// 
 /// <remarks>
 /// LIFO is easily represented by a stack, FIFO is a queue,
-/// and circular buffer implementation using a List<T> and index
+/// and circular buffer implementation using a List/<T/> and index
 /// pointer to approximate a round-robin access pattern.
 /// </remarks>
 ///
