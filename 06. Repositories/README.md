@@ -98,3 +98,5 @@ public class Repository<T> : IRepository<T> where T : EntityBase
     }
 }
 ```
+
+Note that in this implementation, all operations are saved as they are performed; there is no Unit of Work being applied. There are a variety of ways in which Unit of Work behavior can be added to this implementation, the simplest of which being to add an explicit Save() method to the ```IRepository<T>``` method, and to only call the underlying SaveChanges() method from this method.
