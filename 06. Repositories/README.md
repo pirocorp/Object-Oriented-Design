@@ -53,7 +53,6 @@ Generic Repository Implementation
 Assuming you create a Generic Repository Interface, you can implement the interface generically as well. Once this is done, you can easily create repositories for any given type without having to write any new code, and your classes the declare dependencies can simply specify ```IRepository<Item>``` as the type, and it's easy for your IoC container to match that up with a ```Repository<Item>``` implementation. You can see an example Generic Repository Implementation, using Entity Framework, here.
 
 ```csharp
-Copy
 public class Repository<T> : IRepository<T> where T : EntityBase
 {
     private readonly ApplicationDbContext _dbContext;
