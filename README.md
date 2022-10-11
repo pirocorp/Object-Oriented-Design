@@ -37,13 +37,17 @@ Wikipedia describes them as
 
 > Also note that the code samples below are in C#-7, however this shouldn't stop you because the concepts are same anyways. Plus the **support for other languages is underway**.
 
-Types of Design Patterns
+Types of Design Patterns (GoF)
 -----------------
 
 * [Creational](02.%20Design%20Patterns%20-%20Creational%20Patterns)
 * [Structural](03.%20Design%20Patterns%20-%20Structural%20Patterns)
 * [Behavioral](04.%20Design%20Patterns%20-%20Behavioral%20Patterns)
 
+Other Patterns
+-----------------
+
+* [Repository](06.%20Repositories)
 
 ## License
 
