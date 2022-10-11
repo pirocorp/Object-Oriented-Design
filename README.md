@@ -44,6 +44,10 @@ Types of Design Patterns (GoF)
 * [Structural](03.%20Design%20Patterns%20-%20Structural%20Patterns)
 * [Behavioral](04.%20Design%20Patterns%20-%20Behavioral%20Patterns)
 
+Other Patterns
+-----------------
+
+* [Repository](06.%20Repositories)
 
 ## License
 
