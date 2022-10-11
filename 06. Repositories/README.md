@@ -100,3 +100,13 @@ public class Repository<T> : IRepository<T> where T : EntityBase
 ```
 
 Note that in this implementation, all operations are saved as they are performed; there is no Unit of Work being applied. There are a variety of ways in which Unit of Work behavior can be added to this implementation, the simplest of which being to add an explicit Save() method to the ```IRepository<T>``` method, and to only call the underlying SaveChanges() method from this method.
+
+
+IQueryable?
+-------
+
+Another common question with Repositories has to do with what they return. Should they return data, or should they return queries that can be further refined before execution (**IQueryable**)? The former is safer, but the latter offers a great deal of flexibility. In fact, you can simplify your interface to only offer a single method for reading data if you go the **IQueryable** route, since from there any number of items can be returned.
+
+A problem with this approach is that it tends to result in business logic bleeding into higher application layers, and becoming duplicated there. 
+
+Common example in real applications is the use of "soft deletes" represented by an IsActive or IsDeleted property on an entity. Once an item has been deleted, 99% of the time it should be excluded from display in any UI scenario, so nearly every request will include something like ```.Where(foo => foo.IsActive)``` in addition to whatever other filters are present. This is better achieved within the repository, where it can be the default behavior of the List() method, or the List() method might be renamed to something like ListActive(). If it's truly necessary to view deleted/inactive items, a special List method can be used for just this (probably rare) purpose.
