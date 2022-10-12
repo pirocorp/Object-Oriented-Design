@@ -145,3 +145,5 @@ Refresh the page and you should see the data continue to load, but the Load time
 
 ![image](https://user-images.githubusercontent.com/34960418/195335371-82acc66f-a391-4beb-8a32-821f80d3c683.png)
 
+
+When done just press ```ctrl + c``` in terminal or from Docker Desktop on Windows
