@@ -112,6 +112,54 @@ A problem with this approach is that it tends to result in business logic bleedi
 Common example in real applications is the use of "soft deletes" represented by an IsActive or IsDeleted property on an entity. Once an item has been deleted, 99% of the time it should be excluded from display in any UI scenario, so nearly every request will include something like ```.Where(foo => foo.IsActive)``` in addition to whatever other filters are present. This is better achieved within the repository, where it can be the default behavior of the List() method, or the List() method might be renamed to something like ListActive(). If it's truly necessary to view deleted/inactive items, a special List method can be used for just this (probably rare) purpose.
 
 
+Cached Repository
+-------
+
+At the most basic level, implementing a cached repository is simply a matter of overriding the methods of the base repository implementation (which must be marked as virtual), and then updating the IOC container’s registration to use the new type. Implementing a CachedAlbumRepository would look something like this:
+
+```csharp
+public class CachedAuthorRepositoryDecorator : IReadOnlyRepository<Author>
+    {
+        private const string AuthorModelCacheKey = "Authors";
+
+        private readonly AuthorRepository repository;
+        private readonly IMemoryCache cache;
+        private readonly MemoryCacheEntryOptions cacheOptions;
+
+        public CachedAuthorRepositoryDecorator(
+            AuthorRepository repository,
+            IMemoryCache cache)
+        {
+            this.repository = repository;
+            this.cache = cache;
+
+            this.cacheOptions = new MemoryCacheEntryOptions()
+                .SetAbsoluteExpiration(relative: TimeSpan.FromSeconds(DEFAULT_CACHE_SECONDS));
+        }
+
+        public async Task<Author?> GetById(int id)
+            => await this.cache
+                .GetOrCreateAsync(
+                    $"{AuthorModelCacheKey}-{id}",
+                    async entry =>
+                    {
+                        entry.SetOptions(cacheOptions);
+                        return await this.repository.GetById(id);
+                    });
+
+        public async Task<IEnumerable<Author>> List()
+            => await this.cache
+                .GetOrCreateAsync(
+                    AuthorModelCacheKey,
+                    async entry =>
+                    {
+                        entry.SetOptions(cacheOptions);
+                        return await this.repository.List();
+                    });
+    }
+```
+
+
 Running the Cached Repository Sample App
 ==================
 
