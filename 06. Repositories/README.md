@@ -113,6 +113,9 @@ Common example in real applications is the use of "soft deletes" represented by 
 
 
 Running the Cached Repository Sample App
+==================
+
+Prerequisites
 -------
 
 This application uses seed data created by EF Migrations. You'll need to have a Docker and Docker compose installed. Check for docker compose version.
@@ -123,6 +126,9 @@ docker compose version
 
 ![image](https://user-images.githubusercontent.com/34960418/195333051-4bef877d-bce5-4920-9485-c11e5ea2d6b1.png)
 
+
+Run the app
+-------
 
 Open terminal in Cached Repository folder where ```docker-compose.yml``` is located and execute:
 
@@ -146,7 +152,8 @@ Refresh the page and you should see the data continue to load, but the Load time
 ![image](https://user-images.githubusercontent.com/34960418/195338533-f83bec59-c847-4eae-97f5-95a434b71a08.png)
 
 
-Clen up
+Clean up
+-------
 
 Stop the container(s) using the following command:
 
