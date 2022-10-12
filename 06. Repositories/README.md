@@ -148,4 +148,17 @@ Refresh the page and you should see the data continue to load, but the Load time
 
 Clen up
 
+Stop the container(s) using the following command:
 
+```bash
+docker-compose down
+```
+
+![image](https://user-images.githubusercontent.com/34960418/195339540-fd805d01-1f4a-4e74-b947-5f4202efccdd.png)
+
+
+Delete all containers using the following command:
+
+```bash
+docker rm -f $(docker ps -a -q)
+```
