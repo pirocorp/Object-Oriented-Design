@@ -48,6 +48,7 @@ Other Patterns
 -----------------
 
 * [Repository](06.%20Repositories)
+* [Specification](07.%20Specification)
 
 ## License
 
