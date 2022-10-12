@@ -110,3 +110,244 @@ Another common question with Repositories has to do with what they return. Shoul
 A problem with this approach is that it tends to result in business logic bleeding into higher application layers, and becoming duplicated there. 
 
 Common example in real applications is the use of "soft deletes" represented by an IsActive or IsDeleted property on an entity. Once an item has been deleted, 99% of the time it should be excluded from display in any UI scenario, so nearly every request will include something like ```.Where(foo => foo.IsActive)``` in addition to whatever other filters are present. This is better achieved within the repository, where it can be the default behavior of the List() method, or the List() method might be renamed to something like ListActive(). If it's truly necessary to view deleted/inactive items, a special List method can be used for just this (probably rare) purpose.
+
+
+Cached Repository
+-------
+
+At the most basic level, implementing a cached repository is simply a matter of overriding the methods of the base repository implementation (which must be marked as virtual), and then updating the IOC container’s registration to use the new type. Implementing a CachedAlbumRepository would look something like this:
+
+```csharp
+public class CachedAuthorRepositoryDecorator : IReadOnlyRepository<Author>
+    {
+        private const string AuthorModelCacheKey = "Authors";
+
+        private readonly AuthorRepository repository;
+        private readonly IMemoryCache cache;
+        private readonly MemoryCacheEntryOptions cacheOptions;
+
+        public CachedAuthorRepositoryDecorator(
+            AuthorRepository repository,
+            IMemoryCache cache)
+        {
+            this.repository = repository;
+            this.cache = cache;
+
+            this.cacheOptions = new MemoryCacheEntryOptions()
+                .SetAbsoluteExpiration(relative: TimeSpan.FromSeconds(DEFAULT_CACHE_SECONDS));
+        }
+
+        public async Task<Author?> GetById(int id)
+            => await this.cache
+                .GetOrCreateAsync(
+                    $"{AuthorModelCacheKey}-{id}",
+                    async entry =>
+                    {
+                        entry.SetOptions(cacheOptions);
+                        return await this.repository.GetById(id);
+                    });
+
+        public async Task<IEnumerable<Author>> List()
+            => await this.cache
+                .GetOrCreateAsync(
+                    AuthorModelCacheKey,
+                    async entry =>
+                    {
+                        entry.SetOptions(cacheOptions);
+                        return await this.repository.List();
+                    });
+    }
+```
+
+The above code is an example of the **Proxy** (or perhaps **Decorator**) design pattern. Proxies are all about controlling access, and the **CachedAuthorRepositoryDecorator** controls access to the **AuthorRepository** by first checking to see whether the data exists in the cache (one could make the argument that this is about adding behavior to the underlying repository, in which case the Decorator pattern, which has the same structure, would be the more appropriate label).
+
+Cached Repository Sample App
+==================
+
+The Sample
+-------
+
+The sample application doesn't really do a whole lot. The home page for the web application uses Razor Pages and fetches a list of authors with their associated publications. It captures the time taken to fetch the data as seen from the UI layer:
+
+```csharp
+public class IndexModel : PageModel
+{
+    private readonly IReadOnlyRepository<Author> authorRepository;
+
+    public IndexModel(IReadOnlyRepository<Author> authorRepository)
+    {
+        this.authorRepository = authorRepository;
+    }
+
+    public List<Author> Authors { get; set; } = new();
+
+    public long ElapsedTimeMilliseconds { get; set; }
+
+    public async Task OnGet()
+    {
+        var timer = Stopwatch.StartNew();
+        Authors = (await authorRepository.List()).ToList();
+        timer.Stop();
+        ElapsedTimeMilliseconds = timer.ElapsedMilliseconds;
+    }
+}
+```
+
+The elapsed time in milliseconds is displayed on the page along with a list of authors (and a count of their resources).
+
+Ok so a couple of things to point out here. First, the page is pretty simple. There's no conditional logic to it. There's nothing that indicates where the data is being fetched from or whether or not it should be cached.
+
+We can see that this class depends on a service described by an interface. That interface includes the name Repository which tells us it's concerned with persistence. It's also labeled as a ReadOnly repository, so we can expect that it will only contain queries. Looking at the definition, we're not disappointed:
+
+```csharp
+    public interface IReadOnlyRepository<T> where T : BaseEntity
+    {
+        Task<T?> GetById(int id);
+
+        Task<IEnumerable<T>> List();
+    }
+```
+
+Somewhere there's got to be some actual persistence logic, though, and we find that in an implementation-specific type, **EfRepository.cs**. This type actually implements a full read/write repository interface, but it's got the ReadOnly methods, too, thus satisfying that interface as well. Its List method is the only one we're concerned with:
+
+```csharp
+public virtual async Task<IEnumerable<T>> List()
+            => await this.DbContext.Set<T>().ToListAsync();
+```
+
+In order to perform eager loading I'm subclassing the repo with an author-specific version that includes this implementation for **List()**
+
+```csharp
+    public override async Task<IEnumerable<Author>> List()
+    {
+        return await this.DbContext.Authors
+            .Include(a => a.Resources)
+            .ToListAsync();
+    }
+```
+
+With just the code we've shown so far, we could add one line to Startup.ConfigureServices and our application would work:
+
+```csharp
+services.AddScoped<IReadOnlyRepository<Author>, AuthorRepository>();
+```
+
+Adding Caching
+-------
+
+The nice thing about the **CachedRepository** pattern is that it allows us to add caching behavior without modifying the existing functionality for fetching data from persistence, or the code that calls this code. In fact, we can add caching to the above application without touching any code in the repository implementations shown above or the Razor Page that uses them. The only place we will modify code will be in Startup.ConfigureServices, where we will wire in a new service.
+
+The **Decorator** pattern is used to add additional functionality to an existing type. It's essentially a wrapper around existing functionality. We're going to add caching behavior as a decorator that wraps around the underlying **Repository** instance. The **Proxy** pattern is functionally the same as the **Decorator**, but the intent varies. With the **Proxy**, the intent is to control access to a resource, as opposed to adding functionality. In a sense, though, choosing whether to get data from its source or from a local cached copy is controlling access to the source data, so you can also think of the **CachedRepository** pattern as being a kind of **Proxy**, too.
+
+The simple implementation of data caching in the **CachedAuthorRepositoryDecorator** class looks like this:
+
+```csharp
+public async Task<IEnumerable<Author>> List()
+    => await this.cache
+        .GetOrCreateAsync(
+            AuthorModelCacheKey,
+            async entry =>
+            {
+                entry.SetOptions(cacheOptions);
+                return await this.repository.List();
+            });
+```
+
+In this case the ```this.cache``` refers to an injected instance of **IMemoryCache**. In some projects, it may make sense to rely on your own interface that might wrap additional behavior, since **IMemoryCache** is a pretty low-level interface. For instance, if you find that every one of your cached repositories has basically the same code as shown above, you could reduce duplication by putting that logic into your own cache service.
+
+```csharp
+public CachedAuthorRepositoryDecorator(
+    AuthorRepository repository,
+    IMemoryCache cache)
+```
+
+Caches require keys, and key generation is an important aspect of a caching strategy. In this sample, the key is simply hard-coded in the Decorator class. You can also build keys based on things like class and method name, as well as arguments.
+
+Once you have a CachedRepository class, the only thing left to do is configure your application to use it, in **ConfigureServices()**:
+
+```csharp
+// Requests for ReadOnlyRepository will use the Cached Implementation
+services.AddScoped<IReadOnlyRepository<Author>, CachedAuthorRepositoryDecorator>();
+services.AddScoped(typeof(EfRepository<>));
+services.AddScoped<AuthorRepository>();
+```
+
+Now if you run the application, you will see that loading the large set of records requires some amount of time (100-200ms on my machines I’ve tried it on) on the first load, but then drops to 0ms for subsequent requests. The cache is set up to expire after 5 seconds, so you should see non-zero times every 5 seconds or so as you test the application.
+
+
+Run the app
+===========
+
+Prerequisites
+-------
+
+This application uses seed data created by EF Migrations. You'll need to have a Docker and Docker compose installed. Check for docker compose version.
+
+```
+docker compose version
+```
+
+![image](https://user-images.githubusercontent.com/34960418/195333051-4bef877d-bce5-4920-9485-c11e5ea2d6b1.png)
+
+
+Run the app
+-------
+
+Open terminal in Cached Repository folder where ```docker-compose.yml``` is located and execute:
+
+```
+docker-compose up -d
+```
+
+When application is ready you should see
+
+![image](https://user-images.githubusercontent.com/34960418/195338069-f1330e73-a3aa-4894-a152-84cd74dea523.png)
+
+
+Open browser and go to [https://localhost:8001](https://localhost:8001)
+
+Once the app is working, your initial view of the home page should look something like this:
+
+![image](https://user-images.githubusercontent.com/34960418/195335023-418455d3-2b80-46a0-bfb9-8773fa70179b.png)
+
+Refresh the page and you should see the data continue to load, but the Load time should be 0 ms or close to zero. The cache is configured to reset every 5 seconds so if you continue refreshing you should periodically see a non-zero load time. In Docker Desktop in application container logs you can actually see when queries to the database are made.
+
+![image](https://user-images.githubusercontent.com/34960418/195338533-f83bec59-c847-4eae-97f5-95a434b71a08.png)
+
+
+Clean up
+-------
+
+Stop the container(s) using the following command:
+
+```bash
+docker-compose down
+```
+
+![image](https://user-images.githubusercontent.com/34960418/195339540-fd805d01-1f4a-4e74-b947-5f4202efccdd.png)
+
+
+Delete all containers using the following command (if any left):
+
+```bash
+docker rm -f $(docker ps -a -q)
+```
+
+Delete all volumes using the following command (if any left):
+
+```bash
+docker volume rm $(docker volume ls -q)
+```
+
+Find docker image, it should look something like this
+
+![image](https://user-images.githubusercontent.com/34960418/195341111-0a1e5f48-3932-4f72-b7a4-3bc0d522c324.png)
+
+
+Delete docker image.
+
+```bash
+docker image rm cachedrepository_cachedrepository
+```
+
+![image](https://user-images.githubusercontent.com/34960418/195341262-ac4b05fb-eee7-49ff-888c-cf11f44ca608.png)
