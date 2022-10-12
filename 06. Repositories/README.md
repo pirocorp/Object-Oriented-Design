@@ -157,8 +157,27 @@ docker-compose down
 ![image](https://user-images.githubusercontent.com/34960418/195339540-fd805d01-1f4a-4e74-b947-5f4202efccdd.png)
 
 
-Delete all containers using the following command:
+Delete all containers using the following command (if any left):
 
 ```bash
 docker rm -f $(docker ps -a -q)
 ```
+
+Delete all volumes using the following command (if any left):
+
+```bash
+docker volume rm $(docker volume ls -q)
+```
+
+Find docker image, it should look something like this
+
+![image](https://user-images.githubusercontent.com/34960418/195341111-0a1e5f48-3932-4f72-b7a4-3bc0d522c324.png)
+
+
+Delete docker image.
+
+```bash
+docker image rm cachedrepository_cachedrepository
+```
+
+![image](https://user-images.githubusercontent.com/34960418/195341262-ac4b05fb-eee7-49ff-888c-cf11f44ca608.png)
