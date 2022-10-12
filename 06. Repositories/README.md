@@ -110,3 +110,38 @@ Another common question with Repositories has to do with what they return. Shoul
 A problem with this approach is that it tends to result in business logic bleeding into higher application layers, and becoming duplicated there. 
 
 Common example in real applications is the use of "soft deletes" represented by an IsActive or IsDeleted property on an entity. Once an item has been deleted, 99% of the time it should be excluded from display in any UI scenario, so nearly every request will include something like ```.Where(foo => foo.IsActive)``` in addition to whatever other filters are present. This is better achieved within the repository, where it can be the default behavior of the List() method, or the List() method might be renamed to something like ListActive(). If it's truly necessary to view deleted/inactive items, a special List method can be used for just this (probably rare) purpose.
+
+
+Running the Sample
+-------
+
+This application uses seed data created by EF Migrations. You'll need to have a Docker and Docker compose installed. Check for docker compose version.
+
+```
+docker compose version
+```
+
+![image](https://user-images.githubusercontent.com/34960418/195333051-4bef877d-bce5-4920-9485-c11e5ea2d6b1.png)
+
+
+Open terminal in Cached Repository folder where ```docker-compose.yml``` is located and execute:
+
+```
+docker compose up
+```
+
+When application is ready you should see
+
+![image](https://user-images.githubusercontent.com/34960418/195333560-8e958421-1174-48fe-a36f-19015b3ebec4.png)
+
+
+Open browser and go to [https://localhost:8001](https://localhost:8001)
+
+Once the app is working, your initial view of the home page should look something like this:
+
+![image](https://user-images.githubusercontent.com/34960418/195335023-418455d3-2b80-46a0-bfb9-8773fa70179b.png)
+
+Refresh the page and you should see the data continue to load, but the Load time should be 0 ms or close to zero. The cache is configured to reset every 5 seconds so if you continue refreshing you should periodically see a non-zero load time. In terminal you can actualy see when the app makes queries to the database.
+
+![image](https://user-images.githubusercontent.com/34960418/195335371-82acc66f-a391-4beb-8a32-821f80d3c683.png)
+
