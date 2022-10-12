@@ -127,12 +127,12 @@ docker compose version
 Open terminal in Cached Repository folder where ```docker-compose.yml``` is located and execute:
 
 ```
-docker compose up
+docker-compose up -d
 ```
 
 When application is ready you should see
 
-![image](https://user-images.githubusercontent.com/34960418/195333560-8e958421-1174-48fe-a36f-19015b3ebec4.png)
+![image](https://user-images.githubusercontent.com/34960418/195338069-f1330e73-a3aa-4894-a152-84cd74dea523.png)
 
 
 Open browser and go to [https://localhost:8001](https://localhost:8001)
@@ -141,9 +141,11 @@ Once the app is working, your initial view of the home page should look somethin
 
 ![image](https://user-images.githubusercontent.com/34960418/195335023-418455d3-2b80-46a0-bfb9-8773fa70179b.png)
 
-Refresh the page and you should see the data continue to load, but the Load time should be 0 ms or close to zero. The cache is configured to reset every 5 seconds so if you continue refreshing you should periodically see a non-zero load time. In terminal you can actualy see when the app makes queries to the database.
+Refresh the page and you should see the data continue to load, but the Load time should be 0 ms or close to zero. The cache is configured to reset every 5 seconds so if you continue refreshing you should periodically see a non-zero load time. In Docker Desktop in application container logs we can actually see when queries to the database are made.
 
-![image](https://user-images.githubusercontent.com/34960418/195335371-82acc66f-a391-4beb-8a32-821f80d3c683.png)
+![image](https://user-images.githubusercontent.com/34960418/195338533-f83bec59-c847-4eae-97f5-95a434b71a08.png)
 
 
-When done just press ```ctrl + c``` in terminal or from Docker Desktop on Windows
+Clen up
+
+
