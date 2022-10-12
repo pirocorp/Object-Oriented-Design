@@ -4,8 +4,9 @@ namespace CachedRepository
 
     using CachedRepository.Data;
     using CachedRepository.Data.Models;
+    using CachedRepository.Data.Repositories;
     using CachedRepository.Infrastructure.Extensions;
-
+    
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Routing;
@@ -47,7 +48,18 @@ namespace CachedRepository
                         dbConnectionString,
                         sqlOptions => sqlOptions.EnableRetryOnFailure()
                     ))
-                .AddIdentity<ApplicationUser, ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddIdentity<ApplicationUser, ApplicationRole>(
+                    options =>
+                    {
+                        options.SignIn.RequireConfirmedAccount = true;
+
+                        options.Password.RequireDigit = false;
+                        options.Password.RequireLowercase = false;
+                        options.Password.RequireNonAlphanumeric = false;
+                        options.Password.RequireUppercase = false;
+                        options.Password.RequiredUniqueChars = 1;
+                        options.Password.RequiredLength = 6;
+                    })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -57,6 +69,11 @@ namespace CachedRepository
             }
 
             services.AddRazorPages();
+
+            // Requests for ReadOnlyRepository will use the Cached Implementation
+            services.AddScoped<IReadOnlyRepository<Author>, CachedAuthorRepositoryDecorator>();
+            services.AddScoped(typeof(EfRepository<>));
+            services.AddScoped<AuthorRepository>();
         }
 
         private static void ConfigureMiddleware(IApplicationBuilder app, IHostEnvironment env)
@@ -72,7 +89,7 @@ namespace CachedRepository
             else
             {
                 app.UseExceptionHandler("/Error");
-                //app.UseHsts();
+                // app.UseHsts();
             }
 
             // app.UseHttpsRedirection();

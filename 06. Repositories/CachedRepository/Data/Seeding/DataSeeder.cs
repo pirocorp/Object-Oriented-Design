@@ -105,8 +105,6 @@
                 }
             };
 
-            var id = 4;
-
             foreach (var author in authors)
             {
                 for (var i = 0; i < MaxResourcesPerAuthor; i++)
@@ -116,7 +114,7 @@
                         ResourceTypeId = i % 4 + 1, 
                         AuthorId = author.Id, 
                         Name = "Random Resource", 
-                        Url = "https://ardalis.com", 
+                        Url = "https://pirocorp.com", 
                         Description = "Description would go here."
                     });
                 }
