@@ -112,7 +112,7 @@ A problem with this approach is that it tends to result in business logic bleedi
 Common example in real applications is the use of "soft deletes" represented by an IsActive or IsDeleted property on an entity. Once an item has been deleted, 99% of the time it should be excluded from display in any UI scenario, so nearly every request will include something like ```.Where(foo => foo.IsActive)``` in addition to whatever other filters are present. This is better achieved within the repository, where it can be the default behavior of the List() method, or the List() method might be renamed to something like ListActive(). If it's truly necessary to view deleted/inactive items, a special List method can be used for just this (probably rare) purpose.
 
 
-Running the Sample
+Running the Cached Repository Sample App
 -------
 
 This application uses seed data created by EF Migrations. You'll need to have a Docker and Docker compose installed. Check for docker compose version.
