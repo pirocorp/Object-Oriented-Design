@@ -1,20 +1,34 @@
 ﻿namespace CachedRepository.Pages
 {
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Data;
+    using Data.Models;
+
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.Extensions.Logging;
 
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IReadOnlyRepository<Author> authorRepository;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(IReadOnlyRepository<Author> authorRepository)
         {
-            _logger = logger;
+            this.authorRepository = authorRepository;
         }
 
-        public void OnGet()
-        {
+        public List<Author> Authors { get; set; } = new();
 
+        public long ElapsedTimeMilliseconds { get; set; }
+
+        public async Task OnGet()
+        {
+            var timer = Stopwatch.StartNew();
+            Authors = (await authorRepository.List()).ToList();
+            timer.Stop();
+            ElapsedTimeMilliseconds = timer.ElapsedMilliseconds;
         }
     }
 }
