@@ -159,9 +159,124 @@ public class CachedAuthorRepositoryDecorator : IReadOnlyRepository<Author>
     }
 ```
 
+The above code is an example of the **Proxy** (or perhaps **Decorator**) design pattern. Proxies are all about controlling access, and the **CachedAuthorRepositoryDecorator** controls access to the **AuthorRepository** by first checking to see whether the data exists in the cache (one could make the argument that this is about adding behavior to the underlying repository, in which case the Decorator pattern, which has the same structure, would be the more appropriate label).
 
-Running the Cached Repository Sample App
+Cached Repository Sample App
 ==================
+
+The Sample
+-------
+
+The sample application doesn't really do a whole lot. The home page for the web application uses Razor Pages and fetches a list of authors with their associated publications. It captures the time taken to fetch the data as seen from the UI layer:
+
+```csharp
+public class IndexModel : PageModel
+{
+    private readonly IReadOnlyRepository<Author> authorRepository;
+
+    public IndexModel(IReadOnlyRepository<Author> authorRepository)
+    {
+        this.authorRepository = authorRepository;
+    }
+
+    public List<Author> Authors { get; set; } = new();
+
+    public long ElapsedTimeMilliseconds { get; set; }
+
+    public async Task OnGet()
+    {
+        var timer = Stopwatch.StartNew();
+        Authors = (await authorRepository.List()).ToList();
+        timer.Stop();
+        ElapsedTimeMilliseconds = timer.ElapsedMilliseconds;
+    }
+}
+```
+
+The elapsed time in milliseconds is displayed on the page along with a list of authors (and a count of their resources).
+
+Ok so a couple of things to point out here. First, the page is pretty simple. There's no conditional logic to it. There's nothing that indicates where the data is being fetched from or whether or not it should be cached.
+
+We can see that this class depends on a service described by an interface. That interface includes the name Repository which tells us it's concerned with persistence. It's also labeled as a ReadOnly repository, so we can expect that it will only contain queries. Looking at the definition, we're not disappointed:
+
+```csharp
+    public interface IReadOnlyRepository<T> where T : BaseEntity
+    {
+        Task<T?> GetById(int id);
+
+        Task<IEnumerable<T>> List();
+    }
+```
+
+Somewhere there's got to be some actual persistence logic, though, and we find that in an implementation-specific type, **EfRepository.cs**. This type actually implements a full read/write repository interface, but it's got the ReadOnly methods, too, thus satisfying that interface as well. Its List method is the only one we're concerned with:
+
+```csharp
+public virtual async Task<IEnumerable<T>> List()
+            => await this.DbContext.Set<T>().ToListAsync();
+```
+
+In order to perform eager loading I'm subclassing the repo with an author-specific version that includes this implementation for **List()**
+
+```csharp
+    public override async Task<IEnumerable<Author>> List()
+    {
+        return await this.DbContext.Authors
+            .Include(a => a.Resources)
+            .ToListAsync();
+    }
+```
+
+With just the code we've shown so far, we could add one line to Startup.ConfigureServices and our application would work:
+
+```csharp
+services.AddScoped<IReadOnlyRepository<Author>, AuthorRepository>();
+```
+
+Adding Caching
+-------
+
+The nice thing about the **CachedRepository** pattern is that it allows us to add caching behavior without modifying the existing functionality for fetching data from persistence, or the code that calls this code. In fact, we can add caching to the above application without touching any code in the repository implementations shown above or the Razor Page that uses them. The only place we will modify code will be in Startup.ConfigureServices, where we will wire in a new service.
+
+The **Decorator** pattern is used to add additional functionality to an existing type. It's essentially a wrapper around existing functionality. We're going to add caching behavior as a decorator that wraps around the underlying **Repository** instance. The **Proxy** pattern is functionally the same as the **Decorator**, but the intent varies. With the **Proxy**, the intent is to control access to a resource, as opposed to adding functionality. In a sense, though, choosing whether to get data from its source or from a local cached copy is controlling access to the source data, so you can also think of the **CachedRepository** pattern as being a kind of **Proxy**, too.
+
+The simple implementation of data caching in the **CachedAuthorRepositoryDecorator** class looks like this:
+
+```csharp
+public async Task<IEnumerable<Author>> List()
+    => await this.cache
+        .GetOrCreateAsync(
+            AuthorModelCacheKey,
+            async entry =>
+            {
+                entry.SetOptions(cacheOptions);
+                return await this.repository.List();
+            });
+```
+
+In this case the ```this.cache``` refers to an injected instance of **IMemoryCache**. In some projects, it may make sense to rely on your own interface that might wrap additional behavior, since **IMemoryCache** is a pretty low-level interface. For instance, if you find that every one of your cached repositories has basically the same code as shown above, you could reduce duplication by putting that logic into your own cache service.
+
+```csharp
+public CachedAuthorRepositoryDecorator(
+    AuthorRepository repository,
+    IMemoryCache cache)
+```
+
+Caches require keys, and key generation is an important aspect of a caching strategy. In this sample, the key is simply hard-coded in the Decorator class. You can also build keys based on things like class and method name, as well as arguments.
+
+Once you have a CachedRepository class, the only thing left to do is configure your application to use it, in **ConfigureServices()**:
+
+```csharp
+// Requests for ReadOnlyRepository will use the Cached Implementation
+services.AddScoped<IReadOnlyRepository<Author>, CachedAuthorRepositoryDecorator>();
+services.AddScoped(typeof(EfRepository<>));
+services.AddScoped<AuthorRepository>();
+```
+
+Now if you run the application, you will see that loading the large set of records requires some amount of time (100-200ms on my machines I’ve tried it on) on the first load, but then drops to 0ms for subsequent requests. The cache is set up to expire after 5 seconds, so you should see non-zero times every 5 seconds or so as you test the application.
+
+
+Run the app
+===========
 
 Prerequisites
 -------
