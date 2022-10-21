@@ -26,6 +26,7 @@ public abstract class BaseSpecification<T> : ISpecification<T>
     {
         Criteria = criteria;
     }
+    
     public Expression<Func<T, bool>> Criteria { get; }
     public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
     public List<string> IncludeStrings { get; } = new List<string>();
@@ -34,6 +35,7 @@ public abstract class BaseSpecification<T> : ISpecification<T>
     {
         Includes.Add(includeExpression);
     }
+    
     // string-based includes allow for including children of children, e.g. Basket.Items.Product
     protected virtual void AddInclude(string includeString)
     {
@@ -54,6 +56,7 @@ public class BasketWithItemsSpecification : BaseSpecification<Basket>
     {
         AddInclude(b => b.Items);
     }
+    
     public BasketWithItemsSpecification(string buyerId)
         : base(b => b.BuyerId == buyerId)
     {
