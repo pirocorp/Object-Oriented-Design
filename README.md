@@ -47,7 +47,7 @@ Other Patterns
 
 * [Repository](06.%20Repositories)
 * [Specification](07.%20Specification)
-* [Specification](08.%20DI%20Pattern)
+* [DI Pattern](08.%20DI%20Pattern)
 
 ## License
 
