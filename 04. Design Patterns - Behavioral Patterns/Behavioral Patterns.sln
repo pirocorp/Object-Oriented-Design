@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "08. Strategy", "08. Strateg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10. Template Method", "10. Template Method\10. Template Method.csproj", "{2540012B-58E7-49F6-A064-CCF7765D1DF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06. Observer", "06. Observer\06. Observer.csproj", "{EF8AFA4D-CD78-4C0B-8130-AC2F9B47D4AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2540012B-58E7-49F6-A064-CCF7765D1DF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2540012B-58E7-49F6-A064-CCF7765D1DF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2540012B-58E7-49F6-A064-CCF7765D1DF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF8AFA4D-CD78-4C0B-8130-AC2F9B47D4AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF8AFA4D-CD78-4C0B-8130-AC2F9B47D4AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF8AFA4D-CD78-4C0B-8130-AC2F9B47D4AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF8AFA4D-CD78-4C0B-8130-AC2F9B47D4AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
