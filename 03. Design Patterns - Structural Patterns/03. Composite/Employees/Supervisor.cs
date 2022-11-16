@@ -15,9 +15,6 @@
             subordinates = new HashSet<IEmployee>();
         }
 
-        public IEnumerable<IEmployee> Subordinates
-            => subordinates.ToList();
-
         public override void PerformanceSummary()
         {
             base.PerformanceSummary();
