@@ -9,7 +9,6 @@
         public static void Main()
         {
             var loanProvider = new LoanProvider();
-
             var borrower = new Borrower("Zdravko Zdravkov");
             var eligible = loanProvider.IsEligible(borrower, 1_000_000);
 
