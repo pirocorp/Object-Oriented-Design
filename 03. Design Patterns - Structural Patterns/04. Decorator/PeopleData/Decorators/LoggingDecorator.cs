@@ -1,7 +1,8 @@
-﻿namespace Decorator;
+﻿namespace Decorator.PeopleData.Decorators;
 
 using System.Collections.Generic;
 using System.Linq;
+
 using Decorator.PeopleData;
 using Decorator.Loggers;
 
@@ -21,7 +22,7 @@ public class LoggingDecorator : IPeopleDataReader
     public IEnumerable<Person> Read()
     {
         var data = decoratedReader.Read().ToList();
-        logger.Log($"[LOG] Read { data.Count } elements");
+        logger.Log($"[LOG] Read {data.Count} elements");
 
         return data;
     }

@@ -1,4 +1,4 @@
-﻿namespace Decorator;
+﻿namespace Decorator.PeopleData.Decorators;
 
 using System;
 using System.Collections.Generic;
@@ -18,8 +18,8 @@ public class LimitingDecorator : IPeopleDataReader
 
     public IEnumerable<Person> Read()
     {
-        Console.WriteLine($"LIMITING the count to {this.count} elements");
+        Console.WriteLine($"LIMITING the count to {count} elements");
 
-        return this.decoratedReader.Read().Take(this.count);
+        return decoratedReader.Read().Take(count);
     }
 }

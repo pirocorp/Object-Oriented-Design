@@ -6,6 +6,7 @@ namespace Decorator
     using System;
 
     using Decorator.PeopleData;
+    using Decorator.PeopleData.Decorators;
     using Decorator.Loggers;
 
     public static class Program
