@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04. Decorator", "04. Decorator\04. Decorator.csproj", "{8BF3FCDA-C878-454A-A165-8BE31B1C4A38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "04. Decorator", "04. Decorator\04. Decorator.csproj", "{8BF3FCDA-C878-454A-A165-8BE31B1C4A38}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02. Bridge", "02. Bridge\02. Bridge.csproj", "{CCA0719D-6921-460D-A515-61CAEC8C1678}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01. Adapter", "01. Adapter\01. Adapter.csproj", "{01ABC219-C127-46F4-B73F-86B546E1B541}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05. Facade", "05. Facade\05. Facade.csproj", "{18A89BD2-1BC1-4D8B-918D-B41F9EB76D05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{8BF3FCDA-C878-454A-A165-8BE31B1C4A38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BF3FCDA-C878-454A-A165-8BE31B1C4A38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BF3FCDA-C878-454A-A165-8BE31B1C4A38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCA0719D-6921-460D-A515-61CAEC8C1678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCA0719D-6921-460D-A515-61CAEC8C1678}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCA0719D-6921-460D-A515-61CAEC8C1678}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCA0719D-6921-460D-A515-61CAEC8C1678}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01ABC219-C127-46F4-B73F-86B546E1B541}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01ABC219-C127-46F4-B73F-86B546E1B541}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01ABC219-C127-46F4-B73F-86B546E1B541}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01ABC219-C127-46F4-B73F-86B546E1B541}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18A89BD2-1BC1-4D8B-918D-B41F9EB76D05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18A89BD2-1BC1-4D8B-918D-B41F9EB76D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18A89BD2-1BC1-4D8B-918D-B41F9EB76D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18A89BD2-1BC1-4D8B-918D-B41F9EB76D05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
