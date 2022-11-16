@@ -1,7 +1,5 @@
 ﻿namespace Composite
 {
-    using System;
-    using System.Collections.Generic;
     using Composite.Employees;
 
     public static class Program
@@ -13,8 +11,10 @@
 
         public static void EmployeesDemo()
         {
+            // Composite
             var ceo = new Supervisor() { Id = 0, Name = "The Big Boss", Rating = 5 };
 
+            // Leafs
             var peter = new Employee() { Id = 1, Name = "Peter", Rating = 3 };
             var george = new Employee() { Id = 2, Name = "George", Rating = 4 };
             var john = new Employee() { Id = 3, Name = "John", Rating = 5 };
@@ -22,6 +22,7 @@
             var martin = new Employee() { Id = 5, Name = "Martin", Rating = 3 };
             var jenny = new Employee() { Id = 6, Name = "Jenny", Rating = 3 };
 
+            // Composites
             var michael = new Supervisor() { Id = 7, Name = "Michael", Rating = 3 };
             var justin = new Supervisor() { Id = 8, Name = "Justin", Rating = 3 };
 
