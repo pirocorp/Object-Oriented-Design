@@ -1,4 +1,4 @@
-﻿namespace Decorator;
+﻿namespace Decorator.Loggers;
 
 using System;
 

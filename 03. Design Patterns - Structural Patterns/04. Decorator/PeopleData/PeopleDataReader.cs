@@ -1,4 +1,4 @@
-﻿namespace Decorator;
+﻿namespace Decorator.PeopleData;
 
 using System.Collections.Generic;
 

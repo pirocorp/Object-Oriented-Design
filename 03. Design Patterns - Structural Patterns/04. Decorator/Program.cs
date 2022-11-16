@@ -5,38 +5,52 @@ namespace Decorator
 {
     using System;
 
+    using Decorator.PeopleData;
+    using Decorator.Loggers;
+
     public static class Program
     {
         public static void Main()
         {
-            // Using decorators
-            // var loggingCountLimitingReader = new LimitingDecorator(
-            //     new LoggingDecorator(new PeopleDataReader(), new Logger()),
-            //     3);
-               
-            // var people = loggingCountLimitingReader.Read();
-               
-            // foreach (var person in people)
-            // {
-            //     Console.WriteLine(person);
-            // }
+            DecoratorDemo1();
 
-            // var loggingReader = new LoggingDecorator(
-            //     new PeopleDataReader(), 
-            //     new Logger());
-               
-            // var people1 = loggingReader.Read();
-               
-            // foreach (var person in people1)
-            // {
-            //     Console.WriteLine(person);
-            // }
+            DecoratorDemo2();
+        }
 
+        private static void DecoratorDemo1()
+        {
             var limitingReader = new LimitingDecorator(new PeopleDataReader(), 3);
 
             var people2 = limitingReader.Read();
 
             foreach (var person in people2)
+            {
+                Console.WriteLine(person);
+            }
+        }
+
+        private static void DecoratorDemo2()
+        {
+            var loggingCountLimitingReader = new LimitingDecorator(
+                new LoggingDecorator(
+                    new PeopleDataReader(), 
+                    new Logger()),
+                3);
+
+            var people = loggingCountLimitingReader.Read();
+
+            foreach (var person in people)
+            {
+                Console.WriteLine(person);
+            }
+
+            var loggingReader = new LoggingDecorator(
+                new PeopleDataReader(),
+                new Logger());
+
+            var people1 = loggingReader.Read();
+
+            foreach (var person in people1)
             {
                 Console.WriteLine(person);
             }

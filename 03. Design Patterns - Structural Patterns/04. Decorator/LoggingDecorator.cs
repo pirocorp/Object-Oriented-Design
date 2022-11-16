@@ -2,6 +2,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Decorator.PeopleData;
+using Decorator.Loggers;
 
 public class LoggingDecorator : IPeopleDataReader
 {
