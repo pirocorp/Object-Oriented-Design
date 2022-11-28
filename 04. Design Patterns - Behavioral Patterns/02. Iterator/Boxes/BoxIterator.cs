@@ -1,4 +1,4 @@
-﻿namespace Iterator
+﻿namespace Iterator.Boxes
 {
     using System;
     using System.Collections;
@@ -13,32 +13,32 @@
         public BoxIterator(BoxCollection collection)
         {
             this.collection = collection;
-            this.currentIndex = -1;
-            this.currentBox = default;
+            currentIndex = -1;
+            currentBox = default;
         }
 
-        public Box Current => this.currentBox ?? throw new InvalidOperationException();
+        public Box Current => currentBox ?? throw new InvalidOperationException();
 
-        object IEnumerator.Current => this.Current;
+        object IEnumerator.Current => Current;
 
         public bool MoveNext()
         {
             //Avoids going beyond the end of the collection.
-            if (++this.currentIndex >= this.collection.Count)
+            if (++currentIndex >= collection.Count)
             {
                 return false;
             }
             else
             {
                 // Set current box to next item in collection.
-                this.currentBox = this.collection[this.currentIndex];
+                currentBox = collection[currentIndex];
             }
 
             return true;
         }
 
         public void Reset()
-            => this.currentIndex = -1;
+            => currentIndex = -1;
 
         void IDisposable.Dispose() { }
     }

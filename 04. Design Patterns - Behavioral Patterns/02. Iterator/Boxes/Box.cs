@@ -1,4 +1,4 @@
-﻿namespace Iterator
+﻿namespace Iterator.Boxes
 {
     using System;
 
@@ -8,10 +8,10 @@
 
         public Box()
         {
-            this.name = $"Box-{new Random().Next()}";
+            name = $"Box-{new Random().Next()}";
         }
 
         public override string ToString()
-            => this.name;
+            => name;
     }
 }
