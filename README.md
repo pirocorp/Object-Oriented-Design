@@ -42,12 +42,13 @@ Wikipedia describes them as
 * [Structural](03.%20Design%20Patterns%20-%20Structural%20Patterns)
 * [Behavioral](04.%20Design%20Patterns%20-%20Behavioral%20Patterns)
 
-
-# Other Patterns
+## Other Design Patterns
 
 * [Repository](06.%20Repositories)
 * [Specification](07.%20Specification)
 * [Dependency Injection Pattern](08.%20DI%20Pattern)
+
+
 
 # Architectural Patterns
 
