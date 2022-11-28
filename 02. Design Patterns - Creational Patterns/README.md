@@ -498,7 +498,83 @@ President b = President.GetInstance();
 Console.WriteLine(a == b); //Output : true
 ```
 
+🛥️ Object pool
+------------
 
+The object pool pattern is a software creational design pattern that uses a set of initialized objects kept ready to use – a "pool" – rather than allocating and destroying them on demand. A client of the pool will request an object from the pool and perform operations on the returned object. When the client has finished, it returns the object to the pool rather than destroying it; this can be done manually or automatically.
+
+Object pools are primarily used for performance: in some circumstances, object pools significantly improve performance. Object pools complicate object lifetime, as objects obtained from and returned to a pool are not actually created or destroyed at this time, and thus require care in implementation.
+
+Care must be taken to ensure the state of the objects returned to the pool is reset back to a sensible state for the next use of the object, otherwise the object may be in a state unexpected by the client, which may cause it to fail. The pool is responsible for resetting the objects, not the clients. Object pools full of objects with dangerously stale state are sometimes called object cesspools and regarded as an anti-pattern.
+
+In the [.NET Base Class Library](https://en.wikipedia.org/wiki/Base_Class_Library) there are a few objects that implement this pattern. System.Threading.ThreadPool is configured to have a predefined number of threads to allocate. When the threads are returned, they are available for another computation. Thus, one can use threads without paying the cost of creation and disposal of threads.
+
+**When to use?**
+
+When it is necessary to work with numerous objects that are particularly expensive to instantiate and each object is only needed for a short period of time, the performance of an entire application may be adversely affected. An object pool design pattern may be deemed desirable in cases such as these.
+
+```csharp
+namespace DesignPattern.Objectpool;
+
+// The PooledObject class is the type that is expensive or slow to instantiate,
+// or that has limited availability, so is to be held in the object pool.
+public class PooledObject
+{
+    private DateTime _createdAt = DateTime.Now;
+
+    public DateTime CreatedAt
+    {
+        get { return _createdAt; }
+    }
+
+    public string TempData { get; set; }
+}
+
+// The Pool class controls access to the pooled objects. It maintains a list of available objects and a 
+// collection of objects that have been obtained from the pool and are in use. The pool ensures that released objects 
+// are returned to a suitable state, ready for reuse. 
+public static class Pool
+{
+    private static List<PooledObject> _available = new List<PooledObject>();
+    private static List<PooledObject> _inUse = new List<PooledObject>();
+
+    public static PooledObject GetObject()
+    {
+        lock (_available)
+        {
+            if (_available.Count != 0)
+            {
+                PooledObject po = _available[0];
+                _inUse.Add(po);
+                _available.RemoveAt(0);
+                return po;
+            }
+            else
+            {
+                PooledObject po = new PooledObject();
+                _inUse.Add(po);
+                return po;
+            }
+        }
+    }
+
+    public static void ReleaseObject(PooledObject po)
+    {
+        CleanUp(po);
+
+        lock (_available)
+        {
+            _available.Add(po);
+            _inUse.Remove(po);
+        }
+    }
+
+    private static void CleanUp(PooledObject po)
+    {
+        po.TempData = null;
+    }
+}
+```
 
 ## License
 
