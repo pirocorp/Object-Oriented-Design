@@ -49,6 +49,9 @@ Other Patterns
 * [Specification](07.%20Specification)
 * [Dependency Injection Pattern](08.%20DI%20Pattern)
 
+Architectural Patterns
+-----------------
+
 ## License
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
