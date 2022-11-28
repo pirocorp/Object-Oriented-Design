@@ -1,4 +1,4 @@
-# Design Patterns
+# 🛠️ Design Patterns
 
 
 <h3 align="center">
@@ -36,13 +36,13 @@ Wikipedia describes them as
 - Do not try to force them; bad things are supposed to happen, if done so. Keep in mind that design patterns are solutions **to** problems, not solutions **finding** problems; so don't overthink.
 - If used in a correct place in a correct manner, they can prove to be a savior; or else they can result in a horrible mess of a code.
 
-## Types of Design Patterns (GoF)
+## 🔠 Types of Design Patterns (GoF)
 
 * [Creational](02.%20Design%20Patterns%20-%20Creational%20Patterns)
 * [Structural](03.%20Design%20Patterns%20-%20Structural%20Patterns)
 * [Behavioral](04.%20Design%20Patterns%20-%20Behavioral%20Patterns)
 
-## Other Design Patterns
+## 🆕 Other Design Patterns
 
 * [Repository](06.%20Repositories)
 * [Specification](07.%20Specification)
@@ -50,7 +50,7 @@ Wikipedia describes them as
 
 
 
-# Architectural Patterns
+# 🏗 Architectural Patterns
 
 
 
