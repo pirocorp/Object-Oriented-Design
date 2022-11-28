@@ -1,6 +1,5 @@
 # Design Patterns
 
-[![Design Patterns For Humans](https://cloud.githubusercontent.com/assets/11269635/23065273/1b7e5938-f515-11e6-8dd3-d0d58de6bb9a.png)](https://github.com/anupavanm/csharp-design-patterns-for-humans)
 
 <h3 align="center">
 Adaptation of <a href="https://github.com/kamranahmedse/design-patterns-for-humans">Design Patterns for Humans</a>  to C#
