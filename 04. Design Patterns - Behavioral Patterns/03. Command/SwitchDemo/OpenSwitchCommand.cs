@@ -3,7 +3,7 @@
     /// <summary>
     /// The Command for turning on the device - ConcreteCommand #2
     /// </summary>
-    public class OpenSwitchCommand : ICommand
+    public class OpenSwitchCommand : ISwitchCommand
     {
         private readonly ISwitchable switchable;
 

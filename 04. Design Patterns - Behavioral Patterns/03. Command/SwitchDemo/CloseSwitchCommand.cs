@@ -3,7 +3,7 @@
     /// <summary>
     /// The Command for turning off the device - ConcreteCommand #1
     /// </summary>
-    public class CloseSwitchCommand : ICommand
+    public class CloseSwitchCommand : ISwitchCommand
     {
         private readonly ISwitchable switchable;
 

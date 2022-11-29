@@ -1,21 +1,41 @@
-﻿namespace Command
+﻿namespace Command;
+
+using Command.ComputeDemo;
+using Command.SwitchDemo;
+
+public static class Program
 {
-    using Command.SwitchDemo;
-
-    public static class Program
+    public static void Main()
     {
-        public static void Main()
-        {
-            var lamp = new Light();
+        SwitchDemo();
 
-            // Pass reference to the lamp instance to each command
-            var switchClose = new CloseSwitchCommand(lamp);
-            var switchOpen = new OpenSwitchCommand(lamp);
+        EvaluatorDemo();
+    }
 
-            var @switch = new Switch(switchClose, switchOpen);
+    private static void SwitchDemo()
+    {
+        var lamp = new Light();
 
-            @switch.Close();
-            @switch.Open();
-        }
+        // Pass reference to the lamp instance to each command
+        var switchClose = new CloseSwitchCommand(lamp);
+        var switchOpen = new OpenSwitchCommand(lamp);
+
+        var @switch = new Switch(switchClose, switchOpen);
+
+        @switch.Close();
+        @switch.Open();
+    }
+
+    private static void EvaluatorDemo()
+    {
+        var evaluator = new Evaluator();
+
+        evaluator.Compute(Operation.Addition, 100);
+        evaluator.Compute(Operation.Subtraction, 50);
+        evaluator.Compute(Operation.Multiplication, 10);
+        evaluator.Compute(Operation.Division, 2);
+
+        evaluator.Undo(4);
+        evaluator.Redo(3);
     }
 }

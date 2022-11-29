@@ -5,10 +5,10 @@
     /// </summary>
     public class Switch
     {
-        private readonly ICommand closeCommand;
-        private readonly ICommand openCommand;
+        private readonly ISwitchCommand closeCommand;
+        private readonly ISwitchCommand openCommand;
 
-        public Switch(ICommand closeCommand, ICommand openCommand)
+        public Switch(ISwitchCommand closeCommand, ISwitchCommand openCommand)
         {
             this.closeCommand = closeCommand;
             this.openCommand = openCommand;
