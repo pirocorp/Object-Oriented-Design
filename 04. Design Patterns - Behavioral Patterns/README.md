@@ -1056,3 +1056,8 @@ iosBuilder.Build();
 // Assembling the ios build
 // Deploying ios build to server
 ```
+
+🔁 Interpreter
+-----------------------
+  
+A way to include language (formal grammar) elements in a program. Define representation for the grammar. Define an interpreter that uses the representation to interpret sentences in the language.
