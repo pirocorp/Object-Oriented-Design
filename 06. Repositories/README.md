@@ -161,6 +161,108 @@ public class CachedAuthorRepositoryDecorator : IReadOnlyRepository<Author>
 
 The above code is an example of the **Proxy** (or perhaps **Decorator**) design pattern. Proxies are all about controlling access, and the **CachedAuthorRepositoryDecorator** controls access to the **AuthorRepository** by first checking to see whether the data exists in the cache (one could make the argument that this is about adding behavior to the underlying repository, in which case the Decorator pattern, which has the same structure, would be the more appropriate label).
 
+
+Unit Of Work
+-------
+
+When implementing a Repository pattern it is also important to understand the Unit of Work pattern. Fowler provides an explanation of the [Unit Of Work pattern](https://www.martinfowler.com/eaaCatalog/unitOfWork.html)
+
+> A Unit of Work keeps track of everything you do during a business transaction that can affect the database. When you’re done, it figures out everything that needs to be done to alter the database as a result of your work.
+
+The unit of work represents a transaction when used in data layers. Typically the unit of work will roll back the transaction if Commit() has not been invoked before being disposed.
+
+Taking a high-level view of an ORM, such as **Entity Framework (EF)**, one might conclude that it is nothing more than an implementation of the Repository Pattern and a Unit of Work Pattern, and you would be right, It is, and it does provide an abstraction for interacting with the database.
+
+EF Core almost eliminates the need for developers to write SQL queries directly in their code and providing the ability to design and manage the database.
+
+**DbContext**, within Entity Framework is an example of the Unit Of Work and, **IDbSet<T>** is a repository providing an abstraction layer over the data access layer.
+
+Generally, it is a good idea to expose your Repository layer to a Service layer, which then provides domain entity objects to the UI & Business Layer.
+
+I would emphasis, that it is not always necessary to use the Repository pattern within your application in order to abstract Entity Framework, I would caution that this type of approach has become known as an anti-pattern.
+
+
+Repository Interface
+
+```csharp
+public interface IRepository<T> : IDisposable where T : class
+{
+    IQueryable<T> Query(string sql, params object[] parameters);
+
+    T Search(params object[] keyValues);
+
+    T Single(Expression<Func<T, bool>> predicate = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+        bool disableTracking = true);
+
+    void Add(T entity);
+    void Add(params T[] entities);
+    void Add(IEnumerable<T> entities);
+
+    void Delete(T entity);
+    void Delete(object id);
+    void Delete(params T[] entities);
+    void Delete(IEnumerable<T> entities);
+
+    void Update(T entity);
+    void Update(params T[] entities);
+    void Update(IEnumerable<T> entities);
+}
+```
+
+Simple Unit Of Work interface.
+
+```csharp
+ public interface IUnitOfWork : IDisposable
+{
+    IRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
+
+    int Commit();
+}
+
+public interface IUnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
+{
+    TContext Context { get; }
+}
+```
+
+An example of the code implementation of a class using the above would look something like this
+
+```csharp
+public class SomeService
+{
+	private readonly IUnitOfWork _uow;
+      
+    public SomeService(IUnitOrWork unit )
+    {
+        _uow = unit;
+    }
+    
+    public void SomeMethod(SomeClass entity)
+    {
+        _uow.GetRepository<SomeClass>().Add(entity);
+        _uow.Commit();        
+    }
+}
+```
+
+Abstracting the use of Entity Framework
+
+As discussed previously, the most common use of the **Repository** and **Unit Of Work Pattern**, is to abstract the use of Entity Framework and not to inject the **DbContext** into the ASP.net MVC **Contollers**.
+
+[Service Layer Pattern](https://martinfowler.com/eaaCatalog/serviceLayer.html)
+
+> A Service Layer defines an application’s boundary and its set of available operations from the perspective of interfacing client layers. It encapsulates the application’s business logic, controlling transactions and coor-dinating responses in the implementation of its operations.
+
+Many developers confuse the Service Layer Pattern with the Repository Pattern, the primary reason why is that the Service Layer will usually provide an abstraction for the Repository & Unit Of Work pattern in order to de-couple the presentation layer from the Repository.
+
+
+Entity Framework Core is an Implementation of the Unit Of Work and Repository Pattern
+
+![image](https://user-images.githubusercontent.com/34960418/204818098-6f5f67bc-6348-4654-aacb-d574e2fe28d0.png)
+
+
 Cached Repository Sample App
 ==================
 
