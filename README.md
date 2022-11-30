@@ -53,6 +53,7 @@ Wikipedia describes them as
 # 🏗 Architectural Patterns
 
 * [MVC](10.%20Architectural%20Patterns/MVC.md)
+* [MVVM](10.%20Architectural%20Patterns/MVVM.md)
 
 # License
 
