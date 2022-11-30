@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class RomanNumber
 {
-    private readonly string romanNumber;
     private readonly Context context;
     private readonly List<Expression> tree;
 
@@ -12,12 +11,14 @@ public class RomanNumber
 
     public RomanNumber(string romanNumber)
     {
-        this.romanNumber = romanNumber;
+        this.Literal = romanNumber;
         this.context = new Context(romanNumber);
         this.tree = new List<Expression> ();
 
         this.Init();
     }
+
+    public string Literal { get; }
 
     public int Value 
         => this.context.Input == string.Empty 

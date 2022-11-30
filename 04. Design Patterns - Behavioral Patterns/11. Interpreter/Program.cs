@@ -7,10 +7,11 @@ public static class Program
 {
     public static void Main()
     {
-        var romanString = "MCMXXVIII";
-        var roman = new RomanNumber(romanString);
+        var roman = new RomanNumber("MCMXXVIII");
+        Console.WriteLine($"{roman.Literal} = {roman.Value}");
 
-        Console.WriteLine($"{romanString} = {roman.Value}");
-        Console.WriteLine($"{romanString} = {roman.Value}");
+        roman = new RomanNumber("MMXXIII");
+        Console.WriteLine($"{roman.Literal} = {roman.Value}");
+
     }
 }
