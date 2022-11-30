@@ -46,7 +46,7 @@ Wikipedia describes them as
 
 * [Repository](06.%20Repositories)
 * [Specification](07.%20Specification)
-* [Dependency Injection Pattern](08.%20DI%20Pattern)
+* [Dependency Injection](08.%20DI%20Pattern)
 
 
 
