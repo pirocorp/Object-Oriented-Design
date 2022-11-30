@@ -17,6 +17,7 @@ Wikipedia says
 * [Strategy](#-strategy)
 * [State](#-state)
 * [Template Method](#-template-method)
+* [Interpreter](#-interpreter)
 
 🔗 Chain of Responsibility
 -----------------------
@@ -1055,4 +1056,101 @@ iosBuilder.Build();
 // Linting the ios code
 // Assembling the ios build
 // Deploying ios build to server
+```
+
+🔁 Interpreter
+-----------------------
+  
+A way to include language (formal grammar) elements in a program. Define representation for the grammar. Define an interpreter that uses the representation to interpret sentences in the language.
+  
+For example, when many different or complex search expressions must be specified. Implementing (hard-wiring) them directly into a class is inflexible because it commits the class to particular expressions and makes it impossible to specify new expressions or change existing ones independently from (without having to change) the class.
+  
+**Context** - contains information that is global to the interpreter
+  
+```csharp
+    /// <summary>
+    /// The 'Context' class
+    /// </summary>
+    public class Context
+    {
+    }
+```
+
+**AbstractExpression** - declares an interface for executing an operation
+  
+```csharp
+    /// <summary>
+    /// The 'AbstractExpression' abstract class
+    /// </summary>
+    public abstract class AbstractExpression
+    {
+        public abstract void Interpret(Context context);
+    }
+```
+  
+**TerminalExpression** - implements an Interpret operation associated with terminal symbols in the grammar. An instance is required for every terminal symbol in the sentence.
+  
+```csharp
+    /// <summary>
+    /// The 'TerminalExpression' class
+    /// </summary>
+    public class TerminalExpression : AbstractExpression
+    {
+        public override void Interpret(Context context)
+        {
+            Console.WriteLine("Called Terminal.Interpret()");
+        }
+    }
+```
+  
+**NonterminalExpression** - one such class is required for every rule R ::= R1R2...Rn in the grammar. Maintains instance variables of type AbstractExpression for each of the symbols R1 through Rn. Implements an Interpret operation for nonterminal symbols in the grammar. Interpret typically calls itself recursively on the variables representing R1 through Rn.
+  
+```csharp
+    /// <summary>
+    /// The 'NonterminalExpression' class
+    /// </summary>
+    public class NonterminalExpression : AbstractExpression
+    {
+        public override void Interpret(Context context)
+        {
+            Console.WriteLine("Called Nonterminal.Interpret()");
+        }
+    }
+```
+  
+**Client** - builds (or is given) an abstract syntax tree representing a particular sentence in the language that the grammar defines. The abstract syntax tree is assembled from instances of the NonterminalExpression and TerminalExpression classes. Invokes the Interpret operation.
+  
+
+```csharp
+namespace Interpreter.Structural
+{
+    using System;
+    using System.Collections.Generic;
+  
+    /// <summary>
+    /// Interpreter Design Pattern
+    /// </summary>
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            Context context = new Context();
+  
+            // Usually a tree 
+            List<AbstractExpression> list = new List<AbstractExpression>();
+  
+            // Populate 'abstract syntax tree' 
+            list.Add(new TerminalExpression());
+            list.Add(new NonterminalExpression());
+            list.Add(new TerminalExpression());
+            list.Add(new TerminalExpression());
+  
+            // Interpret
+            foreach (AbstractExpression exp in list)
+            {
+                exp.Interpret(context);
+            } 
+        }
+    }
+}
 ```
