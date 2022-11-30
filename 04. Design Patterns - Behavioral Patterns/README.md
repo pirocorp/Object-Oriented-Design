@@ -17,6 +17,7 @@ Wikipedia says
 * [Strategy](#-strategy)
 * [State](#-state)
 * [Template Method](#-template-method)
+* [Interpreter](#-interpreter)
 
 🔗 Chain of Responsibility
 -----------------------
