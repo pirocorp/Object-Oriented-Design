@@ -12,6 +12,5 @@ public static class Program
 
         roman = new RomanNumber("MMXXIII");
         Console.WriteLine($"{roman.Literal} = {roman.Value}");
-
     }
 }

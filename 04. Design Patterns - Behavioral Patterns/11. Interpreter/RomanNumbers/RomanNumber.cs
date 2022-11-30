@@ -2,6 +2,9 @@
 
 using System.Collections.Generic;
 
+/// <summary>
+/// Client (In this case Facade pattern)
+/// </summary>
 public class RomanNumber
 {
     private readonly Context context;
