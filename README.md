@@ -55,6 +55,14 @@ Wikipedia describes them as
 * [MVC](10.%20Architectural%20Patterns/MVC.md)
 * [MVVM](10.%20Architectural%20Patterns/MVVM.md)
 * [MVP](10.%20Architectural%20Patterns/MVP.md)
+* [Clean Architecture (CHO)](10.%20Architectural%20Patterns/Clean%20Architecture.md)
+
+
+# 🔘 Domain-Driven Design (DDD)
+
+**Domain-Driven Design is a way to design a subset of the objects in the system.**
+
+Clean/Hexagonal/Onion (or CHO in short) architecture, is an architectural pattern for a system, whereas DDD is a way to design a subset of the objects in the system. The two can exist without eachother, so neither is a subset of the other. If you were to use them together - then as a whole the part that is designed using DDD would be a subset of the entire system.
 
 # License
 
