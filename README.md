@@ -65,7 +65,7 @@ Wikipedia describes them as
 
 In **DDD**, the main goal is to establish **common language** with the **business experts**. The separation of the domain from rest of the application code is just a side effect of this main goal. It also has some say about the design of classes as entities and aggregates, but that is only within the domain itself. It has nothing to say about design outside the domain code.
 
-**Clean**/**Hexagonal**/**Onion** (or CHO in short) architecture, is an architectural pattern for a system, whereas **DDD** is a way to design a subset of the objects in the system. The two can exist without eachother, so neither is a subset of the other. If you were to use them together - then as a whole the part that is designed using DDD would be a subset of the entire system.
+**Clean**/**Hexagonal**/**Onion** (or CHO in short) architecture, is an architectural pattern for a system, whereas **DDD** is a way to design a subset of the objects in the system. The two can exist without each other, so neither is a subset of the other. If you were to use them together - then as a whole the part that is designed using DDD would be a subset of the entire system.
 
 # License
 
