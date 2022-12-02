@@ -55,7 +55,7 @@ Wikipedia describes them as
 * [MVC](10.%20Architectural%20Patterns/MVC.md)
 * [MVVM](10.%20Architectural%20Patterns/MVVM.md)
 * [MVP](10.%20Architectural%20Patterns/MVP.md)
-* [Onion Architecture (CHO)](10.%20Architectural%20Patterns/Onion%20Architecture.md)
+* [Clean/Hexagonal/Onion Architecture (CHO)](10.%20Architectural%20Patterns/CHO%20Architecture.md)
 
 
 # 🔘 Domain-Driven Design (DDD)
