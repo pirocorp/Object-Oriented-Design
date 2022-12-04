@@ -1,25 +1,5 @@
 # 🛠️ Design Patterns
 
-
-<h3 align="center">
-Adaptation of <a href="https://github.com/anupavanm/csharp-design-patterns-for-humans">Design Patterns for Humans</a>
-</h3>
-<p align="center"><sub>All the explanation for design patterns stays the same, with minor changes.</sub></p>
-
-****
-
-<p align="center">
-🎉 Ultra-simplified explanation to design patterns! 🎉
-</p>
-<p align="center">
-A topic that can easily make anyone's mind wobble. Here I try to make them stick in to your mind (and maybe mine) by explaining them in the <i>simplest</i> way possible.
-</p>
-<p align="center">
-You can find full length examples for code snippets used in this articles <a href="https://github.com/anupavanm/csharp-design-patterns-for-humans-examples">here.</a>
-</p>
-
-****
-
 ## 🚀 Introduction
 
 Design patterns are solutions to recurring problems; **guidelines on how to tackle certain problems**. They are not classes, packages or libraries that you can plug into your application and wait for the magic to happen. These are, rather, guidelines on how to tackle certain problems in certain situations.
@@ -41,6 +21,8 @@ Wikipedia describes them as
 * [Creational](02.%20Design%20Patterns%20-%20Creational%20Patterns)
 * [Structural](03.%20Design%20Patterns%20-%20Structural%20Patterns)
 * [Behavioral](04.%20Design%20Patterns%20-%20Behavioral%20Patterns)
+
+> Adaptation and extension of [Design Patterns for Humans](https://github.com/anupavanm/csharp-design-patterns-for-humans). All the explanation for design patterns (GoF) stays the same, with minor changes and additional code examples.
 
 ## 🔃 Other Design Patterns
 
