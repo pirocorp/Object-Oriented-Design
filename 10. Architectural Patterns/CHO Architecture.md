@@ -66,4 +66,4 @@ A diagram which attempts to show what **CHO Architecture** would look like when 
 
 # Example
 
-Simple Clean Architecture [Example](https://github.com/pirocorp/Simple-Clean-Architecture/tree/simple-clean-architecture-no-cqrs-no-ddd), with nod CQRS, DDD, etc.
+Simple Clean Architecture [Example].
