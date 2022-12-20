@@ -69,3 +69,12 @@ This pattern isn't recommended when:
 - A simple CRUD-style user interface and data access operations are sufficient.
 
 Consider applying CQRS to limited sections of your system where it will be most valuable.
+
+
+## Decouple your application from you web framework
+
+Over time, web applications started to become a collection of massive controllers. They did everything from being HTTP endpoints, basic data validation, data access, business logic, and authorization and probably had a pile more responsibilities. A lot of the code lived in controllers.
+
+MVC applications all looked the same and did not describe what the application did. What were the actual uses cases? What features did this application provide? The project layout and structure were all the same. Two applications provided completely different functionality but were structured and organized the same way. 
+
+CQRS with a mediator pattern shows how to use commands and queries to decouple your application from your web framework. 
