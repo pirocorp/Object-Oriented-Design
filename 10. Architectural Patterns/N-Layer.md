@@ -28,3 +28,7 @@ The service layer is pulled out from the presentation layer and, as its layer, i
 
 The data access layer encapsulates the persistence mechanisms and exposes the data. The data access layer should provide an API to the service layer that exposes methods of managing the stored data without exposing or creating dependencies on the data storage mechanisms. As with the separation of any layer, there are costs for implementation and often costs to performance in exchange for improved maintainability.
 
+
+# Examples
+
+[N-Layer Architecture](https://github.com/pirocorp/Simple-nLayer-Architecture)
