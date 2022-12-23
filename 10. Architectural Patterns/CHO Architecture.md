@@ -64,6 +64,6 @@ A diagram which attempts to show what **CHO Architecture** would look like when 
 **CHO architecture** works well with and without **DDD patterns**. It works well with **CQRS**, forms over data, and **DDD**. It is merely an **architectural pattern where the core object model is represented in a way that does not accept dependencies on less stable code**.
 
 
-# Example
+# Examples
 
 [Simple Clean Architecture](https://github.com/pirocorp/Simple-Clean-Architecture/tree/simple-clean-architecture-no-cqrs-no-ddd).
