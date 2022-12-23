@@ -31,4 +31,5 @@ The data access layer encapsulates the persistence mechanisms and exposes the da
 
 # Examples
 
-[N-Layer Architecture](https://github.com/pirocorp/Simple-nLayer-Architecture)
+- [Simple nLayer Architecture](https://github.com/pirocorp/Simple-nLayer-Architecture/tree/simple-nlayer-architecture)
+- [Simple N-Layer Architecture with CQRS](https://github.com/pirocorp/Simple-nLayer-Architecture/tree/simple-nlayer-architecture-with-cqrs)
