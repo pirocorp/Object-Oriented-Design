@@ -78,3 +78,8 @@ Over time, web applications started to become a collection of massive controller
 MVC applications all looked the same and did not describe what the application did. What were the actual uses cases? What features did this application provide? The project layout and structure were all the same. Two applications provided completely different functionality but were structured and organized the same way. 
 
 CQRS with a mediator pattern shows how to use commands and queries to decouple your application from your web framework. 
+
+
+# Examples
+
+-[Simple N-Layer Architecture with CQRS](https://github.com/pirocorp/Simple-nLayer-Architecture/tree/simple-nlayer-architecture-with-cqrs)
