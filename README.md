@@ -45,11 +45,11 @@ In software engineering, **SOLID** is a mnemonic acronym for five design princip
 
 # 🏗 Architectural Patterns
 
-* [MVC](10.%20Architectural%20Patterns/MVC.md)
-* [MVVM](10.%20Architectural%20Patterns/MVVM.md)
-* [MVP](10.%20Architectural%20Patterns/MVP.md)
-* [N-Layer Architecture](10.%20Architectural%20Patterns/N-Layer.md)
-* [Clean/Hexagonal/Onion Architecture (CHO)](10.%20Architectural%20Patterns/CHO%20Architecture.md)
+* [MVC](11.%20Architectural%20Patterns/MVC.md)
+* [MVVM](11.%20Architectural%20Patterns/MVVM.md)
+* [MVP](11.%20Architectural%20Patterns/MVP.md)
+* [N-Layer Architecture](11.%20Architectural%20Patterns/N-Layer.md)
+* [Clean/Hexagonal/Onion Architecture (CHO)](11.%20Architectural%20Patterns/CHO%20Architecture.md)
 
 
 # 🔘 Domain-Driven Design (DDD)
