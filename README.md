@@ -42,6 +42,7 @@ In software engineering, **SOLID** is a mnemonic acronym for five design princip
 - [**I**nterface segregation principle](10.%20SOLID/interface-segregation-principle-slides.pdf): Clients should not be forced to depend upon interfaces that they do not use.
 - [**D**ependency inversion principle](10.%20SOLID/dependency-inversion-principle-slides.pdf): Depend upon abstractions, not concretions.
 
+
 # 🏗 Architectural Patterns
 
 * [MVC](10.%20Architectural%20Patterns/MVC.md)
