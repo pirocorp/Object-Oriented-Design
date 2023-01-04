@@ -36,11 +36,11 @@ Wikipedia describes them as
 
 In software engineering, **SOLID** is a mnemonic acronym for five design principles intended to make object-oriented designs more understandable, flexible, and maintainable. The SOLID principles are: 
 
-- **S**ingle-responsibility principle: There should never be more than one reason for a class to change. In other words, every class should have only one responsibility.
-- **O**pen–closed principle: Software entities ... should be open for extension, but closed for modification.
-- **L**iskov substitution principle: Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it.
-- **I**nterface segregation principle: Clients should not be forced to depend upon interfaces that they do not use.
-- **D**ependency inversion principle: Depend upon abstractions, [not] concretions.
+- [**S**ingle-responsibility principle](10.%20SOLID/single-responsibility-principle-slides.pdf): There should never be more than one reason for a class to change. In other words, every class should have only one responsibility.
+- [**O**pen–closed principle](10.%20SOLID/open-closed-principle-slides.pdf): Software entities ... should be open for extension, but closed for modification.
+- [**L**iskov substitution principle](10.%20SOLID/liskov-substitution-principle-slides.pdf): Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it.
+- [**I**nterface segregation principle](10.%20SOLID/interface-segregation-principle-slides.pdf): Clients should not be forced to depend upon interfaces that they do not use.
+- [**D**ependency inversion principle](10.%20SOLID/dependency-inversion-principle-slides.pdf): Depend upon abstractions, [not] concretions.
 
 # 🏗 Architectural Patterns
 
