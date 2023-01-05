@@ -14,6 +14,7 @@ Wikipedia says
  * [Builder](#-builder)
  * [Prototype](#-prototype)
  * [Singleton](#-singleton)
+ * [Object pool](#%EF%B8%8F-object-pool)
 
 🏠 Simple Factory
 --------------
