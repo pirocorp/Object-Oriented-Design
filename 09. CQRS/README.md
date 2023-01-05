@@ -83,3 +83,4 @@ CQRS with a mediator pattern shows how to use commands and queries to decouple y
 # Examples
 
 - [Simple N-Layer Architecture with CQRS](https://github.com/pirocorp/Simple-nLayer-Architecture/tree/simple-nlayer-architecture-with-cqrs)
+- [Clean Architecture with CQRS](https://github.com/pirocorp/Simple-Clean-Architecture/tree/simple-clean-architecture-with-cqrs-no-ddd)
