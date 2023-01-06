@@ -10,7 +10,11 @@ public class RatingEngine
     private readonly IPolicySerializer policySerializer;
     private readonly RaterFactory raterFactory;
 
-    public RatingEngine(ILogger logger, IPolicySource policySource, IPolicySerializer policySerializer, RaterFactory raterFactory)
+    public RatingEngine(
+        ILogger logger, 
+        IPolicySource policySource, 
+        IPolicySerializer policySerializer, 
+        RaterFactory raterFactory)
     {
         this.logger = logger;
         this.policySource = policySource;

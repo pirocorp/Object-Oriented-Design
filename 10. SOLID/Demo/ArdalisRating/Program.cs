@@ -16,14 +16,11 @@ public static class Program
         var engine = InitializeEngine();
         engine.Rate();
 
-        if (engine.Rating > 0)
-        {
-            Console.WriteLine($"Rating: {engine.Rating}");
-        }
-        else
-        {
-            Console.WriteLine("No rating produced.");
-        }
+        var response = engine.Rating > 0
+            ? $"Rating: {engine.Rating}"
+            : "No rating produced.";
+
+        Console.WriteLine(response);
     }
 
     private static RatingEngine InitializeEngine()
