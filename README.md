@@ -26,6 +26,7 @@ Wikipedia describes them as
 
 ## 🔃 Other Design Patterns
 
+* [Null Object Pattern](12.%20Other%20Patterns/01.%20Null%20Object%20Pattern)
 * [Repository](06.%20Repositories)
 * [Specification](07.%20Specification)
 * [Dependency Injection](08.%20DI%20Pattern)
