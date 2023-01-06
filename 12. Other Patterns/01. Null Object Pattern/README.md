@@ -68,7 +68,7 @@ If using `NullObjectCustomer`, code is the same, except for:
 return new NullObjectCustomer();
 ```
 
-Once the Null Object Pattern is in place, there is no need to even have the local variables (orderCount, totalPurchase) shown in the example above, as they only existed because the customer instance might be null. Likewise, their null checks aren't needed - overall the client code is simpler, and probably has less duplicate code, since frequently these kinds of null checks proliferate throughout the code base (this is symptomatic of the fact that nulls violate the [Liskov Substitution Principle](https://github.com/pirocorp/Object-Oriented-Design/blob/main/10.%20SOLID/liskov-substitution-principle-slides.pdf).
+Once the Null Object Pattern is in place, there is no need to even have the local variables (orderCount, totalPurchase) shown in the example above, as they only existed because the customer instance might be null. Likewise, their null checks aren't needed - overall the client code is simpler, and probably has less duplicate code, since frequently these kinds of null checks proliferate throughout the code base (this is symptomatic of the fact that nulls violate the [Liskov Substitution Principle](https://github.com/pirocorp/Object-Oriented-Design/blob/main/10.%20SOLID/liskov-substitution-principle-slides.pdf)).
 
 
 
