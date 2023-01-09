@@ -37,15 +37,27 @@ Martin Fowler
     - Sales - `tasks`, `ubiquitous language`, `unique problems`
   - Modeling - How you decipher and design each subdomain.
 - Implementation of subdomains
-  - **Separation of Concerns** - plays an important role in implementing subdomains
+  - **Separation of Concerns** - plays an important role in implementing subdomains.
 
 
 ## Goals of DDD
 
+- DDD aims to **tackle business complexity**, not technical complexity. 
+  > While Domain-Driven Design provides many technical benefits, such as maintainability, it should be applied **only to complex domains** where the model and the linguistic processes **provide clear benefits** in the **communication of complex information**, and in the formulation of a **common understanding of the domain**.
+
+  Eric Evans, Domain-Driven Design
 
 
-## Benefits and potential drawbacks
+## Benefits and potential drawbacks of DDD
 
+### Benefits of Domain-Driven Design
+
+- Flexible
+- Customer’s vision/perspective of the problem
+- Path through a very complex problem
+- Well-organized and easily tested code
+- Business logic lives in one place
+- Many great patterns to leverage
 
 
 ## View reference application
