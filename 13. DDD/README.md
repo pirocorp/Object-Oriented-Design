@@ -78,11 +78,18 @@ Martin Fowler
 
 ![image](https://user-images.githubusercontent.com/34960418/211310896-a1778527-954d-4e62-8037-95935b4ca65b.png)
 
-- Modeling
+- Modeling - Modeling is an intense examination of the problem space. 
+  - Core Domain - The key is working with the subject matter experts to identify the core domain and other sub-domains that will be tackled.
+  - Bounded Contexts - You focus on modeling a particular sub-domain in each of these bounded contexts.
 
 ![image](https://user-images.githubusercontent.com/34960418/211311084-23c46cfe-116a-4f7c-b69b-2ca256b2a818.png)
 
-- Software Implementation
+- Software Implementation - As a result of modeling the bounded context, you'll identify entities, value objects, aggregates, domain events, repositories, and more and how they interact with each other.
+  - Entities
+  - Value Objects
+  - Domain Events
+  - Aggregates
+  - Repositories
 
 ![image](https://user-images.githubusercontent.com/34960418/211311186-01ceda12-53c9-4732-a54d-e8af88eee01b.png)
 
