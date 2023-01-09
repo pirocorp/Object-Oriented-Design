@@ -102,12 +102,8 @@ Martin Fowler
 - Development Process
   - Anti-corruption Layer - Anti-corruption layer allows sub-domains to communicate with one another from behind their boundaries.
   - Separate Ways - The model also has notes for each element, such as free teams to go separate ways. This is something that can be accomplished once you identify the boundaries of each subdomain.
-
   
 ![image](https://user-images.githubusercontent.com/34960418/211311377-db0035b1-e4a9-4b41-97df-6bdc9f7c3e57.png)
-
-
-## View reference application
 
 
 ## Conferences on DDD
