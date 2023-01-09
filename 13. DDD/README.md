@@ -59,6 +59,12 @@ Martin Fowler
 - Business logic lives in one place
 - Many great patterns to leverage
 
+### Drawbacks of Domain-Driven Design
+
+- Be Prepared for Time and Effort
+  - Discuss and model the problem with domain experts
+  - Isolate domain logic from other parts of application
+
 
 ## View reference application
 
