@@ -68,6 +68,31 @@ Martin Fowler
   - New principles
   - New patterns
   - New processes
+- Be Thoughtful About Possible Overuse - DDD is for handling **complexity in business problems**
+  - Not just CRUD or data-driven applications.
+  - Not just technical complexity without business domain complexity.
+- Requires Team and Business Buy-In
+
+
+## Inspecting a Mind Map of Domain-Driven Design
+
+![image](https://user-images.githubusercontent.com/34960418/211310896-a1778527-954d-4e62-8037-95935b4ca65b.png)
+
+- Modeling
+
+![image](https://user-images.githubusercontent.com/34960418/211311084-23c46cfe-116a-4f7c-b69b-2ca256b2a818.png)
+
+- Software Implementation
+
+![image](https://user-images.githubusercontent.com/34960418/211311186-01ceda12-53c9-4732-a54d-e8af88eee01b.png)
+
+- Communication
+
+![image](https://user-images.githubusercontent.com/34960418/211311270-ed649daa-5158-4565-95d3-53bb0667d1a8.png)
+
+- Development Process
+
+![image](https://user-images.githubusercontent.com/34960418/211311377-db0035b1-e4a9-4b41-97df-6bdc9f7c3e57.png)
 
 
 ## View reference application
