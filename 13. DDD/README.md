@@ -1,10 +1,18 @@
 # Introducing Domain-Driven Design
 
-## Why should you care about DDD?
+## Why DDD?
 
+Value Proposition of DDD
+
+- Principles and patterns to **solve difficult problems**
+- History of **success** with complex projects
+- Aligns with practices from developers **experience**
+- **Clear, readable, testable code** that represents the domain
 
 
 ## What does a DDD solution look like?
+
+![image](https://user-images.githubusercontent.com/34960418/211304710-06d0cd40-8eb6-4f42-8e3f-745c9a9ee1fb.png)
 
 
 ## What is Domain-Driven Design?
@@ -12,6 +20,23 @@
 > **Domain-Driven Design** is an approach to software development that centers the development on programming a domain model that has a rich understanding of the processes and rules of a domain.
 
 Martin Fowler
+
+### Gaining a High-Level Understanding of DDD 
+
+- Better Interaction with domain experts
+  > You really need to cultivate your ability to communicate with business people to free up people's creative modeling.  
+  
+  Eric Evans
+
+- Model a **single subdomain** at a time
+  - Purchase materials - `tasks`, `ubiquitous language`, `unique problems`
+  - Engineering - `tasks`, `ubiquitous language`, `unique problems`
+  - Manage employees - `tasks`, `ubiquitous language`, `unique problems`
+  - Marketing - `tasks`, `ubiquitous language`, `unique problems`
+  - Sales - `tasks`, `ubiquitous language`, `unique problems`
+
+- Divide and Conquer - By separating the problem into separate subdomains, we can tackle each problem independently. We are making the problem much easier to solve.
+- Modeling - How you decipher and design each subdomain.
 
 
 ## Goals of DDD
