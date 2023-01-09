@@ -64,6 +64,10 @@ Martin Fowler
 - Be Prepared for Time and Effort
   - Discuss and model the problem with domain experts
   - Isolate domain logic from other parts of application
+- Be Prepared for a Learning Curve
+  - New principles
+  - New patterns
+  - New processes
 
 
 ## View reference application
