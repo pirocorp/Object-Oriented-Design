@@ -29,14 +29,15 @@ Martin Fowler
   Eric Evans
 
 - Model a **single subdomain** at a time
-  - Purchase materials - `tasks`, `ubiquitous language`, `unique problems`
-  - Engineering - `tasks`, `ubiquitous language`, `unique problems`
-  - Manage employees - `tasks`, `ubiquitous language`, `unique problems`
-  - Marketing - `tasks`, `ubiquitous language`, `unique problems`
-  - Sales - `tasks`, `ubiquitous language`, `unique problems`
-
-- Divide and Conquer - By separating the problem into separate subdomains, we can tackle each problem independently. We are making the problem much easier to solve.
-- Modeling - How you decipher and design each subdomain.
+  - Divide and Conquer - By separating the problem into separate subdomains, we can tackle each problem independently. We are making the problem much easier to solve.
+    - Purchase materials - `tasks`, `ubiquitous language`, `unique problems`
+    - Engineering - `tasks`, `ubiquitous language`, `unique problems`
+    - Manage employees - `tasks`, `ubiquitous language`, `unique problems`
+    - Marketing - `tasks`, `ubiquitous language`, `unique problems`
+    - Sales - `tasks`, `ubiquitous language`, `unique problems`
+  - Modeling - How you decipher and design each subdomain.
+- Implementation of subdomains
+  - **Separation of Concerns** - plays an important role in implementing subdomains
 
 
 ## Goals of DDD
