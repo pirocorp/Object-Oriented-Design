@@ -35,8 +35,7 @@ Some of the Identified Subdomains
   
 ### Conversation with a Domain Expert: Exploring the Scheduling Subdomain
   
-- Continued Deep Collaboration with Domain Experts
-- Notes from Our Conversation
+Continued Deep Collaboration with Domain Experts. Notes from Our Conversations.
   - Clients (people) schedule appointments for patients (pets)
   - Appointments may be either office visits or surgeries
   - Office visits may be an exam requiring a doctor, or a tech visit
