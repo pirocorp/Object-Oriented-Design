@@ -63,3 +63,5 @@ Eric Evans
 Entities Have Identity And Are Mutable. An Entity is something that we can be able to **track**, **locate**, **retrieve** and **store**. And we do that with an identity key. Its properties may change, so we cant use its properties to identify the object.
 
 ![image](https://user-images.githubusercontent.com/34960418/211599421-5846d559-6d80-4ac4-818e-93eff2a34644.png)
+
+![image](https://user-images.githubusercontent.com/34960418/211599830-146dd065-6f1f-4a28-9b35-d2a2e9f63bd0.png)
