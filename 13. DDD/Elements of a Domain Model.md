@@ -121,7 +121,7 @@ public class Patient : BaseEntity<int>
 ```
 
 
-### Apointment Scheduling Context 
+### Apointment Scheduling Context  (Front Desk App)
 
 In Apointment Scheduling Context the Client, Patient, Doctor, and Room classes here differ entirely from the CRUD classes above. However, they have a subset from the same properties of the CRUD classes. But here, they are used just as lookup data and they are read-only.
 
