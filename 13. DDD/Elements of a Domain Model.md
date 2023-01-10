@@ -126,28 +126,29 @@ public class Patient : BaseEntity<int>
 
 ```csharp
 public class Appointment : BaseEntity<Guid>
-  {
-    public Appointment(Guid id,
-      int appointmentTypeId,
-      Guid scheduleId,
-      int clientId,
-      int doctorId,
-      int patientId,
-      int roomId,
-      DateTimeOffsetRange timeRange, // EF Core 5 cannot provide this type
-      string title,
-      DateTime? dateTimeConfirmed = null)
+{
+    public Appointment(
+        Guid id,
+        int appointmentTypeId,
+        Guid scheduleId,
+        int clientId,
+        int doctorId,
+        int patientId,
+        int roomId,
+        DateTimeOffsetRange timeRange, // EF Core 5 cannot provide this type
+        string title,
+        DateTime? dateTimeConfirmed = null)
     {
-      Id = Guard.Against.Default(id, nameof(id));
-      AppointmentTypeId = Guard.Against.NegativeOrZero(appointmentTypeId, nameof(appointmentTypeId));
-      ScheduleId = Guard.Against.Default(scheduleId, nameof(scheduleId));
-      ClientId = Guard.Against.NegativeOrZero(clientId, nameof(clientId));
-      DoctorId = Guard.Against.NegativeOrZero(doctorId, nameof(doctorId));
-      PatientId = Guard.Against.NegativeOrZero(patientId, nameof(patientId));
-      RoomId = Guard.Against.NegativeOrZero(roomId, nameof(roomId));
-      TimeRange = Guard.Against.Null(timeRange, nameof(timeRange));
-      Title = Guard.Against.NullOrEmpty(title, nameof(title));
-      DateTimeConfirmed = dateTimeConfirmed;
+        Id = Guard.Against.Default(id, nameof(id));
+        AppointmentTypeId = Guard.Against.NegativeOrZero(appointmentTypeId, nameof(appointmentTypeId));
+        ScheduleId = Guard.Against.Default(scheduleId, nameof(scheduleId));
+        ClientId = Guard.Against.NegativeOrZero(clientId, nameof(clientId));
+        DoctorId = Guard.Against.NegativeOrZero(doctorId, nameof(doctorId));
+        PatientId = Guard.Against.NegativeOrZero(patientId, nameof(patientId));
+        RoomId = Guard.Against.NegativeOrZero(roomId, nameof(roomId));
+        TimeRange = Guard.Against.Null(timeRange, nameof(timeRange));
+        Title = Guard.Against.NullOrEmpty(title, nameof(title));
+        DateTimeConfirmed = dateTimeConfirmed;
     }
 
     private Appointment() { } // EF required
@@ -166,73 +167,75 @@ public class Appointment : BaseEntity<Guid>
 
     public void UpdateRoom(int newRoomId)
     {
-      Guard.Against.NegativeOrZero(newRoomId, nameof(newRoomId));
-      if (newRoomId == RoomId) return;
+        Guard.Against.NegativeOrZero(newRoomId, nameof(newRoomId));
+        if (newRoomId == RoomId) return;
 
-      RoomId = newRoomId;
+        RoomId = newRoomId;
 
-      var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
-      Events.Add(appointmentUpdatedEvent);
+        var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
+        Events.Add(appointmentUpdatedEvent);
     }
 
     public void UpdateDoctor(int newDoctorId)
     {
-      Guard.Against.NegativeOrZero(newDoctorId, nameof(newDoctorId));
-      if (newDoctorId == DoctorId) return;
+        Guard.Against.NegativeOrZero(newDoctorId, nameof(newDoctorId));
+        if (newDoctorId == DoctorId) return;
 
-      DoctorId = newDoctorId;
+        DoctorId = newDoctorId;
 
-      var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
-      Events.Add(appointmentUpdatedEvent);
+        var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
+        Events.Add(appointmentUpdatedEvent);
     }
 
-    public void UpdateStartTime(DateTimeOffset newStartTime,
-      Action scheduleHandler)
+    public void UpdateStartTime(
+        DateTimeOffset newStartTime,
+        Action scheduleHandler)
     {
-      if (newStartTime == TimeRange.Start) return;
+        if (newStartTime == TimeRange.Start) return;
 
-      TimeRange = new DateTimeOffsetRange(newStartTime, TimeSpan.FromMinutes(TimeRange.DurationInMinutes()));
+        TimeRange = new DateTimeOffsetRange(newStartTime, TimeSpan.FromMinutes(TimeRange.DurationInMinutes()));
 
-      scheduleHandler?.Invoke();
+        scheduleHandler?.Invoke();
 
-      var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
-      Events.Add(appointmentUpdatedEvent);
+        var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
+        Events.Add(appointmentUpdatedEvent);
     }
 
     public void UpdateTitle(string newTitle)
     {
-      if (newTitle == Title) return;
+        if (newTitle == Title) return;
 
-      Title = newTitle;
+        Title = newTitle;
 
-      var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
-      Events.Add(appointmentUpdatedEvent);
+        var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
+        Events.Add(appointmentUpdatedEvent);
     }
 
-    public void UpdateAppointmentType(AppointmentType appointmentType,
-      Action scheduleHandler)
+    public void UpdateAppointmentType(
+        AppointmentType appointmentType,
+        Action scheduleHandler)
     {
-      Guard.Against.Null(appointmentType, nameof(appointmentType));
-      if (AppointmentTypeId == appointmentType.Id) return;
+        Guard.Against.Null(appointmentType, nameof(appointmentType));
+        if (AppointmentTypeId == appointmentType.Id) return;
 
-      AppointmentTypeId = appointmentType.Id;
-      TimeRange = TimeRange.NewEnd(TimeRange.Start.AddMinutes(appointmentType.Duration));
+        AppointmentTypeId = appointmentType.Id;
+        TimeRange = TimeRange.NewEnd(TimeRange.Start.AddMinutes(appointmentType.Duration));
 
-      scheduleHandler?.Invoke();
+        scheduleHandler?.Invoke();
 
-      var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
-      Events.Add(appointmentUpdatedEvent);
+        var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
+        Events.Add(appointmentUpdatedEvent);
     }
 
     public void Confirm(DateTimeOffset dateConfirmed)
     {
-      if (DateTimeConfirmed.HasValue) return; // no need to reconfirm
+        if (DateTimeConfirmed.HasValue) return; // no need to reconfirm
 
-      DateTimeConfirmed = dateConfirmed;
+        DateTimeConfirmed = dateConfirmed;
 
-      var appointmentConfirmedEvent = new AppointmentConfirmedEvent(this);
-      Events.Add(appointmentConfirmedEvent);
+        var appointmentConfirmedEvent = new AppointmentConfirmedEvent(this);
+        Events.Add(appointmentConfirmedEvent);
     }
-  }
+}
 ```
 
