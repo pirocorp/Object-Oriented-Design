@@ -25,7 +25,6 @@ Learning about the Complete Domain
   - Staff scheduling
   - CMS (External?)  
 
-
 Some of the Identified Subdomains
   - Staff
   - Accounting
