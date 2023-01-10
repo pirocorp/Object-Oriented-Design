@@ -9,7 +9,7 @@
 
 Shift Thinking from DB-Driven to Domain-Driven. From Designing software based on data storage needs to Designing software based on business needs.
 
-> [The Domain Layer is] responsible for representing concepts of the business, information about the business situation, and business rules. State that reflects the business situation is controlled and used here, even though the technical details of storing it are delegated to the infrastructure. This layer is the heart of business software.
+> [The Domain Layer is] responsible for representing **concepts of the business, information about the business situation, and business rules**. State that reflects the business situation is controlled and used here, even though the technical details of storing it are delegated to the infrastructure. This layer is the heart of business software.
 
 Eric Evans
 
