@@ -50,3 +50,16 @@ The key point here is that the Service Layer is thin - all the key logic lies in
 > Now, the more common mistake is to give up too easily on fitting the behavior into an appropriate object, gradually slipping toward procedural programming.
 
 Eric Evans
+
+
+## Understanding Entities
+
+![image](https://user-images.githubusercontent.com/34960418/211597475-f9671ada-f12b-4e85-9008-e42398366f95.png)
+
+> Many objects are not fundamentally defined by their attributes, but rather by a thread of continuity and identity.
+
+Eric Evans
+
+Entities Have Identity And Are Mutable. An Entity is something that we can be able to **track**, **locate**, **retrieve** and **store**. And we do that with an identity key. Its properties may change, so we cant use its properties to identify the object.
+
+![image](https://user-images.githubusercontent.com/34960418/211599421-5846d559-6d80-4ac4-818e-93eff2a34644.png)
