@@ -156,4 +156,25 @@ Eric Evans
 Eric Evans
 
 
+### More Thoughts About the Ubiquitous Language
+
+The ubiquitous language of a bounded context is ubiquitous throughout everything you do in that context – discuss, model, code, etc.
+
+- Terms can seem overwhelming at first
+- But they are important to ensure a common understanding of the process
+- The terms are almost “the ubiquitous language” of DDD
+- Easier to convey meaning
+
+In code, namespaces are helpful to quickly identify which bounded context you’re working in.
+
+
+## Reviewing Important Concepts from This Module
+
+- Problem Domain - The specific problem the software you’re working on is trying to solve.
+- Core Domain - The key differentiator for the customer’s business -- something they must do well and cannot outsource.
+- Subdomains - Separate applications or features your software must support or interact with.
+- Bounded Context - A specific responsibility, with explicit boundaries that separate it from other parts of the system.
+- Context Mapping - The process of identifying bounded contexts and their relationships to one another.
+- Shared Kernel - Part of the model that is shared by two or more teams, who agree not to change it without collaboration.
+- Ubiquitous Language - The language using terms from a domain model that programmers and domain experts use to discuss that particular sub-system.
 
