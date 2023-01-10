@@ -86,8 +86,6 @@ The central concept in this application is the **Appointment** itself. Typically
 
 ## Using Bounded Contexts to Untangle Concepts that Appear to Be Shared
 
-### Defining Bounded Contexts
-
 As you develop your **Model**, remember to identify its **Bounded Context** - **where this Model is valid**. If you do not put boundaries around your **Model**, pieces of it will eventually be used where they don't fit. Concepts that make sense in one part of your application may not make sense in another.
 
 - Define a strong boundary around the concepts of each model.
@@ -99,27 +97,36 @@ As you develop your **Model**, remember to identify its **Bounded Context** - **
 
 Eric Evans
 
-
-### Explicitly defined Bounded Contexts
-
 ![image](https://user-images.githubusercontent.com/34960418/211542457-11b49d18-8431-4e2d-a881-9045102bdcf1.png)
 
+![image](https://user-images.githubusercontent.com/34960418/211543514-733f09df-f572-433f-a4c4-247a6a5251f8.png)
 
 
-## The importance of the domain experts
+## Introducing Context Maps
+
+**Context Map** - Demonstrates how bounded contexts connect to one another while supporting communication between teams.
+
+![image](https://user-images.githubusercontent.com/34960418/211544847-17e11168-8fea-4664-9a80-38d97c2d7c36.png)
+
+![image](https://user-images.githubusercontent.com/34960418/211545183-7abe2e9a-3d08-49b6-b585-e1afbe10a8cd.png)
 
 
+## Addressing the Question of Separate Databases per Bounded Context
 
-## A play! (Discovering the domain )
+> If you’re in a company where you share your database and it gets updated by hundreds of different processes, it's very hard to create the kind of models that we're talking about and then write software that does anything interesting with those models.
+
+Eric Evans
+
+![image](https://user-images.githubusercontent.com/34960418/211546109-7b79e56b-f172-4016-9bab-624930b888a8.png)
+
+![image](https://user-images.githubusercontent.com/34960418/211546239-124ace5c-0574-4da2-a911-9d470b44effe.png)
 
 
+## Specifying Bounded Contexts in our Application
 
-## Core elements of a domain model
+> It’s not a simple task, even with experience. Lack of clear boundary impedes the application of DDD ideas. Bounded context is an essential ingredient. Defining boundaries is the biggest stumbling block.
 
-
-
-## Subdomains and bounded contexts
-
+Eric Evans
 
 
 ## That ubiquitous term: ubiquitous language
