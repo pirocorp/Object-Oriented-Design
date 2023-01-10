@@ -133,7 +133,8 @@ Eric Evans
 
 ## Understanding the Ubiquitous Language of a Bounded Context
 
-The language we use is key to the shared understanding we want to have with our domain experts in order to be successful.
+The language we use is key to the shared understanding we want to have with our domain experts in order to be successful. A ubiquitous language applies to a
+single bounded context and is used throughout conversations and code for that context.
 
 - Try to explain back to the customer what you think they explained to you.
 - Avoid: "What I meant was…"
