@@ -100,9 +100,9 @@ As you develop your **Model**, remember to identify its **Bounded Context** - **
 Eric Evans
 
 
-### Explicitly define the Bounded Contexts
+### Explicitly defined Bounded Contexts
 
-![image](https://user-images.githubusercontent.com/34960418/211538753-152d596b-819b-49da-8c13-186803c5724d.png)
+![image](https://user-images.githubusercontent.com/34960418/211542457-11b49d18-8431-4e2d-a881-9045102bdcf1.png)
 
 
 
