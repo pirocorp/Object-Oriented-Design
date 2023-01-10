@@ -58,6 +58,32 @@ Continued Deep Collaboration with Domain Experts. Notes from Our Conversations.
   - Yes!
 
 
+### Reviewing Key Takeaways from Meeting with Domain Expert(s)
+
+Key Takeaways From the Customer Conversation
+
+-  Patients and clients are not the same thing to a veterinarian.
+-  Important to get on the “same page” with the domain expert.
+-  The customer gained better understanding of their own business process by describing it in terms we could understand and model.
+-  Avoid speaking in programmer terms.
+-  At this stage, the focus is on how the domain works, not how the software will work.
+-  Make the implicit knowledge of domain experts explicit.
+
+> As software developers, we fail in two ways: We build the thing wrong, or We build the wrong thing.
+
+Steve Smith
+
+
+### Taking a First Pass at Modeling our Subdomain
+
+The central concept in this application is the **Appointment** itself. Typically the **Appointment** is scheduled by the **Client** for a **Patient**. Often booking an **Appointment** requires an **Exam Room** and a **Doctor**, but it may involve other resources.
+
+**Appointments** may be for office visits or vaccinations, or they may be **Surgeries** which are separate kinds of things entirely with their own rules. They involve different kinds of **Procedures**. **Surgeries** require different **Resources**, too, like **Operating Room** and **Recovery Room**.
+
+![image](https://user-images.githubusercontent.com/34960418/211534635-00a634e0-5c7d-45a7-b710-44a79bb10f27.png)
+
+
+
 ## The importance of the domain experts
 
 
