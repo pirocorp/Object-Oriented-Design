@@ -119,7 +119,7 @@ public class Patient : BaseEntity<int>
 ```
 
 
-### In Apointment Scheduling Context
+### In Apointment Scheduling Context -  The Client, Patient, Doctor, and Room classes here differ entirely from the CRUD classes above. However, they have a subset from the same properties of the CRUD classes. But here, they are used just as lookup data and they are read-only.
 
 ![image](https://user-images.githubusercontent.com/34960418/211604229-fbfc0646-087c-4f7f-8e39-aabee478cf8d.png)
 
