@@ -84,6 +84,28 @@ The central concept in this application is the **Appointment** itself. Typically
 
 
 
+## Using Bounded Contexts to Untangle Concepts that Appear to Be Shared
+
+### Defining Bounded Contexts
+
+As you develop your **Model**, remember to identify its **Bounded Context** - **where this Model is valid**. If you do not put boundaries around your **Model**, pieces of it will eventually be used where they don't fit. Concepts that make sense in one part of your application may not make sense in another.
+
+- Define a strong boundary around the concepts of each model.
+- Ensure model’s concepts don’t leak into other models where they don’t make sense.
+
+![image](https://user-images.githubusercontent.com/34960418/211537216-70798f38-ee48-4efa-a4a4-4bb0372ea2cb.png)
+
+> Explicitly define the context within which a model applies… Keep the model strictly consistent within these bounds, but don’t be distracted or confused by issues outside.
+
+Eric Evans
+
+
+### Explicitly define the Bounded Contexts
+
+![image](https://user-images.githubusercontent.com/34960418/211538753-152d596b-819b-49da-8c13-186803c5724d.png)
+
+
+
 ## The importance of the domain experts
 
 
