@@ -66,3 +66,61 @@ Entities Have Identity And Are Mutable. An Entity is something that we can be ab
 
 ![image](https://user-images.githubusercontent.com/34960418/211600794-6c51c409-2b14-4a14-87cd-3aec64c8de6a.png)
 
+
+## Differentiating CRUD from Complex Problems that Benefit from DDD
+
+CRUD Classes for Client & Patient Managmenet
+
+```csharp
+public class Client : BaseEntity<int>, IAggregateRoot
+{
+    public string FullName { get; set; }
+    public string PreferredName { get; set; }
+    public string Salutation { get; set; }
+    public string EmailAddress { get; set; }
+    public int PreferredDoctorId { get; set; }
+    public IList<Patient> Patients { get; private set; } = new List<Patient>();
+
+    public Client(string fullName,
+        string preferredName,
+        string salutation,
+        int preferredDoctorId,
+        string emailAddress)
+    {
+        FullName = fullName;
+        PreferredName = preferredName;
+        Salutation = salutation;
+        PreferredDoctorId = preferredDoctorId;
+        EmailAddress = emailAddress;
+    }
+
+    public override string ToString()
+    {
+        return FullName.ToString();
+    }
+}
+```
+
+
+```csharp
+public class Patient : BaseEntity<int>
+{
+    public int ClientId { get; set; }
+    public string Name { get; set; }
+    public string Sex { get; set; }
+    public AnimalType AnimalType { get; set; }
+    public int? PreferredDoctorId { get; set; }
+
+    public override string ToString()
+    {
+        return Name;
+    }
+}
+```
+
+
+
+
+
+
+
