@@ -43,6 +43,21 @@ Continued Deep Collaboration with Domain Experts. Notes from Our Conversations.
   - Surgeries depend on O/R and recovery space availability, and can involve different kinds of procedures
   - Different appointment types and procedures require different staff
 
+> Learn and communicate in the language of the domain, not the language of technology.
+
+
+### More Questions for a Domain Expert
+
+- Any chance of concurrency conflicts? 
+  - Doesn’t anticipate being big enough to have this problem any time soon.
+- Do you need to schedule rooms and staff when you schedule an appointment? Dependencies?
+  - Room + tech OR…
+  - Room + doctor OR…
+  - Room + doctor + tech 
+- Does “resources” work as an umbrella term for them?
+  - Yes!
+
+
 ## The importance of the domain experts
 
 
