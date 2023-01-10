@@ -55,7 +55,7 @@ In software engineering, **SOLID** is a mnemonic acronym for five design princip
 
 # 🔘 Domain-Driven Design (DDD)
 
-[**Domain-Driven Design is a way to design a subset of the objects in the system.**](13.%20DDD)
+**[Domain-Driven Design](13.%20DDD) is a way to design a subset of the objects in the system.**
 
 In **DDD**, the main goal is to establish **common language** with the **business experts**. The separation of the domain from rest of the application code is just a side effect of this main goal. It also has some say about the design of classes as entities and aggregates, but that is only within the domain itself. It has nothing to say about design outside the domain code.
 
