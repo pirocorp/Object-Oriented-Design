@@ -69,7 +69,7 @@ Entities Have Identity And Are Mutable. An Entity is something that we can be ab
 
 ## Differentiating CRUD from Complex Problems that Benefit from DDD
 
-CRUD Classes for Client & Patient Managmenet in other bounded context (Clinic Management App) - These classes are not designed using Domain Driven Design.
+### CRUD Classes for Client & Patient Managmenet in other bounded context (Clinic Management App) - These classes are not designed using Domain Driven Design.
 
 ```csharp
 public class Client : BaseEntity<int>, IAggregateRoot
@@ -119,7 +119,7 @@ public class Patient : BaseEntity<int>
 ```
 
 
-In Apointment Scheduling Context
+### In Apointment Scheduling Context
 
 ![image](https://user-images.githubusercontent.com/34960418/211604229-fbfc0646-087c-4f7f-8e39-aabee478cf8d.png)
 
