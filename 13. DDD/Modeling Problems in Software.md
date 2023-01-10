@@ -142,3 +142,16 @@ single bounded context and is used throughout conversations and code for that co
 > A project faces serious problems when its language is fractured.
 
 Eric Evans
+
+
+### Conversation with a Domain Expert: Working on our Ubiquitous Language
+
+![image](https://user-images.githubusercontent.com/34960418/211549333-c2f1a1c4-fea9-4a8f-8fb5-1af630a7866c.png)
+
+![image](https://user-images.githubusercontent.com/34960418/211549444-06c07ccd-0d89-48f3-8b7a-e3739fd27684.png)
+
+
+
+
+
+
