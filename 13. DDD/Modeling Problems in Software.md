@@ -128,5 +128,9 @@ Eric Evans
 
 Eric Evans
 
+![image](https://user-images.githubusercontent.com/34960418/211547228-8c829943-5ba6-46d0-ad90-c73ccf85ea7c.png)
 
-## That ubiquitous term: ubiquitous language
+
+## Understanding the Ubiquitous Language of a Bounded Context
+
+The language we use is key to the shared understanding we want to have with our domain experts in order to be successful.
