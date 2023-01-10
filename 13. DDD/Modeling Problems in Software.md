@@ -151,7 +151,9 @@ Eric Evans
 ![image](https://user-images.githubusercontent.com/34960418/211549444-06c07ccd-0d89-48f3-8b7a-e3739fd27684.png)
 
 
+> Recognize that a change in the ubiquitous language is a change in the model.
 
+Eric Evans
 
 
 
