@@ -106,6 +106,13 @@ Martin Fowler
 ![image](https://user-images.githubusercontent.com/34960418/211311377-db0035b1-e4a9-4b41-97df-6bdc9f7c3e57.png)
 
 
+## Exploring the Sample App’s High-Level Structure
+
+![image](https://user-images.githubusercontent.com/34960418/211518407-61ed5ede-ab62-4597-b320-fb1c4904a192.png)
+
+![image](https://user-images.githubusercontent.com/34960418/211518589-bb161b49-9a94-4432-addc-fca038568a63.png)
+
+
 ## Conferences on DDD
 
 - [Domain Driven Design Europe](https://www.youtube.com/@ddd_eu)
