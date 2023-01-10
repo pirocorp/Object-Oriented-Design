@@ -134,3 +134,10 @@ Eric Evans
 ## Understanding the Ubiquitous Language of a Bounded Context
 
 The language we use is key to the shared understanding we want to have with our domain experts in order to be successful.
+
+- Try to explain back to the customer what you think they explained to you.
+- Avoid: "What I meant was…"
+
+> A project faces serious problems when its language is fractured.
+
+Eric Evans
