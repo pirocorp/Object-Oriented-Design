@@ -43,3 +43,10 @@ In essence the problem with anemic domain models is that they incur all of the c
 > Domain Layer (or Model Layer): Responsible for representing concepts of the business, information about the business situation, and business rules. State that reflects the business situation is controlled and used here, even though the technical details of storing it are delegated to the infrastructure. This layer is the heart of business software.
 
 Eric Evans
+
+
+The key point here is that the Service Layer is thin - all the key logic lies in the domain layer. He reiterates this point in his service pattern:
+
+> Now, the more common mistake is to give up too easily on fitting the behavior into an appropriate object, gradually slipping toward procedural programming.
+
+Eric Evans
