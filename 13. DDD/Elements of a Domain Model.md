@@ -254,3 +254,8 @@ User interface should be designed to hide the existence of bounded contexts from
 ### Ubiquitous Language to the Rescue
 
 ![image](https://user-images.githubusercontent.com/34960418/211813752-079008eb-1781-4165-ad13-add6d2b6561e.png)
+
+
+## Using GUIDs or Ints for Identity Values
+
+GUIDs as Unique Identifiers with No Database Dependency. It is easier for the CRUD entities (not designed with the DDD) to use `int` for their identities (database-generated identities). For DDD entities (ex.: Appointment), using GUIDs is much easier than relying on a database.
