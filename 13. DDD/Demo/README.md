@@ -4,10 +4,6 @@ Sample code for the [Pluralsight DDD Fundamentals course (2nd edition) by Julie 
 
 [Additional exercises from Steve's DDD workshops](https://ardalis.gumroad.com/l/ZCSml) (separate from Pluralsight course)
 
-## Give a Star! :star:
-
-If you like or are using this project to learn, please give it a star. Thanks!!!
-
 ## Table of Contents
 
 [1. Running the Sample](#1-running-the-sample)
