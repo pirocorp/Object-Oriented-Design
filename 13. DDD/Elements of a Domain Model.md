@@ -349,7 +349,7 @@ public class Appointment : BaseEntity<Guid>
 }
 ```
 
-This minimal implementation of the `Doctor` type satisfies the scheduling `Bounded Context`. It is no more than a reference type. `Doctor` and other similar types, `Patient`, `Room`, etc., are all organized into this folder called `SyncedAggregates`.
+This minimal implementation of the `Doctor` type satisfies the scheduling `Bounded Context`. It is no more than a reference entity. `Doctor` and other similar types, `Patient`, `Room`, etc., are all organized into this folder called `SyncedAggregates`.
 
 ![image](https://user-images.githubusercontent.com/34960418/211829814-9c1392ee-847e-444e-9852-7d44771f9226.png)
 
@@ -370,3 +370,21 @@ public class Doctor : BaseEntity<int>, IAggregateRoot
     }
 }
 ```
+
+## Synchronizing Data Across Bounded Contexts
+
+`AppointmentType`, `Client`, `Doctor`, `Patient`, and `Room` are all reference entities. We were doing their maintenance elsewhere, so they are not adding any unneeded complexity to the `FrontDesk` application, and they are just read-only. So we never had to create or modify them.
+
+And we are using the `ints` created by the database when we persisted these with the CRUD context in a different application, but they are still entities here.
+
+The `Clinic Management` bounded context is responsible for updating these types. When changes are made, application events are published by `Clinic Management`, and the `FrontDesk` bounded context subscribes to those events.
+
+**Eventual Consistency** - Systems do not need to be strictly synchronized, but the changes will eventually get to their destination.
+
+
+
+
+
+
+
+
