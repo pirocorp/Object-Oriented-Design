@@ -190,8 +190,9 @@ The `Appointment` class associates the `Patient` with the `Doctor`, `Room`, and 
 
 ![image](https://user-images.githubusercontent.com/34960418/211846297-c2a03240-29c6-42f8-a627-2055308168d0.png)
 
+When we need to modify the `Appointment`, we will do this through a method. For instance, if we want to change what room an `Appointment` is scheduled, we will do this through a method rather than just a setter. We do this because there is additional behavior we may want to do. In this case, we have some `Guards` again to ensure valid values have been passed. And we also want to raise an `AppointmentUpdatedEvent` that we might handle and send a `Notification` or perform some other action.
 
-When we need to modify the `Appointment`, we will do this through a method. For instance, if we want to change what room an `Appointment` is scheduled, we will do this through a method rather than just a setter. We do this because there is additional behavior we may want to do. In this case, we have some `Guards` again to ensure valid values have been passed.
+Guards are a set of reusable functions. In this case, stored in the `Shared Kernel`.
 
 ```csharp
 
@@ -206,6 +207,8 @@ public void UpdateRoom(int newRoomId)
     Events.Add(appointmentUpdatedEvent);
 }
 ```
+
+The whole `Appointment` implementation.
 
 ```csharp
 public class Appointment : BaseEntity<Guid>
