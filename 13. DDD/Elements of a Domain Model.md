@@ -186,7 +186,7 @@ The `Appointment` class associates the `Patient` with the `Doctor`, `Room`, and 
 `Appointment` uses **GUID** to avoid depending on a database for **ID** generation. So using **GUID** lets me create that id right upfront as I'm creating a new `Appointment`. So I'm giving it its **ID**.
 
 `Appointment` has a parameters constructor to ensure that we create `Appointment` in a valid state. So that means passing all necessary elements that the 
-`Appointment` needs to have.
+`Appointment` needs to have. And we have some Guards to ensure valid values have been passed.
 
 ```csharp
 public Appointment(
