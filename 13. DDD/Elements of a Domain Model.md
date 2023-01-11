@@ -265,3 +265,8 @@ GUIDs as Unique Identifiers with No Database Dependency. It is easier for the CR
 - You can use both!
 
 
+## Responsibility of Entities
+
+> Single Responsibility is a good principle to apply to entities. It points you toward the sort of responsibility that an entity should retain. Anything that doesn't fall in that category we ought to put somewhere else.
+
+Eric Evans
