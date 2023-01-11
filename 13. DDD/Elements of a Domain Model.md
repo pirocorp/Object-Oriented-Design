@@ -188,6 +188,9 @@ The `Appointment` class associates the `Patient` with the `Doctor`, `Room`, and 
 `Appointment` has a parameters constructor to ensure that we create `Appointment` in a valid state. So that means passing all necessary elements that the 
 `Appointment` needs to have.
 
+![image](https://user-images.githubusercontent.com/34960418/211846297-c2a03240-29c6-42f8-a627-2055308168d0.png)
+
+
 When we need to modify the `Appointment`, we will do this through a method. For instance, if we want to change what room an `Appointment` is scheduled, we will do this through a method rather than just a setter. We do this because there is additional behavior we may want to do. In this case, we have some `Guards` again to ensure valid values have been passed.
 
 ```csharp
@@ -203,8 +206,6 @@ public void UpdateRoom(int newRoomId)
     Events.Add(appointmentUpdatedEvent);
 }
 ```
-
-![image](https://user-images.githubusercontent.com/34960418/211846297-c2a03240-29c6-42f8-a627-2055308168d0.png)
 
 ```csharp
 public class Appointment : BaseEntity<Guid>
