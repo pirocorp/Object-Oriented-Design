@@ -161,6 +161,14 @@ Eric Evans
 
 The `BaseEntity<T>` class is an abstract class, so we can't create a `BaseEntity` object. We must create something that is a `BaseEntity` object, such as an `Appointment`. 
 
+
+The `BaseEntity<T>` class also has a property to hold a list of domain events that will be defined explicitly for each types that inherit from this `BaseEntity<T>`.
+
+```csharp 
+public List<BaseDomainEvent> Events = new List<BaseDomainEvent>();
+``` 
+
+
 ```csharp
 /// <summary>
 /// Base types for all Entities which track state using a given Id.
