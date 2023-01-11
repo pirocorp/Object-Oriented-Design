@@ -160,6 +160,18 @@ Eric Evans
 ## Implementing Entities in Code
 
 ```csharp
+  /// <summary>
+  /// Base types for all Entities which track state using a given Id.
+  /// </summary>
+  public abstract class BaseEntity<TId>
+  {
+    public TId Id { get; set; }
+
+    public List<BaseDomainEvent> Events = new List<BaseDomainEvent>();
+  }
+```
+
+```csharp
 public class Appointment : BaseEntity<Guid>
 {
     public Appointment(
