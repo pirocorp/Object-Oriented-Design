@@ -379,12 +379,18 @@ And we are using the `ints` created by the database when we persisted these with
 
 The `Clinic Management` bounded context is responsible for updating these types. When changes are made, application events are published by `Clinic Management`, and the `FrontDesk` bounded context subscribes to those events and updates its copies of the entities.
 
+Message queues are one way to share data across bounded contexts.
+
 ![image](https://user-images.githubusercontent.com/34960418/211857199-cffe835f-3ed1-4fe7-a758-22126676c566.png)
 
 **Eventual Consistency** - Systems do not need to be strictly synchronized, but the changes will eventually get to their destination.
 
 
+## Key Terms from this Module
 
+- **Anemic Domain Model** - Model with classes focused on state management. Good for CRUD.
+- **Rich Domain Model** - Model with logic focused on behavior, not just state. Preferred for DDD. Help us solve complex problems.
+- **Entity** - A mutable class with an identity (not tied to its property values) used for tracking and persistence. Driven by their identity value.
 
 
 
