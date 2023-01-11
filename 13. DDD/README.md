@@ -8,3 +8,4 @@
 # Resources
 
 - [Martin Fowler](https://martinfowler.com/)
+- [Pluralsight DDD Fundamentals Sample](https://github.com/ardalis/pluralsight-ddd-fundamentals)
