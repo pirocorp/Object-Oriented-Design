@@ -17,9 +17,10 @@ Value Proposition of DDD
 
 ## What is Domain-Driven Design?
 
-> **Domain-Driven Design** is an approach to software development that centers the development on programming a domain model that has a rich understanding of the processes and rules of a domain.
+Domain-Driven Design is an approach to software development that centers the development on programming a domain model that has a rich understanding of the processes and rules of a domain. The name comes from a 2003 book by Eric Evans that describes the approach through a catalog of patterns. Since then a community of practitioners have further developed the ideas, spawning various other books and training courses. The approach is particularly suited to complex domains, where a lot of often-messy logic needs to be organized.
 
-Martin Fowler
+Eric Evans's great contribution to this, was developing a vocabulary to talk about this approach, identifying key conceptual elements that went beyond the various modeling notations that dominated the discussion at the time. At the heart of this was the idea that to develop software for a complex domain, we need to build Ubiquitous Language that embeds domain terminology into the software systems that we build.
+
 
 ### Gaining a High-Level Understanding of DDD 
 
