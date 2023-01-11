@@ -258,8 +258,10 @@ User interface should be designed to hide the existence of bounded contexts from
 
 ## Using GUIDs or Ints for Identity Values
 
-GUIDs as Unique Identifiers with No Database Dependency. It is easier for the CRUD entities (not designed with the DDD) to use `int` for their identities (database-generated identities). For DDD entities (ex.: Appointment), using GUIDs is much easier than relying on a database. Not only is it easier, but it follows DDD principles more clearly.
+GUIDs as Unique Identifiers with No Database Dependency. It is easier for the CRUD entities (not designed with the DDD) to use `int` for their identities (database-generated identities). For DDD entities (ex.: Appointment), using GUIDs is much easier than relying on a database. Not only is it easier, but it follows DDD principles more clearly since we will build all our domain logic around the given entity (ex.: Appointment) without involving the database.
 
-
+- GUID doesn’t depend on database
+- Database performance favors int for keys
+- You can use both!
 
 
