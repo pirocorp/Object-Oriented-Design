@@ -9,3 +9,11 @@
 
 - [Martin Fowler](https://martinfowler.com/)
 - [Pluralsight DDD Fundamentals Sample](https://github.com/ardalis/pluralsight-ddd-fundamentals)
+
+
+## Conferences on DDD
+
+- [Domain Driven Design Europe](https://www.youtube.com/@ddd_eu)
+- [KanDDDinsky](https://www.youtube.com/@KanDDDinsky)
+- [Explore DDD](https://www.youtube.com/@ExploreDDD)
+- [Virtual DDD Meetup](https://www.youtube.com/@virtualdomain-drivendesign2670)
