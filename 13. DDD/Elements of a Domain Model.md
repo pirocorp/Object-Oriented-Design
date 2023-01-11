@@ -185,6 +185,27 @@ The `Appointment` class associates the `Patient` with the `Doctor`, `Room`, and 
 
 `Appointment` uses **GUID** to avoid depending on a database for **ID** generation. So using **GUID** lets me create that id right upfront as I'm creating a new `Appointment`. So I'm giving it its **ID**.
 
+`Appointment` has a parameters constructor to ensure that we create `Appointment` in a valid state. So that means passing all necessary elements that the 
+`Appointment` needs to have.
+
+When we need to modify the `Appointment`, we will do this through a method. For instance, if we want to change what room an `Appointment` is scheduled, we will do this through a method rather than just a setter. We do this because there is additional behavior we may want to do. In this case, we have some `Guards` again to ensure valid values have been passed.
+
+```csharp
+
+public void UpdateRoom(int newRoomId)
+{
+    Guard.Against.NegativeOrZero(newRoomId, nameof(newRoomId));
+    if (newRoomId == RoomId) return;
+
+    RoomId = newRoomId;
+
+    var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
+    Events.Add(appointmentUpdatedEvent);
+}
+```
+
+![image](https://user-images.githubusercontent.com/34960418/211846297-c2a03240-29c6-42f8-a627-2055308168d0.png)
+
 ```csharp
 public class Appointment : BaseEntity<Guid>
 {
