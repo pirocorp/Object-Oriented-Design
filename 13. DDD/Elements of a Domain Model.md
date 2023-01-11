@@ -388,9 +388,9 @@ Message queues are one way to share data across bounded contexts.
 
 ## Key Terms from this Module
 
-- **Anemic Domain Model** - Model with classes focused on state management. Good for CRUD.
-- **Rich Domain Model** - Model with logic focused on behavior, not just state. Preferred for DDD. Help us solve complex problems.
-- **Entity** - A mutable class with an identity (not tied to its property values) used for tracking and persistence. Driven by their identity value.
+- **Anemic Domain Model** - Model with classes focused on state management. Good for **CRUD**.
+- **Rich Domain Model** - Model with logic focused on behavior, not just state. Preferred for **DDD**. Help us solve complex problems.
+- **Entity** - A mutable class with an **identity** (not tied to its property values) used for tracking and persistence. Driven by their **identity** value.
 
 
 
