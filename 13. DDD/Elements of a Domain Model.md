@@ -173,7 +173,7 @@ public abstract class BaseEntity<TId>
 }
 ```
 
-Implementing Entity `Appointment`
+Implementing DDD Entity `Appointment`
 
 ```csharp
 public class Appointment : BaseEntity<Guid>
@@ -290,4 +290,24 @@ public class Appointment : BaseEntity<Guid>
 }
 ```
 
+Implementing Simple Entity `Doctor`
+
 ![image](https://user-images.githubusercontent.com/34960418/211829814-9c1392ee-847e-444e-9852-7d44771f9226.png)
+
+```csharp
+public class Doctor : BaseEntity<int>, IAggregateRoot
+{
+    public Doctor(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+
+    public string Name { get; private set; }
+
+    public override string ToString()
+    {
+        return Name.ToString();
+    }
+}
+```
