@@ -245,3 +245,12 @@ public class Appointment : BaseEntity<Guid>
 }
 ```
 
+
+## Switching Between Contexts in a UI
+
+User interface should be designed to hide the existence of bounded contexts from end users. 
+
+
+### Ubiquitous Language to the Rescue
+
+![image](https://user-images.githubusercontent.com/34960418/211813752-079008eb-1781-4165-ad13-add6d2b6561e.png)
