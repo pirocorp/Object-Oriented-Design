@@ -128,7 +128,36 @@ In Apointment Scheduling Context the Client, Patient, Doctor, and Room classes h
 ![image](https://user-images.githubusercontent.com/34960418/211604229-fbfc0646-087c-4f7f-8e39-aabee478cf8d.png)
 
 
-Example of Entity designed using Domain Driven Design
+## Switching Between Contexts in a UI
+
+User interface should be designed to hide the existence of bounded contexts from end users. 
+
+
+### Ubiquitous Language to the Rescue
+
+![image](https://user-images.githubusercontent.com/34960418/211813752-079008eb-1781-4165-ad13-add6d2b6561e.png)
+
+
+## Using GUIDs or Ints for Identity Values
+
+GUIDs as Unique Identifiers with No Database Dependency. It is easier for the CRUD entities (not designed with the DDD) to use `int` for their identities (database-generated identities). For DDD entities (ex.: Appointment), using GUIDs is much easier than relying on a database. Not only is it easier, but it follows DDD principles more clearly since we will build all our domain logic around the given entity (ex.: Appointment) without involving the database.
+
+- GUID doesn’t depend on database
+- Database performance favors int for keys
+- You can use both!
+
+
+## Responsibility of Entities
+
+> Their core responsibility is identity and life-cycle
+> 
+> Single Responsibility is a good principle to apply to entities. It points you toward the sort of responsibility that an entity should retain. Anything that doesn't fall in that category we ought to put somewhere else.
+
+
+Eric Evans
+
+
+## Implementing Entities in Code
 
 ```csharp
 public class Appointment : BaseEntity<Guid>
@@ -244,32 +273,3 @@ public class Appointment : BaseEntity<Guid>
     }
 }
 ```
-
-
-## Switching Between Contexts in a UI
-
-User interface should be designed to hide the existence of bounded contexts from end users. 
-
-
-### Ubiquitous Language to the Rescue
-
-![image](https://user-images.githubusercontent.com/34960418/211813752-079008eb-1781-4165-ad13-add6d2b6561e.png)
-
-
-## Using GUIDs or Ints for Identity Values
-
-GUIDs as Unique Identifiers with No Database Dependency. It is easier for the CRUD entities (not designed with the DDD) to use `int` for their identities (database-generated identities). For DDD entities (ex.: Appointment), using GUIDs is much easier than relying on a database. Not only is it easier, but it follows DDD principles more clearly since we will build all our domain logic around the given entity (ex.: Appointment) without involving the database.
-
-- GUID doesn’t depend on database
-- Database performance favors int for keys
-- You can use both!
-
-
-## Responsibility of Entities
-
-> Their core responsibility is identity and life-cycle
-> 
-> Single Responsibility is a good principle to apply to entities. It points you toward the sort of responsibility that an entity should retain. Anything that doesn't fall in that category we ought to put somewhere else.
-
-
-Eric Evans
