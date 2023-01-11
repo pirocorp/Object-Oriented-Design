@@ -379,6 +379,8 @@ And we are using the `ints` created by the database when we persisted these with
 
 The `Clinic Management` bounded context is responsible for updating these types. When changes are made, application events are published by `Clinic Management`, and the `FrontDesk` bounded context subscribes to those events.
 
+![image](https://user-images.githubusercontent.com/34960418/211857199-cffe835f-3ed1-4fe7-a758-22126676c566.png)
+
 **Eventual Consistency** - Systems do not need to be strictly synchronized, but the changes will eventually get to their destination.
 
 
