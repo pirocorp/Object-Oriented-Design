@@ -8,8 +8,14 @@
 # Resources
 
 - [Martin Fowler](https://martinfowler.com/)
+- [Vaughn Vernon](https://vaughnvernon.com/)
+- [Eric Evans](https://www.domainlanguage.com/)
+- [Event storming via Alberto Brandolini](https://www.eventstorming.com/)
+- [Event Modeling via Adam Dymitruk](https://www.eventmodeling.org/)
 - [Pluralsight DDD Fundamentals Sample](https://github.com/ardalis/pluralsight-ddd-fundamentals)
-
+- [Domain-Driven Design: The First 15 Years (Free book)](https://leanpub.com/ddd_first_15_years)
+- [Anemic Domain Model](https://www.martinfowler.com/bliki/AnemicDomainModel.html)
+- [Services in Domain-Driven Design](https://lostechies.com/jimmybogard/2008/08/21/services-in-domain-driven-design/)
 
 ## Conferences on DDD
 
