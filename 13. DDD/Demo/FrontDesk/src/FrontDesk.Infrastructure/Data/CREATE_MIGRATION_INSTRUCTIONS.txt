@@ -1,2 +1,0 @@
-﻿-- RUN THIS FROM FrontDesk.Api project folder
-dotnet ef migrations add MIGRATIONNAME -c appdbcontext -p ../FrontDesk.Infrastructure/FrontDesk.Infrastructure.csproj -s FrontDesk.Api.csproj -o Data/Migrations
