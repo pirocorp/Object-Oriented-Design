@@ -113,11 +113,3 @@ Eric Evans's great contribution to this, was developing a vocabulary to talk abo
 
 ![image](https://user-images.githubusercontent.com/34960418/211518589-bb161b49-9a94-4432-addc-fca038568a63.png)
 
-
-## Conferences on DDD
-
-- [Domain Driven Design Europe](https://www.youtube.com/@ddd_eu)
-- [KanDDDinsky](https://www.youtube.com/@KanDDDinsky)
-- [Explore DDD](https://www.youtube.com/@ExploreDDD)
-- [Virtual DDD Meetup](https://www.youtube.com/@virtualdomain-drivendesign2670)
-
