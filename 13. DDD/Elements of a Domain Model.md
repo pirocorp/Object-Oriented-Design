@@ -175,7 +175,7 @@ public abstract class BaseEntity<TId>
 
 The `Appointment` class associates the `Patient` with the `Doctor`, `Room`, and `AppointmentType` and includes the appointment's start and end times. The `Appointment` class inherits from `BaseEntity<T>`, a generic base class. In this case, it is a `BaseEntity<Guid>`. The `Guid` defines the type of identity property.
 
-`Appointment` uses GUID to avoid depending on a database for ID generation. `Appointment` uses GUID to avoid depending on a database for ID generation. So using GUID lets me create that id right upfront as I'm creating a new `Appointment.` So I'm giving it its ID.
+`Appointment` uses GUID to avoid depending on a database for ID generation. So using GUID lets me create that id right upfront as I'm creating a new `Appointment.` So I'm giving it its ID.
 
 ```csharp
 public class Appointment : BaseEntity<Guid>
