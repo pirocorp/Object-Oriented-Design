@@ -159,7 +159,7 @@ Eric Evans
 
 ## Implementing Entities in Code
 
-`BaseEntity`
+The `BaseEntity<T>` class is an abstract class, so we can't create a `BaseEntity` object. We must create something that is a `BaseEntity` object, such as an `Appointment`. 
 
 ```csharp
 /// <summary>
@@ -173,7 +173,9 @@ public abstract class BaseEntity<TId>
 }
 ```
 
-Implementing DDD Entity `Appointment`
+The `Appointment` class associates the `Patient` with the `Doctor`, `Room`, and `AppointmentType` and includes the appointment's start and end times. The `Appointment` class inherits from `BaseEntity<T>`, a generic base class. In this case, it is a `BaseEntity<Guid>`. The `Guid` defines the type of identity property.
+
+`Appointment` uses GUID to avoid depending on a database for ID generation. `Appointment` uses GUID to avoid depending on a database for ID generation. So using GUID lets me create that id right upfront as I'm creating a new `Appointment.` So I'm giving it its ID.
 
 ```csharp
 public class Appointment : BaseEntity<Guid>
@@ -290,7 +292,7 @@ public class Appointment : BaseEntity<Guid>
 }
 ```
 
-Implementing Simple Entity `Doctor`
+This minimal implementation of the `Doctor` type satisfies the scheduling `Bounded Context`. It is no more than a reference type. `Doctor` and other similar types, `Patient`, `Room`, etc., are all organized into this folder called `SyncedAggregates`.
 
 ![image](https://user-images.githubusercontent.com/34960418/211829814-9c1392ee-847e-444e-9852-7d44771f9226.png)
 
