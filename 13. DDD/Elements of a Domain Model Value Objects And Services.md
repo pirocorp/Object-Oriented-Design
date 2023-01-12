@@ -216,6 +216,27 @@ Frequently **Domain Services** serve as orchestrators for operations that requir
 ![image](https://user-images.githubusercontent.com/34960418/212110658-e21d83e1-3ac1-4fe8-b32f-e68a6eec773c.png)
 
 
+### Examples of Services in Different Layers
 
+- Infrastructure Layer
+  - Send Email
+  - Log to a File
+- UI and App Layer
+  - Message Sending
+  - Message Processing
+  - XML Parsing
+  - UI Services
+- Domain Layer
+  - Orchestrating workflow
+  - Transfer Between Accounts
+  - Process Order
+
+
+## Module Review
+
+- **Immutable** - Refers to a type whose state cannot be changed once the object has been instantiated.
+- **Value Object** - An immutable class whose identity is dependent on the combination of its values.
+- **Domain Services** - Provide a place in the model to hold behavior that doesn’t belong elsewhere in the domain.
+- **Side Effects** - Changes in the state of the application or interaction with the outside world (e.g., infrastructure).
 
 
