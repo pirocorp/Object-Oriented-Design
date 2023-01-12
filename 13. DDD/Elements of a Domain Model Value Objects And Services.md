@@ -235,8 +235,8 @@ Frequently **Domain Services** serve as orchestrators for operations that requir
 ## Module Review
 
 - **Immutable** - Refers to a type whose state cannot be changed once the object has been instantiated.
-- **Value Object** - An immutable class whose identity is dependent on the combination of its values.
-- **Domain Services** - Provide a place in the model to hold behavior that doesn’t belong elsewhere in the domain.
+- **Value Object** - An immutable class whose identity is dependent on the combination of its values. They are used as a property of an entity. The composition of their values identifies them. **Value Objects** are immutable and should have no side effects. Strings and dates are great examples of **Value Objects**. 
+- **Domain Services** - Provide a place in the model to hold behavior that doesn’t belong elsewhere in the domain. **Domain Services** orchestrate across different parts of the domain model. Watch out for the overuse of **Domain Services**!
 - **Side Effects** - Changes in the state of the application or interaction with the outside world (e.g., infrastructure).
 
 
