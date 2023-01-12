@@ -127,3 +127,43 @@ Eric Evans
 
 ## Implementing Value Objects in Code
 
+```DateTimeRange.cs```
+
+```csharp
+public class DateTimeRange : ValueObject
+{   
+    public DateTimeRange(DateTime start, DateTime end)
+    {
+        // Ardalis.GuardClauses supports extensions with custom guards per project
+        Guard.Against.OutOfRange(start, nameof(start), start, end);
+        Start = start;
+        End = end;
+    }
+
+    public DateTimeRange(DateTime start, TimeSpan duration)
+        : this(start, start.Add(duration))
+    {
+    }
+    
+    public DateTime Start { get; private set; }
+    
+    public DateTime End { get; private set; }
+    
+    public DateTimeRange NewEnd(DateTime newEnd)
+    {
+        return new DateTimeRange(this.Start, newEnd);
+    }
+    
+    public bool Overlaps(DateTimeRange dateTimeRange)
+    {
+        return this.Start < dateTimeRange.End && this.End > dateTimeRange.Start;
+    }
+    
+    // used by base ValueObject type to implement equality
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Start;
+        yield return End;
+    }
+}
+```
