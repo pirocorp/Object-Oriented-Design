@@ -50,3 +50,24 @@ Our Instinct:
 Vaughn Vernon’s guidance:
   1. Is this a value object?
   2. Otherwise, an entity
+
+Value Objects Can Be Used for Identifiers
+
+```csharp
+public class ClientId
+{
+  public ClientId()
+  {
+    Id = Guid.NewGuid();
+  }
+  
+  public ClientId(Guid id)
+  {
+    Id = id;
+  }
+  
+  public Guid Id { get; private set; }
+  
+  [Equality and Hash override code]
+}
+```
