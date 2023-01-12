@@ -180,3 +180,25 @@ public class DateTimeRange : ValueObject
 }
 ```
 
+`AnimalType.cs`
+
+```csharp
+public class AnimalType : ValueObject
+{   
+    public AnimalType(string species, string breed)
+    {
+        Species = species;
+        Breed = breed;
+    }
+    
+    public string Species { get; private set; }
+    public string Breed { get; private set; }
+    
+    // used by base ValueObject type to implement equality
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Breed;
+        yield return Species;
+    }
+}
+```
