@@ -51,23 +51,71 @@ Vaughn Vernon’s guidance:
   1. Is this a value object?
   2. Otherwise, an entity
 
-Value Objects Can Be Used for Identifiers
+
+
+Value Objects Can Be Used for Identifiers 
+
+`ClientIdValueObject.cs`
 
 ```csharp
 public class ClientId
 {
-  public ClientId()
-  {
-    Id = Guid.NewGuid();
-  }
+    public ClientId()
+    {
+        Id = Guid.NewGuid();
+    }
   
-  public ClientId(Guid id)
-  {
-    Id = id;
-  }
+    public ClientId(Guid id)
+    {
+        Id = id;
+    }
   
-  public Guid Id { get; private set; }
+    public Guid Id { get; private set; }
   
-  [Equality and Hash override code]
+    [Equality and Hash override code]
+}
+```
+
+Value Objects Can Be Used for Identifiers
+
+`Client.cs`
+
+```csharp
+public class Client
+{
+    public ClientIdValueObject Id {get; set;}
+}
+
+// or
+
+public class Client : BaseEntity<ClientIdValueObject>
+{
+    // Id property provided by base type
+}
+```
+
+
+Explicit ID Value Objects Instead of Ints/GUIDs - Helps to Avoid Errors in Passed Parameters
+
+`Client.cs`
+
+```csharp
+public class Client : BaseEntity<ClientIdValueObject>
+{
+    . . .
+}
+```
+
+`SomeService.cs`
+
+```csharp
+public class SomeService
+{
+    public void CreateAppointmentFor(
+        ClientIdValueObject clientId,
+        PatientIdValueObject patientId)
+    {
+        . . .
+    }
 }
 ```
