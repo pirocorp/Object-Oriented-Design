@@ -3,7 +3,7 @@
 - [Introducing Domain-Driven Design](Introducing%20Domain-Driven%20Design.md)
 - [Modeling Problems in Software](Modeling%20Problems%20in%20Software.md)
 - [Elements of a Domain Model: Entities](Elements%20of%20a%20Domain%20Model%20Entities.md)
-- [Elements of a Domain Model: Value Objects & Services]()
+- [Elements of a Domain Model: Value Objects & Services](Elements%20of%20a%20Domain%20Model%20Value%20Objects%20And%20Services)
 
 # Resources
 
