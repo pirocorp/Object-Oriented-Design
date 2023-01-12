@@ -26,6 +26,8 @@ In object oriented computing it is commonplace and good practice to model values
 
 If I know a field will contain a whole value or nil, I do not have to be concerned with any conditions outside those modeled by the whole value once I have established that it is not nil. The whole value pattern argues that whole values should be entered in single fields and checked to be well formed in one place.
 
+Worth is a **Value Object**
+
 ![image](https://user-images.githubusercontent.com/34960418/212072662-88b8f086-4990-41f9-a569-f850b7abe265.png)
 
 GeoCoordinate are another example of whole value.
