@@ -127,6 +127,18 @@ Eric Evans
 
 ## Implementing Value Objects in Code
 
+- The state of a value object should not be changed once it has been created.
+- Generic logic makes sense in value objects.
+- It’s easier to test logic that’s in a value object.
+- Entity becomes an orchestrator.
+
+
+![image](https://user-images.githubusercontent.com/34960418/212106798-524376d0-6c3c-4cb1-bbe8-522fd4296473.png)
+
+> A higher level of abstraction in entities can lead you to a more precise ubiquitous language.
+
+Eric Evans
+
 ```DateTimeRange.cs```
 
 ```csharp
@@ -167,3 +179,4 @@ public class DateTimeRange : ValueObject
     }
 }
 ```
+
