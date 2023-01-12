@@ -123,3 +123,7 @@ public class SomeService
 > I think that value objects are a really good place to put methods and logic…because we can do our reasoning without side effects and identity, all those things that make logic tricky. We can put functions on those value objects and do the pure reasoning there.
 
 Eric Evans
+
+
+## Implementing Value Objects in Code
+
