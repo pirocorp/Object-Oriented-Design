@@ -1,4 +1,4 @@
-# Elements of a Domain Model
+# Elements of a Domain Model : Entities
 
 Entity & Context are Common Software Terms
 
