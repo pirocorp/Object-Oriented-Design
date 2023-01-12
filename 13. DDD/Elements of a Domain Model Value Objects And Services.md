@@ -39,3 +39,14 @@ DateTimeRange as **Value Object**.
 > It may surprise you to learn that we should strive to model using Value Objects instead of Entities wherever possible. Even when a domain concept must be modeled as an Entity, the Entity’s design should be biased toward serving as a value container rather than a child Entity container.
 
 Vaughn Vernon – Implementing Domain Driven Design
+
+
+## When Considering Domain Objects
+
+Our Instinct:
+  1. Probably an entity
+  2. Maybe a value object
+
+Vaughn Vernon’s guidance:
+  1. Is this a value object?
+  2. Otherwise, an entity
