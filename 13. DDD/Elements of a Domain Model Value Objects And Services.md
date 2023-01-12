@@ -202,3 +202,20 @@ public class AnimalType : ValueObject
     }
 }
 ```
+
+## Understanding Domain Services
+
+A **Domain Service** is often appropriate when an operation is important to the model but doesn't necessarily belong to any **Entity** or **ValueObject**. But take your time finding a natural home for the operation of an existing entity or value object. Or you may end up with a very procedural anemic model.
+
+Frequently **Domain Services** serve as orchestrators for operations that require several different collaborating **Entities** or **ValueObjects**.
+  - Not a natural part of an entity or value object.
+  - Has an interface defined in terms of other domain model elements.
+  - Stateless, but may have side effects.
+  - Lives in the core of the application.
+
+![image](https://user-images.githubusercontent.com/34960418/212110658-e21d83e1-3ac1-4fe8-b32f-e68a6eec773c.png)
+
+
+
+
+
