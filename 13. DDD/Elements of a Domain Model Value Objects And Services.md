@@ -8,13 +8,13 @@ Make sure to distinguish the **Value Objects** pattern from C# support for value
 
 ## Recognizing Commonly Used Value Objects
 
-- **String** is a value object.
-- String Methods Respect Immutability
-  - Replace (StringA, StringB) - Returns a new string in which all occurrences StringA in the current instance are replaced with StringB.
-  - ToUpper() - Returns a copy of this string converted to uppercase.
-  - ToLower() - Returns a copy of this string converted to lowercase.
-
-Money is a Great candidate for a Value Object. 
+- **String** is a **Value Object**.
+  - String Methods Respect Immutability
+    - Replace (StringA, StringB) - Returns a new string in which all occurrences StringA in the current instance are replaced with StringB.
+    - ToUpper() - Returns a copy of this string converted to uppercase.
+    - ToLower() - Returns a copy of this string converted to lowercase.
+- Money is a Great candidate for a **Value Object**. 
+- Dates are a classic value object, and they have all kinds of logic.
 
 ### [Whole Value](http://fit.c2.com/wiki.cgi?WholeValue).
 
@@ -31,4 +31,9 @@ Worth is a **Value Object**
 ![image](https://user-images.githubusercontent.com/34960418/212072662-88b8f086-4990-41f9-a569-f850b7abe265.png)
 
 GeoCoordinate are another example of whole value.
+
+## DateTimeRange as **Value Object**.
+
+![image](https://user-images.githubusercontent.com/34960418/212073850-9f92fcea-8ef7-4649-981e-43de22b268b5.png)
+
 
