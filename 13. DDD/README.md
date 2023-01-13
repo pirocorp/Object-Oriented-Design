@@ -8,7 +8,7 @@
 
 # Patterns Of DDD
 
-- [Value Object]()
+- [Value Object](Value%20Object)
 
 # Resources
 
