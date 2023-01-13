@@ -93,7 +93,7 @@ public class Address : ValueObject
         ZipCode = zipcode;
     }
 	
-	public String Street { get; private set; }
+    public String Street { get; private set; }
 	
     public String City { get; private set; }
 	
