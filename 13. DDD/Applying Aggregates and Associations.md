@@ -88,31 +88,27 @@ The downside of Bi-Directional Navigation (with ORM) - If you are to save an **A
     Appointment o-- ExamRoom
     Appointment o-- AppointmentType
     Appointment o-- Client
-    class Appointment{
-        -int AppointmentTypeId
-        -AppointmentType AppointmentType
-        -int ClientId
-        -Client Client
-        -int DoctorId
-        -Doctor Doctor
-        -int PatientId
-        -atient Patient
-        -int RoomId
-        -ExamRoom ExamRoom
-        -DateTimeOffset? DateTimeConfirmed
-        -bool IsPotentiallyConflicting
-        -DateTimeOffsetRange DateTimeRange
-     }
-    class Client{
-    }
-    class ExamRoom{
-    }  
-    class Patient{
-    }
-    class Doctor{
-    }
-    class AppointmentType{
-    }
+    
+    class Appointment
+    Appointment : -int AppointmentTypeId
+    Appointment : -AppointmentType AppointmentType
+    Appointment : -int ClientId
+    Appointment : -Client Client
+    Appointment : -int DoctorId
+    Appointment : -Doctor Doctor
+    Appointment : -int PatientId
+    Appointment : -atient Patient
+    Appointment : -int RoomId
+    Appointment : -ExamRoom ExamRoom
+    Appointment : -DateTimeOffset? DateTimeConfirmed
+    Appointment : -bool IsPotentiallyConflicting
+    Appointment : -DateTimeOffsetRange DateTimeRange
+    
+    class Client
+    class ExamRoom
+    class Patient
+    class Doctor
+    class AppointmentType
 ```
 
 
