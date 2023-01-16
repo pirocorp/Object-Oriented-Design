@@ -44,9 +44,10 @@ The One-Way Client -> Patient Relationship in the Scheduling Bounded Context
 
 ```mermaid
   classDiagram
+      Client "1" --> "*" Patient
+  
       Entity~int~ <|-- Client
       Entity~int~ <|-- Patient
-      Client o-- Patient
       
       class Client
       Client : -FullName
