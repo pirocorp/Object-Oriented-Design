@@ -70,3 +70,8 @@ By simply including the IDs of related concepts rather than object references, w
 
 ![image](https://user-images.githubusercontent.com/34960418/212662284-bb139413-c897-4d39-9d14-76d7506d2b3e.png)
 
+## Using Invariants to Better Understand our Aggregate
+
+![image](https://user-images.githubusercontent.com/34960418/212664290-d520e2f1-9fef-43c4-b96e-86a742bbe89f.png)
+
+**Aggregate root** is responsible for maintaining the rules of the **Aggregate**. It's the **Aggregate root** responsibility to verify any **Invariants** that **Aggregate** may have. And in this case, the **Appointment** is still acting as an **Aggregate root**, even if we eliminate the navigation properties to the other objects that it may be working with.
