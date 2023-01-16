@@ -171,7 +171,6 @@ Eric Evans
     Entity~Guid~ <|-- Appointment
     Entity~Guid~ <|-- Schedule
     IAggregateRoot <|-- Schedule
-    Schedule o-- Appointment
     
     class Schedule
     Schedule : +int ClinicId
