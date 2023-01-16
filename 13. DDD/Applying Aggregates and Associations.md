@@ -42,7 +42,23 @@ Eric Evans
 
 The One-Way Client -> Patient Relationship in the Scheduling Bounded Context
 
-![image](https://user-images.githubusercontent.com/34960418/212628019-5dd7680a-03e1-4fe9-9692-7f1ca47cb499.png)
+```mermaid
+  classDiagram
+      Entity~int~ <|-- Client
+      Entity~int~ <|-- Patient
+      Client o-- Patient
+      class Client{
+        -FullName
+        -Patients
+      }
+      class Patient{
+        -AnimalType
+        -ClientId
+        -Gender
+        -Name
+        -PreferedDoctor
+      }
+```
 
 Navigation Property - Property that allows navigation from one end of an association to another. A navigation property does not carry data, but acts as a pointer.
 
