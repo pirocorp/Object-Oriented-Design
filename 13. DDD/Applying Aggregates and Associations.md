@@ -64,7 +64,41 @@ The downside of Bi-Directional Navigation (with ORM) - If you are to save an **A
 
 ## Evolving the Appointments Aggregate
 
-![image](https://user-images.githubusercontent.com/34960418/212662050-fb027df3-ed18-4c54-9280-15314b1fbe86.png)
+```mermaid
+  classDiagram
+    Entity~Guid~ <|-- Appointment
+    Appointment o-- Patient
+    Appointment o-- Doctor
+    Appointment o-- ExamRoom
+    Appointment o-- AppointmentType
+    Appointment o-- Client
+    class Appointment{
+        -int AppointmentTypeId
+        -AppointmentType AppointmentType
+        -int ClientId
+        -Client Client
+        -int DoctorId
+        -Doctor Doctor
+        -int PatientId
+        -atient Patient
+        -int RoomId
+        -ExamRoom ExamRoom
+        -DateTimeOffset? DateTimeConfirmed
+        -bool IsPotentiallyConflicting
+        -DateTimeOffsetRange DateTimeRange
+     }
+    class Client{
+    }
+    class ExamRoom{
+    }  
+    class Patient{
+    }
+    class Doctor{
+    }
+    class AppointmentType{
+    }
+```
+
 
 By simply including the IDs of related concepts rather than object references, we can ensure that creating and changing **Appointments** has a minimal impact on our system when we persist the **Appointment** (**Appointments** won't affect **Clients**, **Patients**, etc.). This relationship works because an **Appointment** in the real world is just a note that includes a place, time, and additional details. Adding and removing **Appointments** shouldn't impact the people and places involved. And this revised design reflects this.
 
@@ -96,7 +130,7 @@ By simply including the IDs of related concepts rather than object references, w
   }
   class Doctor{
   }
-  class Appointment Type{
+  class AppointmentType{
   }
 ```
 
