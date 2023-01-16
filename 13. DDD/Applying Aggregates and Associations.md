@@ -177,6 +177,32 @@ The **DateRange** isn't persisted since it can vary with any given instantiation
 	
 The actual population of the **Appointments** that match this range is the responsibility of the **Specification** and **Repository** classes used to retrieve the **Schedule** from the database.
 
+The configuration of the **Aggregate** persistent details are done in the **Infrastructure** project `/Data/Config` folder. This is where **Entities** **EF Core** specific mappings and configurations are performed, which keeps these details out of our **Domain Model**.
+
+Let's look at the `AddNewAppointment` method. The method validates the input to ensure that we don't add bad data to **Aggregate**. And then adds the appointment. When the **Appointment** is added, the **Schedule** is responsible for marking any **Appointments** that may be conflicted. `MarkConflictingAppointments();` After marking any conflicts, an `AppointmentScheduledEvent` is added to the **Aggregates** event collection.
+
+```csharp
+    public void AddNewAppointment(Appointment appointment)
+    {
+	Guard.Against.Null(appointment, nameof(appointment));
+	Guard.Against.Default(appointment.Id, nameof(appointment.Id));
+	Guard.Against.DuplicateAppointment(_appointments, appointment, nameof(appointment));
+
+	_appointments.Add(appointment);
+
+	MarkConflictingAppointments();
+
+	var appointmentScheduledEvent = new AppointmentScheduledEvent(appointment);
+	Events.Add(appointmentScheduledEvent);
+    }
+```
+
+The `DeleteAppointment` method is similar. After deleting an **Appointment**, the **Schedule** needs to once more mark any **Appointment** that may be conflicting `MarkConflictingAppointments();`.
+
+Marking conflicting appointments (`MarkConflictingAppointments` method) is an important part of the business logic for this application and is encapsulated right in the **Schedule Aggregate**.
+
+The `AppointmentUpdatedHandler` method provides a hook for its **Appointments** to use to notify it when changes are made to one of them. Because we do not have navigation properties from **Appointments** back to **Schedule**, we can't directly call methods on the **Aggregate Root** from the **Appointment** method.
+
 ```mermaid
   classDiagram
     Schedule "1" --> "*" Appointment
