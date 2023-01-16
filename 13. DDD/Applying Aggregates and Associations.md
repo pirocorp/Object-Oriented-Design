@@ -46,7 +46,7 @@ The One-Way Client -> Patient Relationship in the Scheduling Bounded Context
   classDiagram
       Entity~int~ <|-- Client
       Entity~int~ <|-- Patient
-      Client o-- Patient
+      Client <-- Patient
       
       class Client
       Client : -FullName
@@ -83,11 +83,11 @@ The downside of Bi-Directional Navigation (with ORM) - If you are to save an **A
 ```mermaid
   classDiagram
     Entity~Guid~ <|-- Appointment
-    Appointment o-- Patient
-    Appointment o-- Doctor
-    Appointment o-- ExamRoom
-    Appointment o-- AppointmentType
-    Appointment o-- Client
+    Appointment <-- Patient
+    Appointment <-- Doctor
+    Appointment <-- ExamRoom
+    Appointment <-- AppointmentType
+    Appointment <-- Client
     
     class Appointment
     Appointment : -int AppointmentTypeId
@@ -143,3 +143,13 @@ By simply including the IDs of related concepts rather than object references, w
 ## Using Invariants to Better Understand our Aggregate
 
 **Aggregate root** is responsible for maintaining the rules of the **Aggregate**. It's the **Aggregate root** responsibility to verify any **Invariants** that **Aggregate** may have. And in this case, the **Appointment** is still acting as an **Aggregate root**, even if we eliminate the navigation properties to the other objects that it may be working with.
+
+**Invariant** - A condition that should always be true for the system to be in a consistent state.
+
+Is **Appointment** really a good ggregate root?
+
+It’s normal and expected for models to evolve as you learn more about the domain. 
+
+> Each refinement of code and model gives developers a clearer view. This clarity often creates the potential for a breakthrough of insights.
+
+Eric Evans
