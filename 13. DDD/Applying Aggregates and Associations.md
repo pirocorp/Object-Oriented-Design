@@ -150,7 +150,7 @@ By simply including the IDs of related concepts rather than object references, w
 
 Cross-aggregate invariants should not be enforced by any one aggregate. In case of something like a unique constraint between all **Aggregates**, you might need to use **Domain Service** or another approach. However, in other cases, the need to do this may indicate that you've missed an important part of your model.
 
-In this case, the whole thing that the user is interacting with is the clinic **Schedule**, but nothing in our original model referred to the **Schedule** itself. Since some of our business rules, like what to do with **Appointments**, that conflict only makes sense on this higher level. It makes sense to introduce change to our model.
+In this case, the whole thing that the user is interacting with is the clinic **Schedule**, but nothing in our original model referred to the **Schedule** itself. Since some of our business rules, like what to do with **Appointments**, that conflict only makes sense on this higher level. It makes sense to introduce a change to our model - the **Schedule Aggregate**.
 
 It’s normal and expected for models to evolve as you learn more about the domain. 
 
