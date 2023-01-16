@@ -50,3 +50,14 @@ Uni-Directional Associations in the Scheduling Bounded Context
 
 ![image](https://user-images.githubusercontent.com/34960418/212628320-576683f9-651b-4f9b-9454-4ab038c47d31.png)
 
+## Handling Relationships that Span Aggregates
+
+**Aggregates** serve as boundaries between logical groupings within an application. We enforce these boundaries by prohibiting direct references to objects within the **Aggregates** that aren't the **Aggregate root**.
+
+![image](https://user-images.githubusercontent.com/34960418/212629787-1c490878-9d61-4e0f-bfea-6bc5c337a484.png)
+
+**Object relationships are not the same as relationships between persisted data.**
+
+The downside of Bi-Directional Navigation (with ORM) - If you are to save an **Address** that has a **Customer** object attached to the **Customer** property, there are scenarios in which EF (Entity Framework) will also update the **Customer**. In other words, updating the **Address** also causes the ORM (EF) to update the **Customer**. This behavior leads to a lot of confusion.
+
+![image](https://user-images.githubusercontent.com/34960418/212631619-d86d75a8-1c99-478d-914b-fe5740ef0c6a.png)
