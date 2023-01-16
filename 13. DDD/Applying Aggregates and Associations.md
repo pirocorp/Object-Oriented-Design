@@ -118,14 +118,14 @@ By simply including the IDs of related concepts rather than object references, w
   classDiagram
     Entity~Guid~ <|-- Appointment
     class Appointment
-    Appointment : +int AppointmentTypeId
-    Appointment : +int ClientId
-    Appointment : +int DoctorId
-    Appointment : +int PatientId
-    Appointment : +int RoomId
-    Appointment : +DateTimeOffset? DateTimeConfirmed
-    Appointment : +bool IsPotentiallyConflicting
-    Appointment : +DateTimeOffsetRange DateTimeRange
+    Appointment : -int AppointmentTypeId
+    Appointment : -int ClientId
+    Appointment : -int DoctorId
+    Appointment : -int PatientId
+    Appointment : -int RoomId
+    Appointment : -DateTimeOffset? DateTimeConfirmed
+    Appointment : -bool IsPotentiallyConflicting
+    Appointment : -DateTimeOffsetRange DateTimeRange
 ```
 
 ---------------------------------------------------------------------
@@ -173,20 +173,20 @@ Eric Evans
     IAggregateRoot <|-- Schedule
     
     class Schedule
-    Schedule : +int ClinicId
-    Schedule : +IEnumerable~Appointment~ Appointments
-    Schedule : +DateTimeOffsetRange DateRange
+    Schedule : -int ClinicId
+    Schedule : -IEnumerable~Appointment~ Appointments
+    Schedule : -DateTimeOffsetRange DateRange
     
     class Appointment
-    Appointment : +Guid ScheduleId
-    Appointment : +int AppointmentTypeId
-    Appointment : +int ClientId
-    Appointment : +int DoctorId
-    Appointment : +int PatientId
-    Appointment : +int RoomId
-    Appointment : +DateTimeOffset? DateTimeConfirmed
-    Appointment : +bool IsPotentiallyConflicting
-    Appointment : +DateTimeOffsetRange DateTimeRange
+    Appointment : -Guid ScheduleId
+    Appointment : -int AppointmentTypeId
+    Appointment : -int ClientId
+    Appointment : -int DoctorId
+    Appointment : -int PatientId
+    Appointment : -int RoomId
+    Appointment : -DateTimeOffset? DateTimeConfirmed
+    Appointment : -bool IsPotentiallyConflicting
+    Appointment : -DateTimeOffsetRange DateTimeRange
 ```
 
 ```csharp
