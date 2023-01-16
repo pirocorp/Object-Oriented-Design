@@ -83,11 +83,11 @@ The downside of Bi-Directional Navigation (with ORM) - If you are to save an **A
 ```mermaid
   classDiagram
     Entity~Guid~ <|-- Appointment
-    Appointment <-- Patient
-    Appointment <-- Doctor
-    Appointment <-- ExamRoom
-    Appointment <-- AppointmentType
-    Appointment <-- Client
+    Appointment <.. Patient
+    Appointment <.. Doctor
+    Appointment <.. ExamRoom
+    Appointment <.. AppointmentType
+    Appointment <.. Client
     
     class Appointment
     Appointment : -int AppointmentTypeId
