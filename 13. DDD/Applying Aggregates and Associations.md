@@ -158,4 +158,37 @@ It’s normal and expected for models to evolve as you learn more about the doma
 
 Eric Evans
 
+## Schedule Aggregate
 
+```mermaid
+classDiagram
+    Schedule "1" --> "*" Appointment
+```
+
+- Enforces invariants
+- Saving changes can save entire aggregate
+- Cascading delete is okay
+
+```mermaid
+  classDiagram
+    Entity~Guid~ <|-- Appointment
+    Entity~Guid~ <|-- Schedule
+    IAggregateRoot <|-- Schedule
+    Schedule o-- Appointment
+    
+    class Schedule
+    Schedule : +int ClinicId
+    Schedule : +IEnumerable~Appointment~ Appointments
+    Schedule : +DateTimeOffsetRange DateRange
+    
+    class Appointment
+    Appointment : +Guid ScheduleId
+    Appointment : +int AppointmentTypeId
+    Appointment : +int ClientId
+    Appointment : +int DoctorId
+    Appointment : +int PatientId
+    Appointment : +int RoomId
+    Appointment : +DateTimeOffset? DateTimeConfirmed
+    Appointment : +bool IsPotentiallyConflicting
+    Appointment : +DateTimeOffsetRange DateTimeRange
+```
