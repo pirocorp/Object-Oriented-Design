@@ -31,3 +31,17 @@ When considering whether a particular object should be treated as an **Aggregate
 Eric Evans
 
 **Aggregates** are sometimes confused with collection classes (lists, maps, etc). **Aggregates** are domain concepts (order, clinic visit, playlist), while collections are generic. An **Aggregate** will often contain mutliple collections, together with simple fields. The term **Aggregate** is a common one, and is used in various different contexts (e.g. UML), in which case it does not refer to the same concept as a DDD **Aggregate**.
+
+## Considering Associations in Aggregates
+
+Default to one-way associations. Bi-directional relationships should be used only when neither object can be defined without the other if that is not the case, you need to be specific about the direction of the relationship. Also called the traversal direction. 
+
+Navigation Property - Property that allows navigation from one end of an association to another. A navigation property does not carry data, but acts as a pointer.
+
+> A bidirectional association means that both objects can be understood only together. When application requirements do not call for traversal in both directions, adding a traversal direction reduces interdependence and simplifies the design.
+
+Eric Evans
+
+The One-Way Client -> Patient Relationship in the Scheduling Bounded Context
+
+![image](https://user-images.githubusercontent.com/34960418/212628019-5dd7680a-03e1-4fe9-9692-7f1ca47cb499.png)
