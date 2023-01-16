@@ -165,11 +165,9 @@ Eric Evans
 - Cascading delete is okay
 
 ```mermaid
-classDiagram
-    Schedule "1" --> "*" Appointment
-```
-```mermaid
   classDiagram
+    Schedule "1" --> "*" Appointment
+  
     Entity~Guid~ <|-- Appointment
     Entity~Guid~ <|-- Schedule
     IAggregateRoot <|-- Schedule
