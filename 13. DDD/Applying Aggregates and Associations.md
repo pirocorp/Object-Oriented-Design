@@ -194,115 +194,90 @@ classDiagram
 ```
 
 ```csharp
-public class Appointment : BaseEntity<Guid>
+public class Schedule : BaseEntity<Guid>, IAggregateRoot
 {
-    public Appointment(
-        Guid id,
-        int appointmentTypeId,
-        Guid scheduleId,
-        int clientId,
-        int doctorId,
-        int patientId,
-        int roomId,
-        DateTimeOffsetRange timeRange, // EF Core 5 cannot provide this type
-        string title,
-        DateTime? dateTimeConfirmed = null)
+    private readonly List<Appointment> _appointments = new List<Appointment>();
+
+    public Schedule(
+		Guid id,
+		DateTimeOffsetRange dateRange,
+		int clinicId)
     {
-        Id = Guard.Against.Default(id, nameof(id));
-        AppointmentTypeId = Guard.Against.NegativeOrZero(appointmentTypeId, nameof(appointmentTypeId));
-        ScheduleId = Guard.Against.Default(scheduleId, nameof(scheduleId));
-        ClientId = Guard.Against.NegativeOrZero(clientId, nameof(clientId));
-        DoctorId = Guard.Against.NegativeOrZero(doctorId, nameof(doctorId));
-        PatientId = Guard.Against.NegativeOrZero(patientId, nameof(patientId));
-        RoomId = Guard.Against.NegativeOrZero(roomId, nameof(roomId));
-        TimeRange = Guard.Against.Null(timeRange, nameof(timeRange));
-        Title = Guard.Against.NullOrEmpty(title, nameof(title));
-        DateTimeConfirmed = dateTimeConfirmed;
+		Id = Guard.Against.Default(id, nameof(id));
+		DateRange = dateRange;
+		ClinicId = Guard.Against.NegativeOrZero(clinicId, nameof(clinicId));
     }
 
-    private Appointment() { } // EF required
-
-    public Guid ScheduleId { get; private set; }
-    public int ClientId { get; private set; }
-    public int PatientId { get; private set; }
-    public int RoomId { get; private set; }
-    public int DoctorId { get; private set; }
-    public int AppointmentTypeId { get; private set; }
-
-    public DateTimeOffsetRange TimeRange { get; private set; }
-    public string Title { get; private set; }
-    public DateTimeOffset? DateTimeConfirmed { get; set; }
-    public bool IsPotentiallyConflicting { get; set; }
-
-    public void UpdateRoom(int newRoomId)
+    private Schedule(Guid id, int clinicId) // used by EF
     {
-        Guard.Against.NegativeOrZero(newRoomId, nameof(newRoomId));
-        if (newRoomId == RoomId) return;
-
-        RoomId = newRoomId;
-
-        var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
-        Events.Add(appointmentUpdatedEvent);
+		Id = id;
+		ClinicId = clinicId;
     }
 
-    public void UpdateDoctor(int newDoctorId)
+    public int ClinicId { get; private set; }
+
+    public IEnumerable<Appointment> Appointments => _appointments.AsReadOnly();
+
+    public DateTimeOffsetRange DateRange { get; private set; }
+
+    public void AddNewAppointment(Appointment appointment)
     {
-        Guard.Against.NegativeOrZero(newDoctorId, nameof(newDoctorId));
-        if (newDoctorId == DoctorId) return;
+		Guard.Against.Null(appointment, nameof(appointment));
+		Guard.Against.Default(appointment.Id, nameof(appointment.Id));
+		Guard.Against.DuplicateAppointment(_appointments, appointment, nameof(appointment));
 
-        DoctorId = newDoctorId;
+		_appointments.Add(appointment);
 
-        var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
-        Events.Add(appointmentUpdatedEvent);
+		MarkConflictingAppointments();
+
+		var appointmentScheduledEvent = new AppointmentScheduledEvent(appointment);
+		Events.Add(appointmentScheduledEvent);
     }
 
-    public void UpdateStartTime(
-        DateTimeOffset newStartTime,
-        Action scheduleHandler)
+    public void DeleteAppointment(Appointment appointment)
     {
-        if (newStartTime == TimeRange.Start) return;
+		Guard.Against.Null(appointment, nameof(appointment));
+		var appointmentToDelete = _appointments
+                                .Where(a => a.Id == appointment.Id)
+                                .FirstOrDefault();
 
-        TimeRange = new DateTimeOffsetRange(newStartTime, TimeSpan.FromMinutes(TimeRange.DurationInMinutes()));
+		if (appointmentToDelete != null)
+		{
+			_appointments.Remove(appointmentToDelete);
+		}
 
-        scheduleHandler?.Invoke();
+		MarkConflictingAppointments();
 
-        var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
-        Events.Add(appointmentUpdatedEvent);
+		// TODO: Add appointment deleted event and show delete message in Blazor client app
     }
 
-    public void UpdateTitle(string newTitle)
+    private void MarkConflictingAppointments()
     {
-        if (newTitle == Title) return;
+		foreach (var appointment in _appointments)
+		{
+			// same patient cannot have two appointments at same time
+			var potentiallyConflictingAppointments = _appointments
+				.Where(a => a.PatientId == appointment.PatientId &&
+				a.TimeRange.Overlaps(appointment.TimeRange) &&
+				a != appointment)
+				.ToList();
 
-        Title = newTitle;
+			// TODO: Add a rule to mark overlapping appointments in same room as conflicting
+			// TODO: Add a rule to mark same doctor with overlapping appointments as conflicting
 
-        var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
-        Events.Add(appointmentUpdatedEvent);
+			potentiallyConflictingAppointments.ForEach(a => a.IsPotentiallyConflicting = true);
+
+			appointment.IsPotentiallyConflicting = potentiallyConflictingAppointments.Any();
+		}
     }
 
-    public void UpdateAppointmentType(AppointmentType appointmentType,
-        Action scheduleHandler)
+    /// <summary>
+    /// Call any time this schedule's appointments are updated directly
+    /// </summary>
+    public void AppointmentUpdatedHandler()
     {
-        Guard.Against.Null(appointmentType, nameof(appointmentType));
-        if (AppointmentTypeId == appointmentType.Id) return;
-
-        AppointmentTypeId = appointmentType.Id;
-        TimeRange = TimeRange.NewEnd(TimeRange.Start.AddMinutes(appointmentType.Duration));
-
-        scheduleHandler?.Invoke();
-
-        var appointmentUpdatedEvent = new AppointmentUpdatedEvent(this);
-        Events.Add(appointmentUpdatedEvent);
-    }
-
-    public void Confirm(DateTimeOffset dateConfirmed)
-    {
-        if (DateTimeConfirmed.HasValue) return; // no need to reconfirm
-
-        DateTimeConfirmed = dateConfirmed;
-
-        var appointmentConfirmedEvent = new AppointmentConfirmedEvent(this);
-        Events.Add(appointmentConfirmedEvent);
+		// TODO: Add ScheduleHandler calls to UpdateDoctor, UpdateRoom to complete additional rules described in MarkConflictingAppointments
+		MarkConflictingAppointments();
     }
 }
 ```
