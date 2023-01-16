@@ -45,3 +45,8 @@ Eric Evans
 The One-Way Client -> Patient Relationship in the Scheduling Bounded Context
 
 ![image](https://user-images.githubusercontent.com/34960418/212628019-5dd7680a-03e1-4fe9-9692-7f1ca47cb499.png)
+
+Uni-Directional Associations in the Scheduling Bounded Context
+
+![image](https://user-images.githubusercontent.com/34960418/212628320-576683f9-651b-4f9b-9454-4ab038c47d31.png)
+
