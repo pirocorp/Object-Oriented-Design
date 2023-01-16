@@ -278,3 +278,4 @@ public class Schedule : BaseEntity<Guid>, IAggregateRoot
     }
 }
 ```
+
