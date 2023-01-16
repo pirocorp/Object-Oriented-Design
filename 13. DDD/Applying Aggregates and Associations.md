@@ -165,6 +165,16 @@ Eric Evans
 - Saving changes can save entire aggregate
 - Cascading delete is okay
 
+**Schedule Aggregate** inherits from a common **BaseEntity<Guid>** type and uses **Guid** for its key just like **Appointment**. This lets us set keys ourselves rather than relying on a database to do it for us. The class also implements the **IAggregateRoot** interface.
+
+Its constructor takes its id, date range, and associated clinic id. The constructor is responsible for ensuring that incoming values are valid and always created in a consistent state. 
+
+**Schedule** has just a few properties there is the **ClinicId**, the associate set of **Appointments** and the **DateRange**. We are careful only to expose a read-only `IEnumerable<Appointment> Appointments` because our **Aggregate** must encapsulate its internal state. 
+
+We don't want other parts of our application to add or delete **Appointments** without going through **Schedule**'s explicit methods designed for this purpose. 
+
+The **DateRange** isn't persisted since it can vary with any given instantiation of the **Schedule**.
+
 ```mermaid
   classDiagram
     Schedule "1" --> "*" Appointment
