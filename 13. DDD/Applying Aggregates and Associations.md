@@ -61,3 +61,10 @@ Uni-Directional Associations in the Scheduling Bounded Context
 The downside of Bi-Directional Navigation (with ORM) - If you are to save an **Address** that has a **Customer** object attached to the **Customer** property, there are scenarios in which EF (Entity Framework) will also update the **Customer**. In other words, updating the **Address** also causes the ORM (EF) to update the **Customer**. This behavior leads to a lot of confusion.
 
 ![image](https://user-images.githubusercontent.com/34960418/212631619-d86d75a8-1c99-478d-914b-fe5740ef0c6a.png)
+
+## Evolving the Appointments Aggregate
+
+![image](https://user-images.githubusercontent.com/34960418/212662050-fb027df3-ed18-4c54-9280-15314b1fbe86.png)
+
+![image](https://user-images.githubusercontent.com/34960418/212662284-bb139413-c897-4d39-9d14-76d7506d2b3e.png)
+
