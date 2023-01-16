@@ -160,15 +160,14 @@ Eric Evans
 
 ## Schedule Aggregate
 
-```mermaid
-classDiagram
-    Schedule "1" --> "*" Appointment
-```
-
 - Enforces invariants
 - Saving changes can save entire aggregate
 - Cascading delete is okay
 
+```mermaid
+classDiagram
+    Schedule "1" --> "*" Appointment
+```
 ```mermaid
   classDiagram
     Entity~Guid~ <|-- Appointment
