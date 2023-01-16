@@ -317,3 +317,27 @@ public class Schedule : BaseEntity<Guid>, IAggregateRoot
 }
 ```
 
+## Aggregate Tips
+
+- Break the model up into aggregates
+- Aggregates encapsulate business rules and invariants.
+- Default to one-way relationships when modeling associations.
+- Aggregates are not always the answer.
+- Aggregates can connect only by the root.
+- Don’t overlook using FKs for non-root entities.
+- Too many FKs to non-root entities may suggest a problem.
+- “Aggregates of one” are acceptable.
+- “Rule of Cascading Deletes”.
+- Don’t fear evolving the design of your aggregates as you learn more about the domain.
+
+
+## Key Terms from this Module
+
+- **Aggregate** - A transactional graph of objects (graph of objects in a transaction).
+- **Aggregate Root** - The entry point of an aggregate which ensures the integrity of the entire graph.
+- **Invariant** - A condition that should always be true for the system to be in a consistent state.
+- **Associations** - The modeled relationship between entities.
+- **Navigation Properties** - An ORM term to describe properties that reference related objects.
+- **Unidirectional Relationships** - Associations between two entities that can only be navigated in one direction.
+
+
