@@ -70,8 +70,7 @@ By simply including the IDs of related concepts rather than object references, w
 
 ```mermaid
   classDiagram
-    Entity <|-- Appointment
-    Entity : +Guid Id
+    Entity~Guid~ <|-- Appointment
     class Appointment{
         +int AppointmentTypeId
         +int ClientId
