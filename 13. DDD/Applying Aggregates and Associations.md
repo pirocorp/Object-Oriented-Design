@@ -66,5 +66,7 @@ The downside of Bi-Directional Navigation (with ORM) - If you are to save an **A
 
 ![image](https://user-images.githubusercontent.com/34960418/212662050-fb027df3-ed18-4c54-9280-15314b1fbe86.png)
 
+By simply including the IDs of related concepts rather than object references, we can ensure that creating and changing **Appointments** has a minimal impact on our system when we persist the **Appointment** (**Appointments** won't affect **Clients**, **Patients**, etc.). This relationship is because an **Appointment** in the real world is just a note that includes a place, time, and additional details. Adding and removing **Appointments** shouldn't impact the people and places involved. And this revised design reflects this.
+
 ![image](https://user-images.githubusercontent.com/34960418/212662284-bb139413-c897-4d39-9d14-76d7506d2b3e.png)
 
