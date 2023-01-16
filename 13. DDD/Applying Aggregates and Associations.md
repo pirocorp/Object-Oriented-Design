@@ -46,7 +46,7 @@ The One-Way Client -> Patient Relationship in the Scheduling Bounded Context
   classDiagram
       Entity~int~ <|-- Client
       Entity~int~ <|-- Patient
-      Client <-- Patient
+      Client o-- Patient
       
       class Client
       Client : -FullName
@@ -83,11 +83,11 @@ The downside of Bi-Directional Navigation (with ORM) - If you are to save an **A
 ```mermaid
   classDiagram
     Entity~Guid~ <|-- Appointment
-    Appointment <.. Patient
-    Appointment <.. Doctor
-    Appointment <.. ExamRoom
-    Appointment <.. AppointmentType
-    Appointment <.. Client
+    Appointment o.. Patient
+    Appointment o.. Doctor
+    Appointment o.. ExamRoom
+    Appointment o.. AppointmentType
+    Appointment o.. Client
     
     class Appointment
     Appointment : -int AppointmentTypeId
