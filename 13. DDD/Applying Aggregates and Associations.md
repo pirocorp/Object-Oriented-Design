@@ -117,16 +117,15 @@ By simply including the IDs of related concepts rather than object references, w
 ```mermaid
   classDiagram
     Entity~Guid~ <|-- Appointment
-    class Appointment{
-        +int AppointmentTypeId
-        +int ClientId
-        +int DoctorId
-        +int PatientId
-        +int RoomId
-        +DateTimeOffset? DateTimeConfirmed
-        +bool IsPotentiallyConflicting
-        +DateTimeOffsetRange DateTimeRange
-     }
+    class Appointment
+    Appointment : +int AppointmentTypeId
+    Appointment : +int ClientId
+    Appointment : +int DoctorId
+    Appointment : +int PatientId
+    Appointment : +int RoomId
+    Appointment : +DateTimeOffset? DateTimeConfirmed
+    Appointment : +bool IsPotentiallyConflicting
+    Appointment : +DateTimeOffsetRange DateTimeRange
 ```
 
 ---------------------------------------------------------------------
@@ -134,16 +133,11 @@ By simply including the IDs of related concepts rather than object references, w
 
 ```mermaid
   classDiagram
-  class Client{
-  }
-  class ExamRoom{
-  }  
-  class Patient{
-  }
-  class Doctor{
-  }
-  class AppointmentType{
-  }
+    class Client
+    class ExamRoom
+    class Patient
+    class Doctor
+    class AppointmentType
 ```
 
 ## Using Invariants to Better Understand our Aggregate
