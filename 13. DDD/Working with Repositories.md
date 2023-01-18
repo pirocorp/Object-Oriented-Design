@@ -243,3 +243,124 @@ public interface ICustomerReadRepository
     // and more get added all the time
 }
 ```
+
+## Generic Repository Benefits
+
+- Promote code-reuse - With a straightforward interface, any **Entity** can be persistent using a standard set of operations.
+- Promote code-reuse protect aggregates - Generic constraints can ensure that only **Aggregate Roots** can be persisted using your interface.
+
+`IRepository` May Lead to Unused Methods
+
+<table>
+    
+<tr>
+<td> Interface </td> 
+<td> Implementation </td>
+</tr>
+    
+<tr>
+<td>
+    
+```csharp
+public interface IRepository<T>
+{
+	T GetById(int id);
+	void Add(T entity);
+	void Remove(T entity);
+	void Update(T entity);
+	IEnumerable<T> List();
+}
+```
+    
+</td>
+<td>
+    
+```csharp
+    class ScheduleRepo : IRepository<Schedule>
+    {
+        public Schedule GetById(int id)
+        { ...some logic... }
+        public void Add(Schedule entity)
+        {...some logic... }
+        public void Remove(Schedule entity)
+        { ... Do nothing! ... }
+        public void Update(Schedule entity)
+        { ...some logic... }
+        public void IEnumerable<Schedule> List
+        {}
+    }
+```
+    
+</td>
+</tr>
+    
+<tr>
+<td>    
+<p align="center">
+    A Targeted <b>IScheduleRepository</b> with Relevant Methods
+</p>
+</td>
+<td>
+    
+```csharp
+public interface IScheduleRepository
+{
+    Schedule GetScheduleForDateWithAppointments(int clinicId, DateTime date);
+    void Update(Schedule schedule);
+}
+```
+    
+</td>
+</tr>
+    
+<tr>
+<td colspan="2">
+<p align="center">
+    Generic Repositories for Aggregate Roots
+</p>
+</td>
+</tr>
+    
+<tr>
+<td>
+    Aggregate Root
+</td>
+<td>
+    Generic Repositories for Aggregate Root
+</td>
+</tr>
+    
+<tr>
+<td>
+    
+```csharp
+public class Root: IEntity
+{
+    public int Id { get; init; }
+    ...
+}
+```
+
+</td>
+<td>
+    
+```csharp
+public class RootRepository : IRepository<Root>
+{
+    public IEnumerable<Root> List() {}
+    public Root GetById(int id) {}
+    public void Insert (Root entity) {}
+    public void Update (Root entity) {}
+    public void Delete (Root etity) {}
+}
+```
+
+</td>
+</tr>
+
+</table>
+    
+Trade-Offs
+- Consistent persistence implementation, but possible unused methods.
+- Individually crafted classes with a variety of bespoke methods.
+    
