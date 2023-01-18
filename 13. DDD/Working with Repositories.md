@@ -114,7 +114,7 @@ Be careful of **Custom Query Implementation** as it can grow out of hand, and yo
 
 Client code can be ignorant of repository implementation **…but developers cannot**.
 
-- N+1 Query Errors
+- N+1 Query Errors - To display a list of rows from a database, you call one query to get a list and then a number of queries equal to the count of that list to fetch each item individually.
 
 <table>
 <tr>
@@ -140,6 +140,7 @@ Client code can be ignorant of repository implementation **…but developers can
 
 ```
     select Clients.* from Clients
+    
     select Patients.* from Patients where ClientId=1
     select Patients.* from Patients where ClientId=2
     select Patients.* from Patients where ClientId=3
@@ -156,3 +157,8 @@ Client code can be ignorant of repository implementation **…but developers can
 </tr>
 
 </table>
+
+- Inappropriate use of eager or lazy loading.
+- Fetching more data than required.
+
+Most of these blunders impact how data is accessed in a data store, meaning that one of the best tools you have for surfacing these problems is profiling your data store.
