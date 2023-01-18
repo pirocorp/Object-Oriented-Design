@@ -106,3 +106,6 @@ Eric Evans
     ```
     
 Be careful of **Custom Query Implementation** as it can grow out of hand, and your repositories may end with many different query methods. A simple way to address this is to use [specification](/07.%20Specification) instead.
+
+- Use repositories for aggregate roots only.
+- Client focuses on model, repository on persistence.
