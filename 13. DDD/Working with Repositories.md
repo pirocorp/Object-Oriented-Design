@@ -115,12 +115,44 @@ Be careful of **Custom Query Implementation** as it can grow out of hand, and yo
 Client code can be ignorant of repository implementation **…but developers cannot**.
 
 - N+1 Query Errors
-```csharp
-var clients = _context.Clients.ToList();
 
-foreach (var client in clients)
-{
-    _context.Patients.Where(p => p.ClientId == client.Id)
-    .ToList();
-}
+<table>
+<tr>
+<td> Code </td> 
+<td> Result </td>
+</tr>
+<tr>
+<td>
+    
+```csharp
+    var clients = _context.Clients.ToList();
+
+    foreach (var client in clients)
+    {
+        _context.Patients
+            .Where(p => p.ClientId == client.Id)
+            .ToList();
+    }
+``` 
+
+</td>
+<td>
+
 ```
+    select Clients.* from Clients
+    select Patients.* from Patients where ClientId=1
+    select Patients.* from Patients where ClientId=2
+    select Patients.* from Patients where ClientId=3
+    select Patients.* from Patients where ClientId=4
+    select Patients.* from Patients where ClientId=5
+    select Patients.* from Patients where ClientId=6
+    select Patients.* from Patients where ClientId=7
+    select Patients.* from Patients where ClientId=8
+    select Patients.* from Patients where ClientId=9
+    select Patients.* from Patients where ClientId=10
+```
+
+</td>
+</tr>
+
+</table>
