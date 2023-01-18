@@ -293,14 +293,17 @@ public interface IRepository<T>
     
 </td>
 </tr>
-    
+	
 <tr>
-<td>    
+<td colspan="2">
 <p align="center">
     A Targeted <b>IScheduleRepository</b> with Relevant Methods
 </p>
 </td>
-<td>
+</tr>
+    
+<tr>
+<td colspan="2">
     
 ```csharp
 public interface IScheduleRepository
@@ -320,16 +323,7 @@ public interface IScheduleRepository
 </p>
 </td>
 </tr>
-    
-<tr>
-<td>
-    Aggregate Root
-</td>
-<td>
-    Generic Repositories for Aggregate Root
-</td>
-</tr>
-    
+      
 <tr>
 <td>
     
@@ -355,6 +349,35 @@ public class RootRepository : IRepository<Root>
 }
 ```
 
+</td>
+</tr>
+	
+<tr>
+<td colspan="2">
+<p align="center">
+    Generic Repositories for CRUD Work
+</p>
+</td>
+</tr>
+	
+<tr>
+<td colspan="2">
+
+```csharp
+public class Repository<TEntity> : IRepository<TEntity>
+{
+	private readonly CrudContext _context;
+	private readonly DbSet<TEntity> _dbSet;
+	
+	public Repository(CrudContext context) {}
+	public IEnumerable<TEntity> List() {}
+	public Root GetById(int id) {}
+	public void Insert (TEntity entity) {}
+	public void Update (TEntity entity) {}
+	public void Delete (TEntity etity) {}
+}	
+```
+	
 </td>
 </tr>
 
