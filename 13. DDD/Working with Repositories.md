@@ -254,8 +254,8 @@ public interface ICustomerReadRepository
 <table>
     
 <tr>
-<td> Interface </td> 
-<td> Implementation </td>
+<td> Interface for Any Repository </td> 
+<td> Implementing IRepository </td>
 </tr>
     
 <tr>
