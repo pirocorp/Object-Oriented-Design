@@ -61,6 +61,13 @@ In **DDD**, the main goal is to establish **common language** with the **busines
 
 **Clean**/**Hexagonal**/**Onion** (or CHO in short) architecture, is an architectural pattern for a system, whereas **DDD** is a way to design a subset of the objects in the system. The two can exist without each other, so neither is a subset of the other. If you were to use them together - then as a whole the **part that is designed using DDD would be a subset** of the entire system.
 
+
+- [Introducing Domain-Driven Design](13.%20DDD/Introducing%20Domain-Driven%20Design.md)
+- [Modeling Problems in Software](13.%20DDD/Modeling%20Problems%20in%20Software.md)
+- [Elements of a Domain Model: Entities](13.%20DDD/Elements%20of%20a%20Domain%20Model%20Entities.md)
+- [Elements of a Domain Model: Value Objects & Services](13.%20DDD/Elements%20of%20a%20Domain%20Model%20Value%20Objects%20And%20Services.md)
+- [Applying Aggregates and Associations](13.%20DDD/Applying%20Aggregates%20and%20Associations.md)
+
 # License
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
