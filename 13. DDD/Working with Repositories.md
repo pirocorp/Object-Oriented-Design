@@ -162,3 +162,84 @@ Client code can be ignorant of repository implementation **…but developers can
 - Fetching more data than required.
 
 Most of these blunders impact how data is accessed in a data store, meaning that one of the best tools you have for surfacing these problems is profiling your data store.
+
+
+## Using Repositories
+
+Repository - An abstraction your **Domain Model** uses to define what persistence needs it has. They are part of your **Domain Model**. They define the persistence operations the **Model** will use. 
+
+A domain model should be persistent and ignorant as well as ignorant of implementation details. Using SOLID in DDD enables us to follow **Dependency Inversion**. We can define an abstraction in the **Domain Model** and then implement that abstraction in another project that depends on the domain model.
+
+
+## Returning IQueryables: Pros and Cons
+
+### Returning IQueryable from Repository List methods
+
+![image](https://user-images.githubusercontent.com/34960418/213219318-68887dc0-034d-4e53-a691-6917f56a494e.png)
+
+![image](https://user-images.githubusercontent.com/34960418/213227085-188e0285-2fee-4ea8-a259-10a50f11fafd.png)
+
+| Pros                                            	| Cons                                          	|
+|-----------------------------------------------	|--------------------------------------------------	|
+| Flexibility                                   	| Query logic spread out everywhere                	|
+| Can build query from multiple locations       	| Violating Single Responsibility Principle        	|
+| Minimal Repository code required              	| Violating Separation of Concerns                 	|
+| Restrict data returned to just what is needed 	| Confusion about when the query actually executes 	|
+| Reuse small set of Repository methods         	| Code compiles, but blows up when executed        	|
+|                                               	| No encapsulation                                 	|
+
+### Accept Arbitrary Predicates - instead of returning IQueryable from Repository List methods
+
+Predicate - Expression used in the search condition of a query’s where clause. Represents the method that defines a set of criteria and determines whether the specified object meets those criteria.
+
+```csharp
+public interface ICustomerRepository
+{
+    IEnumerable<Customer> List(Expression<Func<Customer,bool>> predicate);
+}
+
+public IEnumerable<Customer> List(Expression<Func<Customer,bool>> predicate)
+{
+    return _db.Customers.Where(predicate);
+}
+```
+
+It helps with part of the problem where the query could be executed at any of these points. At least now we know that whatever comes back from the **Repository** will be in memory result. The actual query is always executed at **Repository** itself.
+
+![image](https://user-images.githubusercontent.com/34960418/213232908-7805d410-f4af-41bc-9338-2122f609e0f4.png)
+
+Of course, if the **Service** takes in a predicate, it still means that any code anywhere in this system could be responsible for creating the query logic. With the possible exception of the **View** if it has just been passed **IEnumerable** at this point.
+
+![image](https://user-images.githubusercontent.com/34960418/213233423-5658be0f-d9bb-4fed-8d79-5284c26615a0.png)
+
+| Pros                                            	| Cons                                          	    |
+|-----------------------------------------------	|-------------------------------------------------------|
+| Flexibility                                   	| Query logic spread out everywhere                	    |
+| ~~Can build query from multiple locations~~      	| Violating Single Responsibility Principle        	    |
+| Minimal Repository code required              	| Violating Separation of Concerns                 	    |
+| Restrict data returned to just what is needed 	| ~~Confusion about when the query actually executes~~  |
+| Reuse small set of Repository methods         	| Code compiles, but blows up when executed        	    |
+|                                               	| No encapsulation                                 	    |
+
+
+### Custom Query Methods
+
+```csharp
+public interface ICustomerReadRepository
+{
+    Customer GetById(int id);
+    List<Customer> List();
+    // custom queries
+    List<Customer> ListCustomersByState(string state);
+    List<Customer> ListCustomersBySales(decimal minSales);
+    List<Customer> ListCustomersWithOrders();
+    List<Customer> ListCustomersWithAddresses();
+    List<Customer> ListCustomersWithOrdersAndAddresses();
+    List<Customer> ListCustomersByStateWithOrders(string state);
+    List<Customer> ListCustomersByLastName(string lastName);
+    List<Customer> ListCustomersByGeo(int latitude, int longitude, int radiusMiles);
+    List<Customer> ListCustomersByShoeSize(string size);
+    List<Customer> ListCustomersByFavoriteNetflixShow(string title);
+    // and more get added all the time
+}
+```
