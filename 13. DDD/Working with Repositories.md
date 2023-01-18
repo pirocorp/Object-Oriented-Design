@@ -116,11 +116,11 @@ Client code can be ignorant of repository implementation **…but developers can
 
 - N+1 Query Errors
 ```csharp
-var clients=_context.Clients.ToList();
+var clients = _context.Clients.ToList();
 
 foreach (var client in clients)
 {
-    _context.Patients.Where(p=>p.ClientId==client.Id)
+    _context.Patients.Where(p => p.ClientId == client.Id)
     .ToList();
 }
 ```
