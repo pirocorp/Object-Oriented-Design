@@ -328,7 +328,7 @@ public interface IScheduleRepository
 <td>
     
 ```csharp
-public class Root: IEntity
+public class Root : IEntity
 {
     public int Id { get; init; }
     ...
@@ -351,6 +351,30 @@ public class RootRepository : IRepository<Root>
 
 </td>
 </tr>
+	
+<tr>
+<td colspan="2">
+<p align="center">
+    Marker interfaces can provide protection to your aggregates
+</p>
+</td>
+</tr>
+	
+<tr>
+<td colspan="2">
+
+```csharp
+public interface IAggregateRoot : IEntity {}
+	
+public class Root : IAggregateRoot
+{
+    public int Id { get; init; }
+}
+	
+public class Repository<TEntity> : IRepository<TEntity>
+   where TEntity : class, IAggregateRoot	
+{}
+```
 	
 <tr>
 <td colspan="2">
