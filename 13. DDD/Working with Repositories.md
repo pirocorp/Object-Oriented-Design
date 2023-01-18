@@ -105,3 +105,4 @@ Eric Evans
     }
     ```
     
+Be careful of **Custom Query Implementation** as it can grow out of hand, and your repositories may end with many different query methods. A simple way to address this is to use specification instead.
