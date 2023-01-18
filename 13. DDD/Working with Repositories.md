@@ -109,3 +109,18 @@ Be careful of **Custom Query Implementation** as it can grow out of hand, and yo
 
 - Use repositories for aggregate roots only.
 - Client focuses on model, repository on persistence.
+
+## Avoiding Repository Blunders
+
+Client code can be ignorant of repository implementation **…but developers cannot**.
+
+- N+1 Query Errors
+```csharp
+var clients=_context.Clients.ToList();
+
+foreach (var client in clients)
+{
+    _context.Patients.Where(p=>p.ClientId==client.Id)
+    .ToList();
+}
+```
