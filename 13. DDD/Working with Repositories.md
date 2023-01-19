@@ -419,3 +419,32 @@ Trade-Offs
 Eric Evans
 	
 ![image](https://user-images.githubusercontent.com/34960418/213434430-dc589eb3-5594-4160-ae84-abdbd548b51f.png)
+
+**Specifications** are used to specify the state of an object. And as such are primarily used in three ways.
+- Validation
+- Selection & Querying
+- Creation for a specific purpose
+	
+> Create explicit predicate-like **Value Objects** for specialized purposes. A Specification is a predicate that determines if an object satisfies some criteria.
+	
+Eric Evans
+
+### A Basic Specification
+	
+The most basic **Specification** provides a method typically named `IsSatisfiedBy`, which accepts some `object`, and returns a `bool`. These methods performed their logic in memory. Unfortunately, in remote data querying scenarios, this approach would require every row to be transferred to the application before the specification logic could be executed against it.
+	
+```mermaid
+flowchart LR
+	id1(Specification) -->|"bool IsSatisfiedBy(object someObject)"| id2(Object)    
+```
+	
+### Combining Specifications with ORMs
+	
+**Specifications** can be used with ORMs (ex., EF) to encapsulate the details of a query while still allowing an ORM to translate the query to SQL that executes on a database server.
+	
+```mermaid
+flowchart LR
+	id1(DbContext) -->|".Where()"| id2(Specification) -->|".Where()"| id3(Object)
+```
+	
+One of the benefits of using a **Repository** was preventing query logic from spreading throughout the application. This was also the reason for not returning the `IQueryable` from the **Repository** method. The same reasoning can be applied to **Repositories** that accept arbitrary predicates. Sense again that means the complexity of these predicates would mean to live in code calling the **Repository**, which may be in UI Layer, for example.
