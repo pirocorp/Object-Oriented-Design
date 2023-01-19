@@ -67,6 +67,7 @@ In **DDD**, the main goal is to establish **common language** with the **busines
 - [Elements of a Domain Model: Entities](13.%20DDD/Elements%20of%20a%20Domain%20Model%20Entities.md)
 - [Elements of a Domain Model: Value Objects & Services](13.%20DDD/Elements%20of%20a%20Domain%20Model%20Value%20Objects%20And%20Services.md)
 - [Applying Aggregates and Associations](13.%20DDD/Applying%20Aggregates%20and%20Associations.md)
+- [Working with Repositories](13.%20DDD/Working%20with%20Repositories.md)
 
 # License
 
