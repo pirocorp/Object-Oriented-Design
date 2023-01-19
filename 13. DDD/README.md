@@ -25,6 +25,8 @@
 - [Domain-Driven Design: The First 15 Years (Free book)](https://leanpub.com/ddd_first_15_years)
 - [Anemic Domain Model](https://www.martinfowler.com/bliki/AnemicDomainModel.html)
 - [Services in Domain-Driven Design](https://lostechies.com/jimmybogard/2008/08/21/services-in-domain-driven-design/)
+- [Specification Pattern Base Class](https://github.com/ardalis/Specification)
+- [Avoid In-Memory Databases for Tests](jimmybogard.com/avoid-in-memory-databases-for-tests/)
 
 ## Conferences on DDD
 
