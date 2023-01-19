@@ -412,7 +412,7 @@ Trade-Offs
 - Individually crafted classes with a variety of bespoke methods.
     
 
-## Introducing the [Specification](07.%20Specification) Pattern
+## Introducing the [Specification](/07.%20Specification) Pattern
 
 > Specifications mesh smoothly with Repositories, which are the building-block mechanisms for providing query access to domain objects and encapsulating the interface to the database.
 	
