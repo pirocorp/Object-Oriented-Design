@@ -556,4 +556,44 @@ public interface ICustomerReadRepository
     }
 ```
 	
+## Implementing Specification Classes
 	
+- You will need to write the rules of your specifications.
+- The classes belong in your domain model.
+- If only a few, organize in root Specifications folder.
+- Or, along side your aggregates in their folders.
+	
+Custom Specification Inheriting from Base:
+	
+```csharp
+public class ScheduleIdWithAppointmentsSpec : Specification<Schedule>
+{
+    public ScheduleByIdWithAppointmentsSpec(Guid scheduleId)
+    {
+        Query
+	    .Where(schedule => schedule.Id == scheduleId)
+	    .Include(schedule => schedule.Appointments);
+    }
+}
+```
+	
+Examples of Applying Specifications in EF Core: 
+	
+```csharp
+dbContext.Customers.WithSpecification(specification).ToListAsync();
+	
+dbContext.Customers.WithSpecification(specification).FirstOrDefaultAsync();
+	
+dbContext.Customers.WithSpecification(specification)
+    .Select("whatever your expression is").ToListAsync();
+	
+dbContext.Customers.WithSpecification(specification)
+    .UseWhateverExtensionsAvailableForIQueryable;
+```
+	
+Using Specifications in Your Code:
+	
+```csharp
+var clientSpec = new ClientByIdIncludePatientsSpecification(appointment.ClientId);
+var client = await _clientRepository.GetBySpecAsync(clientSpec);
+```
