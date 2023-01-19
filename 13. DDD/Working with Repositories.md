@@ -411,3 +411,11 @@ Trade-Offs
 - Consistent persistence implementation, but possible unused methods.
 - Individually crafted classes with a variety of bespoke methods.
     
+
+## Introducing the [Specification](07.%20Specification) Pattern
+
+> Specifications mesh smoothly with Repositories, which are the building-block mechanisms for providing query access to domain objects and encapsulating the interface to the database.
+	
+Eric Evans
+	
+![image](https://user-images.githubusercontent.com/34960418/213434430-dc589eb3-5594-4160-ae84-abdbd548b51f.png)
