@@ -601,3 +601,13 @@ The resulting code for most queries turns into one line to create the **Specific
 var clientSpec = new ClientByIdIncludePatientsSpecification(appointment.ClientId);
 var client = await _clientRepository.GetBySpecAsync(clientSpec);
 ```
+
+## Key Terms from this Module
+	
+**Repository** - A class that encapsulates the data persistence for an aggregate root.
+**Specification Pattern** - A method of encapsulating a business rule so that it can be passed to other methods which are responsible for applying it.
+**Persistence Ignorance** - Objects are unaware of where their data comes from or goes to.
+**ACID** - Atomic, Consistent, Isolated, and Durable.
+**SOLID** - A set of five software design patterns.	
+	
+	
