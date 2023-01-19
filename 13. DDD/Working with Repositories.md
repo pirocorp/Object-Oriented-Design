@@ -565,6 +565,8 @@ public interface ICustomerReadRepository
 	
 Custom Specification Inheriting from Base:
 	
+Each **Specifications** class is a value object. So it should be immutable. Generally, they do all of their work in the constructor. Any variable part of the **Specifications** should be supplied as a constructor argument. 
+	
 ```csharp
 public class ScheduleIdWithAppointmentsSpec : Specification<Schedule>
 {
@@ -579,6 +581,8 @@ public class ScheduleIdWithAppointmentsSpec : Specification<Schedule>
 	
 Examples of Applying Specifications in EF Core: 
 	
+Once constructed, the **Specification** needs to be supplied to your query implementation. You can use **Specifications** directly with the EF or the **Repository** abstraction that supports them. In either case, pass the **Specification** to the query object, and it will be used to build the query. Which is the executed and results are returned.
+	
 ```csharp
 dbContext.Customers.WithSpecification(specification).ToListAsync();
 	
@@ -592,6 +596,8 @@ dbContext.Customers.WithSpecification(specification)
 ```
 	
 Using Specifications in Your Code:
+	
+The resulting code for most queries turns into one line to create the **Specification** and another line to execute the query by passing **Specification** to a **Repository** or a **DbContext** method.
 	
 ```csharp
 var clientSpec = new ClientByIdIncludePatientsSpecification(appointment.ClientId);
