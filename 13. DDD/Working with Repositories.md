@@ -448,3 +448,4 @@ flowchart LR
 ```
 	
 One of the benefits of using a **Repository** was preventing query logic from spreading throughout the application. This was also the reason for not returning the `IQueryable` from the **Repository** method. The same reasoning can be applied to **Repositories** that accept arbitrary predicates. Sense again that means the complexity of these predicates would mean to live in code calling the **Repository**, which may be in UI Layer, for example.
+
