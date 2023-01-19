@@ -11,6 +11,8 @@
 # Patterns Of DDD
 
 - [Value Object](Value%20Object)
+- [Repository](/06.%20Repositories)
+- [Specification](/07.%20Specification)
 
 # Resources
 
