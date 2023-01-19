@@ -4,8 +4,6 @@
 
 Random data access code in your system makes it difficult to maintain the integrity of your models.
 
-![image](https://user-images.githubusercontent.com/34960418/213174744-81eeffc1-7910-4835-9e6c-c928159dec64.png)
-
 Having ad hoc access to the data source also promotes having developers query for any bit of data they want at any time they want instead of using **Aggregates**. This makes it challenging to manage the consistency of **Aggregates** by inforcing their **Invariants**. At best, the logic for enforcing the integrity of the **Model** becomes scattered among many queries. And, at worst, it's not done at all.
 
 Applying separation of concerns means pushing persistent behavior into its own set of abstractions which we referred to as **Repositories**. Only particular objects, specifically **Aggregate Roots**, should be available over global requests. **Repositories** provide this access and, through omission, prevent access to non-aggregate objects except through their **Aggregate Roots**.
@@ -418,7 +416,7 @@ Trade-Offs
 	
 Eric Evans
 	
-![image](https://user-images.githubusercontent.com/34960418/213434430-dc589eb3-5594-4160-ae84-abdbd548b51f.png)
+![image](https://user-images.githubusercontent.com/34960418/213467402-0c5f3d7a-5009-445d-b0bf-5773d0f80867.png)
 
 **Specifications** are used to specify the state of an object. And as such are primarily used in three ways.
 - Validation
