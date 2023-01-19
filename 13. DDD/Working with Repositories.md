@@ -452,3 +452,108 @@ One of the benefits of using a **Repository** was preventing query logic from sp
 Using **Repository** interfaces that accept **Specifications** instead of custom predicates addresses this problem very elegantly.
 
 ![image](https://user-images.githubusercontent.com/34960418/213446459-0f390b65-860e-4c1e-ac47-a2a96e981f67.png)
+
+### Typed Repository Interfaces Provide Needed Query Methods
+
+Generic methods accepting generic **Specifications** allow for custom queries where needed for any given **Aggregate**.
+	
+```csharp
+public interface ICustomerReadRepository
+{
+	Customer GetById(int id);
+	List<Customer> List();
+	List<Customer> ListCustomersBySpecification(specification);
+}
+```
+
+### Specification Benefits
+	
+- Named Classes via **Ubiquitous Language**.
+- Reusable.
+- Separate Persistence from Domain Model and UI.
+- Keep Business Logic out of Persistence Layer and Database.
+- Help **Entities** & **Aggregates** follow Single Responsibility Principle (SRP).
+	
+	
+## [Ardalis Specification](https://github.com/ardalis/Specification) Base Class
+	
+```csharp
+    public abstract class Specification<T> : ISpecification<T>
+    {
+        protected IInMemorySpecificationEvaluator Evaluator { get; }
+        protected virtual ISpecificationBuilder<T> Query { get; }
+
+        protected Specification()
+            : this(InMemorySpecificationEvaluator.Default)
+        {
+        }
+
+        protected Specification(IInMemorySpecificationEvaluator inMemorySpecificationEvaluator)
+        {
+            this.Evaluator = inMemorySpecificationEvaluator;
+            this.Query = new SpecificationBuilder<T>(this);
+        }
+
+        public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities)
+        {
+            return Evaluator.Evaluate(entities, this);
+        }
+
+        public IEnumerable<Expression<Func<T, bool>>> WhereExpressions { get; } = new List<Expression<Func<T, bool>>>();
+
+        public IEnumerable<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)> OrderExpressions { get; } = 
+            new List<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)>();
+
+        public IEnumerable<IncludeExpressionInfo> IncludeExpressions { get; } = new List<IncludeExpressionInfo>();
+
+        public IEnumerable<string> IncludeStrings { get; } = new List<string>();
+
+        public IEnumerable<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)> SearchCriterias { get; } =
+            new List<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)>();
+
+        public int? Take { get; internal set; } = null;
+
+        public int? Skip { get; internal set; } = null;
+
+        public bool IsPagingEnabled { get; internal set; } = false;
+
+        public Func<IEnumerable<T>, IEnumerable<T>>? PostProcessingAction { get; internal set; } = null;
+
+        public string? CacheKey { get; internal set; }
+
+	public bool CacheEnabled { get; internal set; }
+
+        public bool AsNoTracking { get; internal set; } = false;
+	
+        public bool AsSplitQuery { get; internal set; } = false;
+	
+        public bool AsNoTrackingWithIdentityResolution { get; internal set; } = false;
+    }
+	
+    public abstract class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
+    {
+        protected new virtual ISpecificationBuilder<T, TResult> Query { get; }
+
+        protected Specification()
+            : this(InMemorySpecificationEvaluator.Default)
+        {
+        }
+
+        protected Specification(IInMemorySpecificationEvaluator inMemorySpecificationEvaluator)
+            : base(inMemorySpecificationEvaluator)
+        {
+            this.Query = new SpecificationBuilder<T, TResult>(this);
+        }
+
+        public new virtual IEnumerable<TResult> Evaluate(IEnumerable<T> entities)
+        {
+            return Evaluator.Evaluate(entities, this);
+        }
+
+        public Expression<Func<T, TResult>>? Selector { get; internal set; }
+
+        public new Func<IEnumerable<TResult>, IEnumerable<TResult>>? PostProcessingAction { get; internal set; } = null;
+    }
+```
+	
+	
