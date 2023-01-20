@@ -248,7 +248,7 @@ public void Confirm(DateTime dateConfirmed)
 }
 ```
 
-The actual dispatching of the events is done in the **Repository** **Save** method `await this.mediator.Publish(domainEvent).ConfigureAwait(false);`. 
+The actual dispatching of the events is done in the **Repository** **Save** method after the save is successful `await this.mediator.Publish(domainEvent).ConfigureAwait(false);`
 
 ```csharp
 public async Task Save(TEntity entity)
