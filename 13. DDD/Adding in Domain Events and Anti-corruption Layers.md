@@ -58,12 +58,35 @@ public class AppointmentConfirmed
 }
 ```
 
-Include when the event took place - The code handling the event may run sometime after the event occurs. It can be helpful to create an interface or base class that defines the common requirements of your **Domain Events**.
+Include when the event took place - The code handling the event may run sometime after the event occurs. It can be helpful to create an interface or base class that defines the common requirements of your **Domain Events**. For example, capturing the time event occurred. 
 
 
 ```csharp
 public abstract class BaseDomainEvent : INotification
 {
     public DateTimeOffset DateOccurred { get; protected set; } = DateTimeOffset.UtcNow;
+}
+```
+
+Capture eventspecific details - You should include the current state of the **Entity** in the **Event's** definition. Think about what information you need to trigger the **Event** again. This can provide you with the set of information that is important to this **Event**. Similarly, you may need to know the identities of any **Aggregates** involved in the **Event**. Even if you don't include the entire **Aggregate** itself, this will allow the event handler to pull the information back from the system, which they may require when handling the **Event**.
+
+```csharp
+public class AppointmentScheduledEvent : BaseDomainEvent
+{
+    public AppointmentScheduledEvent (Appointment appointment) 
+        : this()
+    {
+        AppointmentScheduled = appointment;
+    }
+    . . .
+}
+```
+
+Event fields are initialized in the constructor. No behavior or side effects.
+
+```csharp
+public AppointmentScheduledEvent()
+{
+    this.Id = Guid.NewGuid();
 }
 ```
