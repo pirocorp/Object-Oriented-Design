@@ -1,3 +1,6 @@
+# Applying Domain Events to a Simple App
+
+
 Each **Entity** has a collection of **Events**.
 
 ```csharp
