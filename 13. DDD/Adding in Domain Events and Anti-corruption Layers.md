@@ -92,3 +92,9 @@ public AppointmentScheduledEvent()
 ```
 
 ## Applying Domain Events to a Simple App
+
+**Aggregates** should work whether accessed directly or through services. The **Domain Model** should work with either workflow. **Aggregate** doesn’t need to know what actions must be performed. Inform the app about an event. App triggers the needed actions. Consider the order of operations (E.g., persistence should succeed before notifications are sent)
+
+![image](https://user-images.githubusercontent.com/34960418/213749813-44f4b0fc-285a-40e2-a5d5-97a90b33ed4e.png)
+
+Putting all logic into services leads to anemic domain models.
