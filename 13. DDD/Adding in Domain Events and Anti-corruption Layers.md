@@ -98,3 +98,43 @@ public AppointmentScheduledEvent()
 ![image](https://user-images.githubusercontent.com/34960418/213749813-44f4b0fc-285a-40e2-a5d5-97a90b33ed4e.png)
 
 Putting all logic into services leads to anemic domain models.
+
+
+## Integration Events - Events Between Apps, Services or BCs
+
+Integration Event Message Types Must Match - Class names can differ; property names and types must match
+
+`AppA.SomeEvent.cs`
+
+```csharp
+// Publishing app
+// Changes to this type must also be
+// made in all consuming apps.
+public class SomeEvent
+{
+    public Guid CustomerId { get; set; }
+    public string Fullname { get; set; }
+    public string Email { get; set; }
+}
+```
+
+`AppB.SomethingEvent.cs`
+
+```csharp
+// Consuming app
+// Class name can differ; props match
+// (a shared class would sync easily)
+public class SomethingEvent
+{
+    public Guid CustomerId { get; set; }
+    public string Fullname { get; set; }
+    public string Email { get; set; }
+}
+```
+
+Don’t expect integration events to match your domain events.
+
+
+## Introducing Anti-Corruption Layers
+
+
