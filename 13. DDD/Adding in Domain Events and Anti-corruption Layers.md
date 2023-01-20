@@ -42,7 +42,7 @@ Domain Event Examples
 Create Events as Needed, Not Just in Case - Only create **Domain Events** if you have some behavior that needs to occur when the event occurs and want to decuple the behavior from its trigger. You only need to do this when the behavior doesn't belong in the class triggering it. (YAGNI)
 
 
-## Designing Domain Events
+## Designing Domain Events ([Sample App](Domain%20Events))
 
 Each event is its own class
 
