@@ -174,7 +174,7 @@ public class AppointmentConfirmed : IDomainEvent
 }
 ```
 
-`NotifyUIAppointmentConfirmed`, `NotifyUIAppointmentCreated`, and `NotifyUserAppointmentCreated` events-handlers.
+`NotifyUIAppointmentConfirmed`, `NotifyUIAppointmentCreated`, and `NotifyUserAppointmentCreated` events handlers.
 
 ```csharp
 public class NotifyUiAppointmentConfirmed : INotificationHandler<AppointmentConfirmed>
@@ -216,5 +216,34 @@ public class NotifyUserAppointmentCreated : INotificationHandler<AppointmentCrea
 
         return Task.CompletedTask;
     }
+}
+```
+
+`Appointment` **Entity** adds an event to its event list after completing the `Create` operation and before the return statement.
+
+```csharp
+public static Appointment Create(string emailAddress)
+{
+    Console.WriteLine("Appointment::Create()");
+
+    var appointment = new Appointment
+    {
+        EmailAddress = emailAddress
+    };
+
+    appointment.Events.Add(new AppointmentCreated(appointment));
+
+    return appointment;
+}
+```
+
+`Appointment` **Entity** adds an event to its event list after completing the `Confirm` operation.
+
+```csharp
+public void Confirm(DateTime dateConfirmed)
+{
+    this.ConfirmationReceivedDate = dateConfirmed;
+
+    this.Events.Add(new AppointmentConfirmed(this, dateConfirmed));
 }
 ```
