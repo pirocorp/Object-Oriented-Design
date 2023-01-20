@@ -247,3 +247,21 @@ public void Confirm(DateTime dateConfirmed)
     this.Events.Add(new AppointmentConfirmed(this, dateConfirmed));
 }
 ```
+
+The actual dispatching of the events is done in the **Repository** **Save** method `await this.mediator.Publish(domainEvent).ConfigureAwait(false);`. 
+
+```csharp
+public async Task Save(TEntity entity)
+{
+    this.entities[entity.Id] = entity;
+    ConsoleWriter.FromRepositories("[DATABASE] Saved entity {0}", entity.Id.ToString());
+
+    var eventsCopy = entity.Events.ToArray();
+    entity.Events.Clear();
+
+    foreach (var domainEvent in eventsCopy)
+    {
+        await this.mediator.Publish(domainEvent).ConfigureAwait(false);
+    }
+}
+```
