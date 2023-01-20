@@ -14,6 +14,7 @@
 - [Value Object](Value%20Object)
 - [Repository](/06.%20Repositories)
 - [Specification](/07.%20Specification)
+- [Domain Events](Domain%20Events)
 
 # Resources
 
