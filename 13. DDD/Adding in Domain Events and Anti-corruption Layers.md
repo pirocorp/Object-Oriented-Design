@@ -101,7 +101,7 @@ Putting all logic into services leads to anemic domain models.
 
 Each **Entity** has a collection of **Events**.
 
-```chsarp
+```csharp
 public interface IEntity
 {
     List<IDomainEvent> Events { get; }
@@ -171,5 +171,50 @@ public class AppointmentConfirmed : IDomainEvent
     public Appointment Appointment { get; set; }
 
     public DateTime DateOccurred { get; private set; }
+}
+```
+
+`NotifyUIAppointmentConfirmed`, `NotifyUIAppointmentCreated`, and `NotifyUserAppointmentCreated` events-handlers.
+
+```csharp
+public class NotifyUiAppointmentConfirmed : INotificationHandler<AppointmentConfirmed>
+{
+    public Task Handle(AppointmentConfirmed notification, CancellationToken cancellationToken)
+    {
+        ConsoleWriter.FromUiEventHandlers(
+            "[UI] User Interface informed appointment for {0} confirmed at {1}",
+            notification.Appointment.EmailAddress,
+            notification.Appointment.ConfirmationReceivedDate.ToString());
+
+        return Task.CompletedTask;
+    }
+}
+
+public class NotifyUiAppointmentCreated : INotificationHandler<AppointmentCreated>
+{
+    public Task Handle(AppointmentCreated notification, CancellationToken cancellationToken)
+    {
+        var emailAddress = notification.Appointment.EmailAddress;
+
+        ConsoleWriter.FromUiEventHandlers(
+            "[UI] User Interface informed appointment created for {0}", 
+            emailAddress);
+
+        return Task.CompletedTask;
+    }
+}
+
+public class NotifyUserAppointmentCreated : INotificationHandler<AppointmentCreated>
+{
+    public Task Handle(AppointmentCreated notification, CancellationToken cancellationToken)
+    {
+        var emailAddress = notification.Appointment.EmailAddress;
+
+        ConsoleWriter.FromEmailEventHandlers(
+            "[EMAIL] Notification email sent to {0}", 
+            emailAddress);
+
+        return Task.CompletedTask;
+    }
 }
 ```
