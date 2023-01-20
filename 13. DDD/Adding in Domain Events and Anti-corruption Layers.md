@@ -90,3 +90,5 @@ public AppointmentScheduledEvent()
     this.Id = Guid.NewGuid();
 }
 ```
+
+## Applying Domain Events to a Simple App
