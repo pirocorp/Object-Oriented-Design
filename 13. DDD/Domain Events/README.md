@@ -66,7 +66,7 @@ public class AppointmentConfirmed : IDomainEvent
 }
 ```
 
-**Event Handlers** implement the `INotificationHandler<T>` interface  which comes from [MediatR](https://github.com/jbogard/MediatR) library. `NotifyUIAppointmentConfirmed`, `NotifyUIAppointmentCreated`, and `NotifyUserAppointmentCreated` events handlers.
+**Event Handlers** implement the `INotificationHandler<TNotification>` interface  which comes from [MediatR](https://github.com/jbogard/MediatR) library. Where `TNotification` is the raised event. `NotifyUIAppointmentConfirmed`, `NotifyUIAppointmentCreated`, and `NotifyUserAppointmentCreated` events handlers.
 
 ```csharp
 public class NotifyUiAppointmentConfirmed : INotificationHandler<AppointmentConfirmed>
