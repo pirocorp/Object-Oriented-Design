@@ -150,3 +150,11 @@ Eric Evans
 ![image](https://user-images.githubusercontent.com/34960418/213866658-82ea81b7-9249-4920-b71a-07d95b66ecd8.png)
 
 Whatever you need to insulate your system from the systems it works with is what you should put inside this layer. This should allow you to simplify how you interact with the other systems and ensure that their domain decisions do not bleed into your design. And ensure any necessary translation is done along the way.
+
+
+## Module Review
+
+- **Domain Event** - A class that captures the occurrence of an event in a domain object.
+- **Hollywood Principle** - Don’t call us, we’ll call you.
+- **Anti-Corruption Layer** - Functionality that insulates a bounded context and handles interaction with foreign systems or contexts. Anti-corruption layers protect your models while interacting with other systems.
+- 
