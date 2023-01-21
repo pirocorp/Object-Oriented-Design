@@ -36,4 +36,3 @@
 - [KanDDDinsky](https://www.youtube.com/@KanDDDinsky)
 - [Explore DDD](https://www.youtube.com/@ExploreDDD)
 - [Virtual DDD Meetup](https://www.youtube.com/@virtualdomain-drivendesign2670)
-- [Virtual Domain-Driven Design](https://www.youtube.com/@virtualdomain-drivendesign2670)
