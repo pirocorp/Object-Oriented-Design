@@ -137,4 +137,14 @@ Don’t expect integration events to match your domain events.
 
 ## Introducing Anti-Corruption Layers
 
+**Anti-Corruption Layer** helps you prevent corruption in your **Domain Model** and provides security to your **Model** when it needs to interact with other systems or **Bounded Contexts**.
 
+![image](https://user-images.githubusercontent.com/34960418/213866396-1f079b11-2a67-4de1-a7c6-ae80cb3ee030.png)
+
+Translate between foreign systems’ models and our own using design patterns, e.g. Façade, Adapter, or custom translation classes or services. Simplifies communication between systems. May employ design atterns such as façade or adapter.
+
+> Even when the other system is well designed, it is not based on the same model as the client.
+
+Eric Evans
+
+![image](https://user-images.githubusercontent.com/34960418/213866658-82ea81b7-9249-4920-b71a-07d95b66ecd8.png)
