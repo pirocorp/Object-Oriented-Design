@@ -155,6 +155,5 @@ Whatever you need to insulate your system from the systems it works with is what
 ## Module Review
 
 - **Domain Event** - A class that captures the occurrence of an event in a domain object.
-- **Hollywood Principle** - Don’t call us, we’ll call you.
 - **Anti-Corruption Layer** - Functionality that insulates a bounded context and handles interaction with foreign systems or contexts. Anti-corruption layers protect your models while interacting with other systems.
-- 
+
