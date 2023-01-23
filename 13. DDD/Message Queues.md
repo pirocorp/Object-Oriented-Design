@@ -17,7 +17,20 @@ flowchart LR
 
 Sometimes a number of applications are interested in that message, and you might not even know in advance or control those applications. So this is when something called **Service Bus** comes into play. 
 
-![image](https://user-images.githubusercontent.com/34960418/214044803-68de5b74-0954-4051-8e43-3c4185369862.png)
+```mermaid
+flowchart LR
+    subgraph Service Bus
+        direction LR
+        id5{{Message}} -..-> id6{{message}}
+        id5{{Message}} -..-> id7{{message}}
+        id5{{Message}} -..-> id8{{message}}
+    end
+
+    id1((Publisher)) -...-> id5{{Message}}
+    id6{{"✉️"}} -...-> id2{Dependent Process}
+    id7{{"✉️"}} -...-> id3{Dependent Process}
+    id8{{"✉️"}} -...-> id4{Dependent Process}
+```
 
 **Service Bus** usually sits on top of **Message Queues*, and one of its responsibilities is ensuring that messages get delivered to different applications that care about that messages.
 
