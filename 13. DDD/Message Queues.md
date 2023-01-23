@@ -22,9 +22,9 @@ Appointment Scheduled Workflow
 
 ```mermaid
 flowchart TB
-id1("AddNewAppointment()") -. "Using MediatR for domain events" -..-> id2("AppointmentScheduledEvent") -. "Using MediatR for domain events" -..-> id3("RelayAppointmentScheduledService(apptData)") -. "Using MediatR for domain events" -..-> id4("MessagePublish(apptObject)")
-  
-id3("RelayAppointmentScheduledService(apptData)") -..-> id5("{json}") -. "RabbitMQ for integration events" -..-> id6("Message queue")
+id1("AddNewAppointment()") -. "Using MediatR for domain events" -..-> id2("AppointmentScheduledEvent") -. "Using MediatR for domain events" -..-> id3("RelayAppointmentScheduledService(apptData)") -. "Using MediatR for domain events" -..-> id4("MessagePublish(apptObject) : {json}") -. "RabbitMQ for integration events" -..-> id6("Message queue")
+
+id2("AppointmentScheduledEvent") -. "Using MediatR for domain events" -..-> id7("AppointmentScheduledHandler") -. "SignalR" -..-> id8("ScheduleHub")
 ```
 
 ## Reading From the Message Queue and Acting on the Message
