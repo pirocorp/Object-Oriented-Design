@@ -31,6 +31,7 @@
 - [Services in Domain-Driven Design](https://lostechies.com/jimmybogard/2008/08/21/services-in-domain-driven-design/)
 - [Specification Pattern Base Class](https://github.com/ardalis/Specification)
 - [Avoid In-Memory Databases for Tests](jimmybogard.com/avoid-in-memory-databases-for-tests/)
+- [Bus or Queue](https://ardalis.com/bus-or-queue/)
 
 ## Conferences on DDD
 
