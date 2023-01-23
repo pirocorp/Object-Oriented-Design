@@ -142,3 +142,51 @@ The `SendConfirmationEmail` method in `ConfirmationEmailSender.cs` sends the mai
       _emailSender.SendEmail(to, from, subject, body);
   }
 ```
+
+## Using Multiple Queues to Handle Various Communications
+
+Sending the Confirmation to Front Desk
+
+ ```AppointmentController``` - When the client clicks on the confirmation button (Vet Clinic Public), the `AppointmentConfirmLinkClickedIntegrationEvent` is published. 
+
+```csharp
+[HttpGet("appointment/confirm/{id}")]
+public ActionResult Confirm(Guid id)
+{
+    var appEvent = new AppointmentConfirmLinkClickedIntegrationEvent(id);
+    _messagePublisher.Publish(appEvent);
+    return View();
+}
+```
+
+The `Publish` method in `RabbitMessagePublisher` publishes the `AppointmentConfirmLinkClickedIntegrationEvent` message to the RabbtiMQ **on another queue**.
+
+```csharp
+public void Publish(AppointmentConfirmLinkClickedIntegrationEvent eventToPublish)
+{
+    Guard.Against.Null(eventToPublish, nameof(eventToPublish));
+    var channel = _objectPool.Get();
+    object message = (object)eventToPublish;
+    
+    try
+    {
+        string exchangeName = MessagingConstants.Exchanges.FRONTDESK_VETCLINICPUBLIC_EXCHANGE;
+        channel.ExchangeDeclare(exchangeName, "direct", true, false, null);
+
+        var sendBytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
+
+        var properties = channel.CreateBasicProperties();
+        properties.Persistent = true;
+
+        channel.BasicPublish(
+          exchange: exchangeName,
+          routingKey: "appointment-confirmation",
+          basicProperties: properties,
+          body: sendBytes);
+      }
+    finally
+    {
+        _objectPool.Return(channel);
+    }
+}
+```
