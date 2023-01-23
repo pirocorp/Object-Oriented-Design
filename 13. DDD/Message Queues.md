@@ -240,3 +240,9 @@ Analogically the FrontDesk app listens for messages on a RabbtiMQ queue, and if 
       }
   }
 ```
+
+## Module Review
+
+- **Message Queue** - A tool for storing and retrieving messages, often used by applications to communicate with one another in a disconnected fashion.
+- **Service Bus** - Software responsible for managing how messages are routed between numerous applications and services.
+
