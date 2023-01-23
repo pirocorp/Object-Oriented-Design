@@ -2,6 +2,8 @@
 
 ## Introducing Message Queues
 
+A **Message Queue** receives messages from an application and makes them available to one or more other applications in a first-in-first-out (FIFO) manner. In many architectural scenarios, if application A needs to send updates or commands to applications B and C, then separate message queues can be set up for B and C. A would write separate messages to each queue, and each dependent application would read from its own queue (the message being removed upon being dequeued). Neither B nor C need to be available in order for A to send updates. Each message queue is persistent, so if an application restarts, it will begin pulling from its queue once it is back online. This helps break dependencies between dependent systems and can provide greater scalability and fault tolerance to applications.
+
 **Message Queues** decuples applications and make it so that one of the applications can drop off something into a **Message Queue** and continue with its work and not have to worry about what happens to the message after that. 
 
 Applications trying to communicate with one another don't need to worry that the other application is available and listening at that very moment. The message can sit in a queue, and when the other application is ready, it does grab it. 
@@ -33,6 +35,8 @@ flowchart LR
 ```
 
 **Service Bus** usually sits on top of **Message Queues*, and one of its responsibilities is ensuring that messages get delivered to different applications that care about that messages.
+
+A **Service Bus** or **Message Bus** provides a way for one (or more) application to communicate messages to one or more other applications. There may be no guarantee of first-in-first-out ordering, and subscribers to the bus can come and go without the knowledge of message senders. Thus, an application A could be written to communicate status updates to application B via a message bus. Later, application C is written that can also benefit from these updates. Application C can be configured to listen to the message bus and take action based on these updates as well, without requiring any update to application A. Unlike queues, where the sending application explicitly adds messages to every queue, a message bus uses a publish/subscribe model. Messages are published to the bus, and any application that has subscribed to that kind of message will receive it. This approach allows applications to follow the open/closed principle, since they become open to future changes while remaining closed to additional modification.
 
 ## Sending a Message to the Queue
 
