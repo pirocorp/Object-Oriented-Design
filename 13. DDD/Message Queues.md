@@ -31,7 +31,7 @@ id3("RelayAppointmentScheduledService(apptData)") -..-> id5("{json}") -. "Rabbit
 
 `Startup.cs` -  registering `FrontDeskRabbitMqService` as a background service that listens for messages from the RabbitMQ.
 
-```
+```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     ...
