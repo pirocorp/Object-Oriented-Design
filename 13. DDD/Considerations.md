@@ -28,11 +28,10 @@ Jimmy Nilsson
 
 - Event Storming
 - Event Modeling
-- A Model Designed Using Miro.com
 - Domain Storytelling
 - Domain Storytelling Modeler
 - Bounded Context Canvas
-
+- Using [Miro.com](miro.com) for a Model Desiggn
 
 # Fallacy of Perfectionism
 
