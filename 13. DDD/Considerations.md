@@ -22,3 +22,26 @@ The demands of the user interface can impact parts of your application.
 > Most likely I’m learning stuff [with UI sketching] that affects my story and scenario
 
 Jimmy Nilsson
+
+
+# Modeling with Event Storming and Other Techniques
+
+- Event Storming
+- Event Modeling
+- A Model Designed Using Miro.com
+- Domain Storytelling
+- Domain Storytelling Modeler
+- Bounded Context Canvas
+
+
+# Fallacy of Perfectionism
+
+**Domain-Driven Design provides guidance, not rules.**
+
+> There’s something about DDD that brings out the perfectionist in people… they say, this model’s not really good enough…and basically churn and churn. I’m here to say, no model is going to be perfect.
+>
+> We need to know what we’re doing with this thing, the scenarios we’re trying to address. We want a model that helps us do that, that makes it easier to make software that solves those problems. That’s it.
+
+Eric Evans
+
+
