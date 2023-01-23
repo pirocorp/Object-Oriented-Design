@@ -8,7 +8,12 @@ Applications trying to communicate with one another don't need to worry that the
 
 With the **Message Queue**, we were dealing with a single message. One application drops it, another takes it, and then the message is gone.
 
-![image](https://user-images.githubusercontent.com/34960418/214043868-275b1f53-6291-47e9-bbf8-6e99046b0282.png)
+```mermaid
+flowchart LR
+    id1((Publisher)) -...-> id2[[Message Queue]] -...-> id3{Dependent Process}
+    id1((Publisher)) -...-> id4[[Message Queue]] -...-> id5{Dependent Process}
+    id1((Publisher)) -...-> id6[[Message Queue]] -...-> id7{Dependent Process}
+```
 
 Sometimes a number of applications are interested in that message, and you might not even know in advance or control those applications. So this is when something called **Service Bus** comes into play. 
 
