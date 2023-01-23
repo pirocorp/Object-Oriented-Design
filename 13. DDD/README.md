@@ -8,6 +8,7 @@
 - [Working with Repositories](Working%20with%20Repositories.md)
 - [Adding in Domain Events and Anti-corruption Layers](Adding%20in%20Domain%20Events%20and%20Anti-corruption%20Layers.md)
 - [Message Queues](Message%20Queues.md)
+- [Considerations](Considerations.md)
 
 
 # Patterns Of DDD
