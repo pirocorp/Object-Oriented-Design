@@ -190,3 +190,35 @@ public void Publish(AppointmentConfirmLinkClickedIntegrationEvent eventToPublish
     }
 }
 ```
+
+Analogically the FrontDesk app listens for messages on a RabbtiMQ queue, and if it gets new ones, it publishes `AppointmentConfirmLinkClickedIntegrationEvent` internally through MediatR.
+
+```csharp
+  private async Task HandleMessage(string message)
+  {
+      _logger.LogInformation($"Handling Message: {message}");
+      using var doc = JsonDocument.Parse(message);
+      var root = doc.RootElement;
+      var eventType = root.GetProperty("EventType");
+
+      using var scope = _serviceScopeFactory.CreateScope();
+      var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+      if (eventType.GetString() == nameof(AppointmentConfirmLinkClickedIntegrationEvent))
+      {
+          Guid appointmentId = root.GetProperty("AppointmentId").GetGuid();
+          DateTimeOffset dateTimeOffset = root.GetProperty("DateTimeEventOccurred").GetDateTimeOffset();
+          
+          var appEvent = new AppointmentConfirmLinkClickedIntegrationEvent(dateTimeOffset)
+          {
+              AppointmentId = appointmentId
+          };
+          
+          await mediator.Publish(appEvent);
+      }
+      else
+      {
+          throw new Exception($"Unknown message type: {eventType.GetString()}");
+      }
+  }
+```
