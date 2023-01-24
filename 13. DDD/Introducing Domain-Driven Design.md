@@ -162,9 +162,6 @@ Eric Evans's great contribution to this, was developing a vocabulary to talk abo
   id1 -- "define model with" --> id11
   id1 -- "model gives structure to" --> id10
 ```
-
-![image](https://user-images.githubusercontent.com/34960418/211310896-a1778527-954d-4e62-8037-95935b4ca65b.png)
-
 - Modeling - Modeling is an intense examination of the problem space. 
   - Core Domain - The key is working with the subject matter experts to identify the core domain and other sub-domains that will be tackled.
   - Bounded Contexts - You focus on modeling a particular sub-domain in each of these bounded contexts.
