@@ -160,8 +160,6 @@ Eric Evans's great contribution to this, was developing a vocabulary to talk abo
       id11 -- "name enter" --> id10
       id11 -- "keep model unified by" --> id14
     end
-  
-
     
     id11 -- "assess/overview relationships with" --> id15
   end
@@ -174,7 +172,39 @@ Eric Evans's great contribution to this, was developing a vocabulary to talk abo
   - Bounded Contexts - You focus on modeling a particular sub-domain in each of these bounded contexts.
   - Generic Subdomains - The model also has notes for each element, such as avoiding overinvesting in Generic Subdomains. That can be something like the credit card verification service you can use rather than building yourself.
 
-![image](https://user-images.githubusercontent.com/34960418/211311084-23c46cfe-116a-4f7c-b69b-2ca256b2a818.png)
+```mermaid
+flowchart LR
+  subgraph ide3 ["Context Map"]
+    id15(Context Map)
+    id16(Shared Kernel)
+    id17(Customer / Supplier)
+    id18(Conformist)
+    id19(Open Host Service)
+    id20(Published Language)
+
+    id15 -- "interdependent contexts from" --> id16
+    id15 -- "overlap allied contexts through" --> id16
+    id15 -- "relate allied contexts as" --> id17
+    id15 -- "minimize translation" --> id18
+    id15 -- "support multiple clients through" --> id19 -- "formalize" --> id20
+    id15 -- "loosely couple contexts through" --> id20
+  end
+
+  subgraph ide2 ["Domain"]
+    id10(Ubiquitous Language)
+    id11(Bounded Context)    
+    id12(Core Domain)
+    id13(Generic Subdomains)    
+
+    id12 -- "cultivate rich model with" --> id10
+    id12 -- "work in autonomous, clean" --> id11
+    id12 -- "avoid overinvesting in" --> id13
+
+    id11 -- "name enter" --> id10
+  end
+
+  id11 -- "assess/overview relationships with" --> id15
+```
 
 - Software Implementation - As a result of modeling the bounded context, you'll identify entities, value objects, aggregates, domain events, repositories, and more and how they interact with each other.
   - **Entities**
