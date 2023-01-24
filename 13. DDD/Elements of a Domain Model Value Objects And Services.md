@@ -28,13 +28,51 @@ If I know a field will contain a whole value or nil, I do not have to be concern
 
 Worth is a **Value Object**
 
-![image](https://user-images.githubusercontent.com/34960418/212072662-88b8f086-4990-41f9-a569-f850b7abe265.png)
+```mermaid
+classDiagram
+  direction LR
+  Company *-- Worth 
+
+  class Company {
+    - Id
+    - Worth
+  }
+  
+  class Worth {
+    - Unit
+    - Amount
+  }
+```
 
 GeoCoordinate are another example of whole value.
 
 DateTimeRange as **Value Object**.
 
-![image](https://user-images.githubusercontent.com/34960418/212073850-9f92fcea-8ef7-4649-981e-43de22b268b5.png)
+```mermaid
+classDiagram
+  direction LR
+  Appointment *-- DateTimeRange 
+  Meeting *-- DateTimeRange 
+
+  class Appointment {
+    - ClientId
+    - DoctorId
+    - PatientId
+    - DateTimeRange
+  }
+  
+    class Meeting {
+    - RoomId
+    - StaffAttending
+    - DateTimeRange
+  }
+  
+  class DateTimeRange {
+    Start
+    End
+    DateTimeRange(start, end)
+  }
+```
 
 > It may surprise you to learn that we should strive to model using Value Objects instead of Entities wherever possible. Even when a domain concept must be modeled as an Entity, the Entity’s design should be biased toward serving as a value container rather than a child Entity container.
 
