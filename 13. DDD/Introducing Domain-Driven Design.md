@@ -253,7 +253,10 @@ flowchart LR
 - Communication
   - **Ubiquitous Language** - to come up with terms that will be commonly used when discussing a particular sub-domain. And they most likely are terms coming from problem space, not the software world. They have to be agreed upon so that as discussions move forward, there is clarity and understanding created by the terminology used by team members.
 
-![image](https://user-images.githubusercontent.com/34960418/211311270-ed649daa-5158-4565-95d3-53bb0667d1a8.png)
+```mermaid
+flowchart LR
+  id10(Ubiquitous Language)
+```
 
 - Development Process
   - **Anti-corruption Layer** - Anti-corruption layer allows sub-domains to communicate with one another from behind their boundaries.
@@ -261,6 +264,14 @@ flowchart LR
   
 ![image](https://user-images.githubusercontent.com/34960418/211311377-db0035b1-e4a9-4b41-97df-6bdc9f7c3e57.png)
 
+```mermaid
+flowchart LR
+  id1(Layered Architecture)
+  id2(Continuous integration)   
+  id3(Separate Ways)
+  id4(Anti-Corruption Layer)
+  id5(Big Ball of Mud)
+```
 
 ## Exploring the Sample App’s High-Level Structure
 
