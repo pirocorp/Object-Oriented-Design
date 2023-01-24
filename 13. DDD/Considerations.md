@@ -11,6 +11,7 @@ Each **Microservice** should have a boundary around it, and within that boundary
 
 It is not unusual for teams to treat individual **Microservices** like **Bounded Contexts** with their own **Ubiquitous Language** and everything else that goes along with the **Bounded Contexts**. **Bounded context is not necessarily equal to a microservice**
 
+![image](https://user-images.githubusercontent.com/34960418/214265199-cc99422d-aa52-4c1e-9dad-e67ec96c420c.png)
 
 # Considering the UI in the Domain Design
 
