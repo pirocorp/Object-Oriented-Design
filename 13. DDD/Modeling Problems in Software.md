@@ -107,7 +107,32 @@ The central concept in this application is the **Appointment** itself. Typically
 
 **Appointments** may be for office visits or vaccinations, or they may be **Surgeries** which are separate kinds of things entirely with their own rules. They involve different kinds of **Procedures**. **Surgeries** require different **Resources**, too, like **Operating Room** and **Recovery Room**.
 
-![image](https://user-images.githubusercontent.com/34960418/211534635-00a634e0-5c7d-45a7-b710-44a79bb10f27.png)
+```mermaid
+flowchart LR
+    id1(Client)
+    id2(Patient)
+    id3(Appointment)
+    id4(Surgery)
+    
+    subgraph ide1[Appoitment Types]
+      direction LR
+      id3(Appointment)
+      id4(Surgery)
+    end
+    
+    subgraph ide2[Resources]
+      direction LR
+      id5(Exam Room)
+      id6(Doctor)
+      id7(O/R)
+      id8(Recovery)
+    end
+    
+    id1 -- "Schedules" --> ide1
+    id2 -- "Schedules" --> ide1
+    
+    ide1 -- "Requires" --> ide2    
+```
 
 ## Using Bounded Contexts to Untangle Concepts that Appear to Be Shared
 
