@@ -2,7 +2,11 @@
 
 Entity & Context are Common Software Terms
 
-![image](https://user-images.githubusercontent.com/34960418/211572523-4a4d4eb6-aa30-49d6-a35d-4db043007b31.png)
+|         | Entity Framework Core                                                                      | Domain-Driven Design                                                       |
+|---------|--------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| Entity  | A data model class with a key that is mapped to a table in a database                      | A domain class with an identity for tracking                               |
+| Context | A DbContext class provides access to entities and defines how entities map to the database | A Bounded Context defines the scope and boundaries of a subset of a domain |
+|         |                                                                                            |                                                                            |
 
 
 ## Focusing on the Domain
