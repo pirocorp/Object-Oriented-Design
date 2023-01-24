@@ -301,7 +301,37 @@ The context map is a visual representation of the system’s bounded contexts an
 
 Eric Evans
 
-![image](https://user-images.githubusercontent.com/34960418/211546109-7b79e56b-f172-4016-9bab-624930b888a8.png)
+### Mirroring Data: High Level
+
+At a very high level, the solution I’ll apply is that every time a customer is inserted into System A, the ID and name of that customer should be added to System B’s data store. If I change an existing customer’s name in System A, then System B needs to have the correct name as well, so a name change should cause an update in the System B data store. This domain doesn’t delete data, but a future enhancement could be to remove inactive customers from the System B data store. I won’t bother with that in this implementation.
+
+So, from the previous paragraph, I care about only two events in System A to which I need to respond:
+
+- A customer was inserted
+- An existing customer’s name was updated
+
+In a connected system, System B could expose methods for System A to call, such as InsertCustomer or UpdateCustomerName. Or System A could raise events, such as CustomerCreated and CustomerNameUpdated, for other systems, including System B, to catch and respond to.
+
+In response to each event, System B needs to do something in its database.
+
+Because these systems are disconnected, a better approach is to employ a publish-subscribe pattern. System A will publish one or more events to some type of operator. And one or more systems then subscribe to that same operator, waiting for particular events and performing their own actions in response to those events.
+
+Publish-subscribe aligns with the principles of DDD that require these two systems be unaware of each other and, therefore, not talk directly to one another. So, instead, I’ll use a concept called an anti-corruption layer. Each system will communicate through the operator that will shuffle messages between the two.
+
+This operator is a message queue. System A will send messages to the queue. System B will retrieve messages from the queue.
+
+
+### What’s in the Event Message?
+
+When the event being published is the CustomerCreated event, System A will send a message that says, “A customer has been inserted. Here’s the customer’s identity and name.” That’s the full message except that it’s represented in data, not in nice English sentences. The interesting part about publishing an event to a message queue is that the publisher doesn’t care what systems are retrieving the message or what they’ll do in response.
+
+System B will respond to that message by inserting or updating the customer in its database. In the end, System B, the ordering system, will have a complete list of customers it can use.
+
+
+### Communicating with the Message Queue
+
+A system that allows you to communicate messages in an asynchronous way is called an event bus. An event bus contains the infrastructure to store messages and provide them to whoever needs to retrieve them. It also provides an API for interacting with it.
+
 
 ![image](https://user-images.githubusercontent.com/34960418/211546239-124ace5c-0574-4da2-a911-9d470b44effe.png)
 
