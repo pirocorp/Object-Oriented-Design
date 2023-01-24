@@ -19,7 +19,7 @@ It is not unusual for teams to treat individual **Microservices** like **Bounded
   
   Martin Fowler
   
-- Heuristic #3 Buy/Adopt Generic Subdomains
+- Heuristic #3 Buy/Adopt **Generic Subdomains**
 
 
 # Considering the UI in the Domain Design
