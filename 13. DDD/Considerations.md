@@ -50,7 +50,7 @@ It is not unusual for teams to treat individual **Microservices** like **Bounded
       
         ide1 -- "Sync call" --> ide2
     ```
-  - Eventual consistency? - Two services, asynchronous communication
+  - Eventual consistency? - Two services, asynchronous communication - default way of integrating microservices.
     ```mermaid
       flowchart LR
       subgraph ide1 [Service A]
@@ -66,6 +66,26 @@ It is not unusual for teams to treat individual **Microservices** like **Bounded
       
       ide1 --> ide3 --> ide2
     ```
+- Heuristic #7 Public / Private Events
+  - Separate events on public and private - this minimizes the services front door. It also freed you to change the implementation details without affecting the integrating systems (clients that integrate with your service).
+  ```mermaid
+  flowchart LR
+    id1[Service A] -- "✉️" -->  id2{{"Event Type 1"}} --> id9("Public event types (Public interface)")
+    id1[Service A] -- "✉️" -->  id3{{"Event Type 2"}} --> id9("Public event types (Public interface)")
+    id1[Service A] -- "✉️" -->  id4{{"Event Type 3"}} --> id9("Public event types (Public interface)")
+    id1[Service A] -- "✉️" -->  id5{{"Event Type 4"}} --> id10("Private event types (Implementation details)")
+    id1[Service A] -- "✉️" -->  id6{{"Event Type 5"}} --> id10("Private event types (Implementation details)")
+    id1[Service A] -- "✉️" -->  id7{{"Event Type 6"}} --> id10("Private event types (Implementation details)")
+    id1[Service A] -- "✉️" -->  id8{{"Event Type 1000"}} --> id10("Private event types (Implementation details)")
+  ```
+  - Compressing the public events
+  ```mermaid
+  flowchart LR
+    id1[Service A] -- "✉️" -->  id2{{"EmailChanged"}} -->  id10("Private event types (Implementation details)")
+    id1[Service A] -- "✉️" -->  id3{{"PhoneNumberChanged"}} -->  id10("Private event types (Implementation details)")
+    id1[Service A] -- "✉️" -->  id4{{"AddressChanged"}} -->  id10("Private event types (Implementation details)")
+    id1[Service A] -- "✉️" -->  id5{{"ContactDetailsChanged"}} --> id9("Public event type (Public interface)")
+  ```
 
 # Considering the UI in the Domain Design
 
