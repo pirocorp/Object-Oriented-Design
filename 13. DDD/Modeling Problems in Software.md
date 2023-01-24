@@ -165,11 +165,128 @@ DDD's strategic design goes on to describe a variety of ways that you have relat
 
 ## Introducing Context Maps
 
-**Context Map** - Demonstrates how bounded contexts connect to one another while supporting communication between teams.
+```mermaid
+    flowchart LR
+      id15(Context Map)
+      id16(Shared Kernel)
+      id17(Customer / Supplier)
+      id18(Conformist)
+      id19(Open Host Service)
+      id20(Published Language)
+      id21(Separate Ways)
+      id22(Anti-Corruption Layer)
+      id23(Big Ball of Mud)
 
-![image](https://user-images.githubusercontent.com/34960418/211544847-17e11168-8fea-4664-9a80-38d97c2d7c36.png)
+      id15 -- "interdependent contexts from" --> id16
+      id15 -- "overlap allied contexts through" --> id16
+      id15 -- "relate allied contexts as" --> id17
+      id15 -- "minimize translation" --> id18
+      id15 -- "support multiple clients through" --> id19 -- "formalize" --> id20
+      id15 -- "loosely couple contexts through" --> id20
+      id15 -- "free teams to go" --> id21
+      id15 -- "translate and insulate unilaterally with" --> id22
+      id15 -- "segregate the conceptual messes" --> id23
+```
+
+Not only does the **Bounded Context** protect the consistency of a **Ubiquitous Language**, but it also enables modeling. You cannot build a **Model** without specifying its purpose—its boundary. The boundary divides the responsibility of languages. A language in one **Bounded Context** can model the business domain for the solving of a particular problem. Another **Bounded Context** can represent the same business entities, but model them for solving a different problem.
+
+Moreover, models in different **Bounded Contexts** can be evolved and implemented independently. That said, **Bounded Contexts** are not independent. A system cannot be built out of independent components; the components have to interact with one another to achieve the overarching system goals. The same goes for **Bounded Contexts**. Although their implementations can evolve independently, they have to integrate with each other. As a result, there will always be touchpoints between bounded contexts. These are called contracts.
+
+The need for contracts results from differences in **Bounded Context** models and languages. Since each contract affects more than one party, they need to be defined and coordinated. Also, by definition, two bounded contexts are using different **Ubiquitous Language**. Which language will be used for integration purposes? These integration concerns should be addressed by the solution’s design.
+
+### Shared Kernel
+
+The shared kernel is a formal way of defining a contract between multiple **Bounded Contexts**. The library defines the integration methods and language used by both bounded contexts.
+
+The **Shared Kernel** is both referenced and owned by multiple **Bounded Contexts**. Each team is free to modify the compiled library that defines the integration contract. A change to the contract can break the other team’s build, though; hence, as in the partnership case, this pattern requires high levels of commitment and synchronization between teams.
+
+A peculiar detail about the **Shared Kernel** pattern is that in a way, it contradicts a core principle of **Bounded Contexts**: that only one team can own a **Bounded Context**. Here we extract a shared part of multiple **Bounded Contexts** into its own **Bounded Context**. As a result, the shared **Bounded Context** is jointly owned by multiple teams.
+
+The key to implementing the **Shared Kernel** pattern is to keep the scope of the **Shared Kernel** small, and limited to the integration contract only.
 
 ![image](https://user-images.githubusercontent.com/34960418/211545183-7abe2e9a-3d08-49b6-b585-e1afbe10a8cd.png)
+
+#### One team owning multiple bounded contexts
+
+It’s worth mentioning that a **Shared Kernel** is a natural fit for integrating **Bounded Contexts** that are owned and implemented by the same team. In such a case, an ad hoc integration of the **Bounded Contexts** can “wash out” the contexts’ boundaries over time. A **Shared Kernel** can be used for explicitly defining the integration contract.
+
+Moreover, in this scenario, the one team ownership principle is not broken—both **Bounded Contexts** are implemented by the same team.
+
+### Customer–Supplier
+
+Here one of the **Bounded Contexts** — the **supplier** — provides a service for its **customers**. The service provider is “**upstream**,” and the **customer** or **consumer** is “**downstream**.”
+
+![image](https://user-images.githubusercontent.com/34960418/214337366-5b771ec8-25f2-4629-a271-3f22f68fc64c.png)
+
+Unlike in the **Shared Kernel**, both teams (**upstream** and **downstream**) can succeed independently. Hence, in most cases, we have an imbalance of power: either the **upstream** or the **downstream** team can dictate the integration contract.
+
+### Conformist
+
+In some cases the balance of power is in favor of the **upstream** team, which has no real motivation to support its clients’ needs. Instead, it just provides the integration contract, defined according to its own **Model**—take it or leave it. Such power imbalances can be caused by integration with service providers that are external to the organization, or simply by organizational politics.
+
+If the **downstream** team can accept the **upstream** team’s model, the relationship between the **Bounded Contexts** is called conformist. The **downstream** team conforms to the **upstream** team’s **Model**.
+
+![image](https://user-images.githubusercontent.com/34960418/214339188-3b0e54e5-0dcb-4424-94b6-6604733195fe.png)
+
+The **downstream** team’s decision to give up some of its autonomy can be justified in multiple ways. For example, the contract exposed by the **upstream** team may be an industry-standard, well-established model, or it may just be good enough for the **downstream** team’s needs.
+
+### Anticorruption Layer
+
+As in the case of the conformist pattern, the balance of power in this relationship is still skewed toward the **upstream** service. However, in this case the **downstream** **Bounded Context** is not willing to conform. What it can do instead is translate the **upstream** **Bounded Contexts**’s **Model** into a **Model** tailored to its own needs via an **Anticorruption Layer**.
+
+The **Anticorruption Layer** addresses scenarios in which it is not desirable or worth the effort to conform to the supplier’s model, such as:
+  - When the **downstream** **Bounded Context** contains a **Core Subdomain**. A **Core Subdomain**’s **Model** requires extra attention, and adhering to the supplier’s **Model** might impede the modeling of the problem domain.
+  - When the **upstream** **Model** is bad or inconvenient. If a **Bounded Context** conforms to a mess, it risks becoming a mess itself. This is often the case with integration with legacy systems.
+  - When the supplier’s contract changes often, and the consumer wants to protect its **Model** from such frequent changes. With an **Anticorruption Layer**, the changes in the supplier’s **Model** only affect the translation mechanism.
+
+From the modeling perspective, the translation of the **supplier**’s **Model** isolates the **downstream** **consumer** from foreign concepts that are not relevant to its **Bounded Context**. Hence, it simplifies the consumer’s **Ubiquitous Language** and **Model**.
+
+![image](https://user-images.githubusercontent.com/34960418/214340027-8ee394bb-e94b-46e5-b42e-1292b0237a4e.png)
+
+### Open-Host Service
+
+This pattern addresses the case where the power is skewed toward the consumers. The **supplier** is interested in protecting its **consumers** and providing the best service possible.
+
+To protect the **consumers** from changes in its implementation, the **upstream** **supplier** decouples its implementation **Model** from the public interface. This decoupling allows the supplier to evolve its implementation and public **Models** at different rates.
+
+![image](https://user-images.githubusercontent.com/34960418/214342020-f4bd394e-d497-4696-ae00-549877fefe18.png)
+
+The **supplier**’s public interface is not intended to conform to its **Ubiquitous Language**. Instead, it is intended to expose a **protocol** convenient for the **consumers**, expressed in an **integration-oriented language**. Hence, the public protocol is called the “published language.”
+
+In a sense, the open-host service pattern is a reversal of the **Anticorruption Layer**: instead of the **consumer**, the **supplier** implements the translation of its internal **Model**.
+
+### Separate Ways
+
+The last collaboration option is, of course, not to collaborate at all. This pattern can arise for different reasons, in cases where the teams are not willing or able to collaborate. We’ll look at a few of them here.
+
+#### Communication Issues
+
+A common reason for avoiding collaboration is communication difficulties driven by the organization’s size or internal political issues. When teams have a hard time collaborating and agreeing, it may be more cost-effective for them to go their separate ways and duplicate functionality in multiple **Bounded Contexts**.
+
+#### Generic Subdomains
+
+The nature of the duplicated **Subdomain** can also be a reason for teams to go their separate ways. More specifically, when the **Subdomain** in question is generic, if the generic solution is easy to integrate it may be more cost-effective to integrate it in each of the **Bounded Contexts** locally. An example is a logging framework; it would make little sense for one of the **Bounded Contexts** to expose it as a service, as the added complexity of integrating such a solution would outweigh the benefit of not duplicating the functionality in multiple contexts. Duplicating the functionality would be less expensive than collaboration.
+
+#### Model Differences
+
+The difference in **Bounded Contexts**’ **Models** can also be a reason to go separate ways. The **Models** may be so different that a conformist relationship is not possible, and implementing an **Anticorruption Layer** would be more expensive than duplicating the functionality. In such a case, again, it’s more cost-effective for the teams to go their separate ways.
+
+#### When to Avoid
+
+The separate ways should be avoided when integrating core **Subdomains**. Duplicating the implementation of such **Subdomains** would defy the company’s strategy to implement them in the most effective and optimized way.
+
+
+### Context Map
+
+After analyzing the integration patterns between a system’s bounded contexts, we can plot them on a context map.
+
+**Context Map** - Demonstrates how bounded contexts connect to one another while supporting communication between teams.
+
+**Context Maps**, are a part of strategic **Domain-driven Design** whichs aims at delivering a holistic overview over the interactions between bounded contexts and teams. They make the implicitly hidden organizational dynamics explicitly visible.
+
+![image](https://user-images.githubusercontent.com/34960418/214344915-32dd56aa-2d15-4079-8e10-9886fb2675ee.png)
+
+The context map is a visual representation of the system’s bounded contexts and integrations between them. This visual notation gives valuable strategic insight on multiple levels:
 
 
 ## Addressing the Question of Separate Databases per Bounded Context
