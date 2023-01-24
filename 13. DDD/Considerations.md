@@ -19,12 +19,11 @@ It is not unusual for teams to treat individual **Microservices** like **Bounded
   
   Martin Fowler
   
-- Heuristic #3 Buy/Adopt **Generic Subdomains** - it is beneficial to abstract its model and implementation details by implementing a thin **Anti-Corruption-Layer** that will be used as a proxy between that product and your system.
+- Heuristic #3 Buy/Adopt **Generic Subdomains** - it is beneficial to abstract its model and implementation details by implementing a thin **Anti-Corruption-Layer** that will be used as a proxy between that product and your system. This will make them well-behaved microservices.
   ```mermaid
     flowchart LR
     id1[Your System] <--> id2[Anti-Corruption-Layer] <--> id3[3rd party product]
   ```
-
 
 # Considering the UI in the Domain Design
 
