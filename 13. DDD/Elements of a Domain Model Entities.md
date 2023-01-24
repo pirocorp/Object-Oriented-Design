@@ -114,8 +114,43 @@ Entities Have Identity And Are Mutable. An Entity is something that we can be ab
     id8 -- "encapsulate with" --> id9
 ```
 
-![image](https://user-images.githubusercontent.com/34960418/211600794-6c51c409-2b14-4a14-87cd-3aec64c8de6a.png)
-
+```mermaid
+classDiagram
+  BaseEntity~T~ <|-- Client
+  BaseEntity~T~ <|-- Patient
+  BaseEntity~T~ <|-- Doctor
+  BaseEntity~T~ <|-- Room
+  BaseEntity~T~ <|-- Appointment
+  
+  class Client {
+    - FullName
+    - Patients
+  }
+  
+  class Patient {
+    - AnimalType
+    - ClientId
+    - Gender
+    - Name
+    - PreferredDoctor
+  }
+  
+  class Doctor {
+    - Name
+  }
+  
+  class Room {
+    - Name
+  }
+  
+  class Appointment {
+    - ClientId
+    - DoctorId
+    - PatientId
+    - RoomId
+    - StartEndTime
+  }
+```
 
 ## Differentiating CRUD from Complex Problems that Benefit from DDD
 
