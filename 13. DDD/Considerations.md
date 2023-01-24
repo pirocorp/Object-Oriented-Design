@@ -25,6 +25,48 @@ It is not unusual for teams to treat individual **Microservices** like **Bounded
     id1[Your System] <--> id2[Anti-Corruption-Layer] <--> id3[3rd party product]
   ```
 
+- Heuristic #4 **Core Subdomains** - Don't Rush - Adhere to the subdomain's boundaries. Decompose further only when you acquire domain knowledge. Making changes across wrong boundaries, it's both painful, and the complexity of each change will be orders of magnitude higher.
+- Heuristic #5 Supporting Subdomains - Safe to decompose beyond the subdomain's boundaries. 
+- Heuristic #6 Evaluate Consistency Requirements
+  - Concurency Control? - Same Service
+    ```mermaid
+      flowchart TB
+      subgraph ide1 [Service A]
+        direction BT
+        id2((Method A)) --> id1[(Database)]
+        id3((Method B)) --> id1[(Database)]
+      end
+    ```
+  - Read last write? - Two services, synchronous communication
+    ```mermaid
+      flowchart LR
+        subgraph ide1 [Service A]
+          id2((Method A))
+        end
+        
+        subgraph ide2 [Service B]
+          id3((Method B))
+        end
+      
+        ide1 -- "Sync call" --> ide2
+    ```
+  - Eventual consistency? - Two services, asynchronous communication
+    ```mermaid
+      flowchart LR
+      subgraph ide1 [Service A]
+        id2((Method A))
+      end
+      subgraph ide2 [Service B]
+        id3((Method B))
+      end
+      
+      subgraph ide3 [Asynchronous Communication]
+        id4{{"✉️"}}
+      end
+      
+      ide1 --> ide3 --> ide2
+    ```
+
 # Considering the UI in the Domain Design
 
 Is it an anti-pattern to think about the UI when we are focused on the domain?
