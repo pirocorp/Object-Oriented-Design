@@ -213,7 +213,42 @@ flowchart LR
   - **Aggregates**
   - **Repositories**
 
-![image](https://user-images.githubusercontent.com/34960418/211311186-01ceda12-53c9-4732-a54d-e8af88eee01b.png)
+```mermaid
+flowchart LR
+  subgraph ide1 ["Software Implementation"]
+    direction LR
+    id1(Model-Driven Design)
+    id2(Services)
+    id3(Layered Architecture)
+    
+    id4(Domain Events)
+    id5(Entities)
+    id6(Value Objects)
+    
+    id7(Repositories)
+    id8(Aggregates)
+    id9(Factories)
+    
+    id1 -- "express model with" --> id2
+    id1 -- "isolate domain expressions with" --> id3
+    
+    id1 -- "express change with" --> id4
+    id1 -- "express identity with" --> id5
+    id1 -- "express state and computation with" --> id6
+    
+    id5 -- "push state change with" --> id4
+    id5 -- "access with" --> id7
+    id5 -- "encapsulate with" --> id8
+    id5 -- "act as root of" --> id8
+    id5 -- "encapsulate with" --> id9
+    
+    id6 -- "encapsulate with" --> id8
+    id6 -- "encapsulate with" --> id9
+    
+    id8 -- "access with" --> id7
+    id8 -- "encapsulate with" --> id9
+  end
+```
 
 - Communication
   - **Ubiquitous Language** - to come up with terms that will be commonly used when discussing a particular sub-domain. And they most likely are terms coming from problem space, not the software world. They have to be agreed upon so that as discussions move forward, there is clarity and understanding created by the terminology used by team members.
