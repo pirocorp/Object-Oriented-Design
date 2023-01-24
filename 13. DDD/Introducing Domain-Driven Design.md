@@ -121,46 +121,53 @@ Eric Evans's great contribution to this, was developing a vocabulary to talk abo
     id8 -- "access with" --> id7
     id8 -- "encapsulate with" --> id9
   end
+    
+  subgraph ide4 ["Modeling"]
+    direction TB
+    subgraph ide3 ["Context Map"]
+      id15(Context Map)
+      id16(Shared Kernel)
+      id17(Customer / Supplier)
+      id18(Conformist)
+      id19(Open Host Service)
+      id20(Published Language)
+      id21(Separate Ways)
+      id22(Anti-Corruption Layer)
+      id23(Big Ball of Mud)
+
+      id15 -- "interdependent contexts from" --> id16
+      id15 -- "overlap allied contexts through" --> id16
+      id15 -- "relate allied contexts as" --> id17
+      id15 -- "minimize translation" --> id18
+      id15 -- "support multiple clients through" --> id19 -- "formalize" --> id20
+      id15 -- "loosely couple contexts through" --> id20
+      id15 -- "free teams to go" --> id21
+      id15 -- "translate and insulate unilaterally with" --> id22
+      id15 -- "segregate the conceptual messes" --> id23
+    end
+    
+    subgraph ide2 ["Domain"]
+      id10(Ubiquitous Language)
+      id11(Bounded Context)    
+      id12(Core Domain)
+      id13(Generic Subdomains)    
+      id14(Continuous integration)    
+
+      id12 -- "cultivate rich model with" --> id10
+      id12 -- "work in autonomous, clean" --> id11
+      id12 -- "avoid overinvesting in" --> id13
+
+      id11 -- "name enter" --> id10
+      id11 -- "keep model unified by" --> id14
+    end
   
-  subgraph ide2 ["Modeling"]
-    direction LR
-    id10(Ubiquitous Language)
-    id11(Bounded Context)    
-    id12(Core Domain)
-    id13(Generic Subdomains)    
-    id14(Continuous integration)
-    id15(Context Map)
+
     
-    id16(Shared Kernel)
-    id17(Customer / Supplier)
-    id18(Conformist)
-    id19(Open Host Service)
-    id20(Published Language)
-    id21(Separate Ways)
-    id22(Anti-Corruption Layer)
-    id23(Big Ball of Mud)
-    
-    id12 -- "cultivate rich model with" --> id10
-    id12 -- "work in autonomous, clean" --> id11
-    id12 -- "avoid overinvesting in" --> id13
-    
-    id11 -- "name enter" --> id10
-    id11 -- "keep model unified by" --> id14
     id11 -- "assess/overview relationships with" --> id15
-    
-    id15 -- "interdependent contexts from" --> id16
-    id15 -- "overlap allied contexts through" --> id16
-    id15 -- "relate allied contexts as" --> id17
-    id15 -- "minimize translation" --> id18
-    id15 -- "support multiple clients through" --> id19 -- "formalize" --> id20
-    id15 -- "loosely couple contexts through" --> id20
-    id15 -- "free teams to go" --> id21
-    id15 -- "translate and insulate unilaterally with" --> id22
-    id15 -- "segregate the conceptual messes" --> id23
   end
   
   id1 -- "define model with" --> id11
-  id1 -- "model gives structure to" --> id10
+  id1 -- "model gives structure to" --> id10  
 ```
 - Modeling - Modeling is an intense examination of the problem space. 
   - Core Domain - The key is working with the subject matter experts to identify the core domain and other sub-domains that will be tackled.
