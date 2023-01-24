@@ -114,6 +114,8 @@ Entities Have Identity And Are Mutable. An Entity is something that we can be ab
     id8 -- "encapsulate with" --> id9
 ```
 
+### Entities in the Appointment Scheduling Context
+
 ```mermaid
 classDiagram
   BaseEntity~T~ <|-- Client
@@ -148,7 +150,6 @@ classDiagram
     - DoctorId
     - PatientId
     - RoomId
-    - StartEndTime
   }
 ```
 
