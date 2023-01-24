@@ -1,5 +1,32 @@
 # Modeling Problems in Software
 
+## Domains and Subdomains
+
+**Domain** is the most vital concept of **DDD**, understanding what is **Domain** is essential for us to accomplish what we call ‘Domain Distillation‘.
+
+We can say that **Domain** is a scope where one works and how one works, in other words, it refers to the space of the problem for which we are acting, its **Entities**, its **behavior** and **rules**. Each company owns a unique **Domain**, even if it follows ‘market practices’, the company will always have its own way of doing things, its business differential, its brand.
+
+**One thing we need to know is that the term Domain may have some meanings within the DDD:**
+
+– Domain which is the totality of the Company’s Domain.
+– Domain that refers to an area, sector or process of the company.
+– Domain that serves as support for the business.
+
+It is from the Domain that we design our Domain Models, which are solutions that seek to meet the needs of the Domain.
+
+## Subdomains
+
+**DDD** requires the decomposition of the **Domain** into **Subdomains**, which facilitates our understanding.
+
+In this way, we are able to separate what in fact generates value and financial return for the company, and thus, strategically we can put our best efforts in that part of the **Domain**.
+
+In simple terms, a **Subdomain** is a subpart of the **Domain**. Regardless of the size of the company, every **Domain** can always be divided into **Subdomains**, by doing this we divide the entire complexity of the Company’s **Domain** into smaller parts, and we will have domain experts who will understand the aspects of the business very well because it is a specific **Subdomain**.
+
+### Types of Subdomains 
+
+- **Core or Basic** - This is where we must put our best efforts, it is what makes the company work, which brings value to the business, which differentiates the company from competitors, is where the greatest focus is placed.
+- **Auxiliary or Support** - It is the **Domain** that complements the main **Domain**, without it, its main **Domain** can not be successful, therefore, it is very important, will require internal development or outsourcing, because there is no solution ready to implement.
+- **Generic** - It is typically a ready-made solution, but can also be outsourced or even developed internally. It does not bring a specific rule to your main business, ie in most cases we could hire as a service.
 
 ## Breaking up the veterinary office domain
 
@@ -81,8 +108,6 @@ The central concept in this application is the **Appointment** itself. Typically
 **Appointments** may be for office visits or vaccinations, or they may be **Surgeries** which are separate kinds of things entirely with their own rules. They involve different kinds of **Procedures**. **Surgeries** require different **Resources**, too, like **Operating Room** and **Recovery Room**.
 
 ![image](https://user-images.githubusercontent.com/34960418/211534635-00a634e0-5c7d-45a7-b710-44a79bb10f27.png)
-
-
 
 ## Using Bounded Contexts to Untangle Concepts that Appear to Be Shared
 
