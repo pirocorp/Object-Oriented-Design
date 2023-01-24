@@ -288,6 +288,12 @@ After analyzing the integration patterns between a system’s bounded contexts, 
 
 The context map is a visual representation of the system’s bounded contexts and integrations between them. This visual notation gives valuable strategic insight on multiple levels:
 
+- **High-level design** - A context map provides an overview of the system’s components and the models they implement.
+
+- **Communication patterns** - A context map depicts the communication patterns between teams—for example, which teams are collaborating and which prefer “less intimate” integration patterns, such as the anticorruption layer and separate ways patterns.
+
+- **Organizational issues** - Finally, a context map can give an insight into organizational issues. For example, what does it mean if a certain upstream team’s downstream consumers all resort to implementing an anticorruption layer, or if all implementations of the separate ways pattern are concentrated around the same team?
+
 
 ## Addressing the Question of Separate Databases per Bounded Context
 
