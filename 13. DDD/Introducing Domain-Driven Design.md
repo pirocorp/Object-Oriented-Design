@@ -86,6 +86,83 @@ Eric Evans's great contribution to this, was developing a vocabulary to talk abo
 
 ## Inspecting a Mind Map of Domain-Driven Design
 
+```mermaid
+  flowchart LR
+  subgraph ide1 ["Software Implementation"]
+    direction LR
+    id1(Model-Driven Design)
+    id2(Services)
+    id3(Layered Architecture)
+    
+    id4(Domain Events)
+    id5(Entities)
+    id6(Value Objects)
+    
+    id7(Repositories)
+    id8(Aggregates)
+    id9(Factories)
+    
+    id1 -- "express model with" --> id2
+    id1 -- "isolate domain expressions with" --> id3
+    
+    id1 -- "express change with" --> id4
+    id1 -- "express identity with" --> id5
+    id1 -- "express state and computation with" --> id6
+    
+    id5 -- "push state change with" --> id4
+    id5 -- "access with" --> id7
+    id5 -- "encapsulate with" --> id8
+    id5 -- "act as root of" --> id8
+    id5 -- "encapsulate with" --> id9
+    
+    id6 -- "encapsulate with" --> id8
+    id6 -- "encapsulate with" --> id9
+    
+    id8 -- "access with" --> id7
+    id8 -- "encapsulate with" --> id9
+  end
+  
+  subgraph ide2 ["Modeling"]
+    direction LR
+    id10(Ubiquitous Language)
+    id11(Bounded Context)    
+    id12(Core Domain)
+    id13(Generic Subdomains)    
+    id14(Continuous integration)
+    id15(Context Map)
+    
+    id16(Shared Kernel)
+    id17(Customer / Supplier)
+    id18(Conformist)
+    id19(Open Host Service)
+    id20(Published Language)
+    id21(Separate Ways)
+    id22(Anti-Corruption Layer)
+    id23(Big Ball of Mud)
+    
+    id12 -- "cultivate rich model with" --> id10
+    id12 -- "work in autonomous, clean" --> id11
+    id12 -- "avoid overinvesting in" --> id13
+    
+    id11 -- "name enter" --> id10
+    id11 -- "keep model unified by" --> id14
+    id11 -- "assess/overview relationships with" --> id15
+    
+    id15 -- "interdependent contexts from" --> id16
+    id15 -- "overlap allied contexts through" --> id16
+    id15 -- "relate allied contexts as" --> id17
+    id15 -- "minimize translation" --> id18
+    id15 -- "support multiple clients through" --> id19 -- "formalize" --> id20
+    id15 -- "loosely couple contexts through" --> id20
+    id15 -- "free teams to go" --> id21
+    id15 -- "translate and insulate unilaterally with" --> id22
+    id15 -- "segregate the conceptual messes" --> id23
+  end
+  
+  id1 -- "define model with" --> id11
+  id1 -- "model gives structure to" --> id10
+```
+
 ![image](https://user-images.githubusercontent.com/34960418/211310896-a1778527-954d-4e62-8037-95935b4ca65b.png)
 
 - Modeling - Modeling is an intense examination of the problem space. 
