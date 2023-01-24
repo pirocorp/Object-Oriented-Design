@@ -13,6 +13,15 @@ It is not unusual for teams to treat individual **Microservices** like **Bounded
 
 ![image](https://user-images.githubusercontent.com/34960418/214265199-cc99422d-aa52-4c1e-9dad-e67ec96c420c.png)
 
+- Heuristic #1 Decompose to **Bounded Contexts** - Do not implement conflicting models in the same service. Always decompose to **Bounded Contexts**
+- Heuristic #2 Only decompose the **Bounded Contexts** further if you got a good reason to do so.
+  > First Law of Distributed Object Design: "Don't distribute your objects."
+  
+  Martin Fowler
+  
+- Heuristic #3
+
+
 # Considering the UI in the Domain Design
 
 Is it an anti-pattern to think about the UI when we are focused on the domain?
