@@ -49,14 +49,12 @@ Eric Evans's great contribution to this, was developing a vocabulary to talk abo
 - Implementation of subdomains
   - **Separation of Concerns** - plays an important role in implementing subdomains.
 
-
 ## Goals of DDD
 
 - DDD aims to **tackle business complexity**, not technical complexity. 
   > While Domain-Driven Design provides many technical benefits, such as maintainability, it should be applied **only to complex domains** where the model and the linguistic processes **provide clear benefits** in the **communication of complex information**, and in the formulation of a **common understanding of the domain**.
 
-  Eric Evans, Domain-Driven Design
-
+Eric Evans, Domain-Driven Design
 
 ## Benefits and potential drawbacks of DDD
 
@@ -273,7 +271,14 @@ flowchart TB
 
 ## Exploring the Sample App’s High-Level Structure
 
-![image](https://user-images.githubusercontent.com/34960418/211518407-61ed5ede-ab62-4597-b320-fb1c4904a192.png)
+```mermaid
+  flowchart 
+  subgraph ide1 [Distributed Web Apps]
+    direction BT
+    id1["Single Page App (SPA) using Blazor Web Assembly (Front End)"]
+    id2["APIs built with ASP.NET Core (Back End)"]
+  end
+```
 
 ![image](https://user-images.githubusercontent.com/34960418/211518589-bb161b49-9a94-4432-addc-fca038568a63.png)
 
