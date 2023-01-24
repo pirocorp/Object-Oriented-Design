@@ -86,6 +86,16 @@ It is not unusual for teams to treat individual **Microservices** like **Bounded
     id1[Service A] -- "✉️" -->  id4{{"AddressChanged"}} -->  id10("Private event types (Implementation details)")
     id1[Service A] -- "✉️" -->  id5{{"ContactDetailsChanged"}} --> id9("Public event type (Public interface)")
   ```
+  - Events?
+    - **Domain Events** - private events - inside of the **Microservice**
+    - **State Change Events** / **Integration Events** - public events
+- Heuristic #8 Make Events Explicit
+  ```mermaid
+  flowchart LR
+    id1[Service A] -- "✉️" -->  id2{{"AssignedAgentChanged"}}
+  ```
+- Heuristic #9 Evaluate Reasons for Change - each time one of them changes, the second service also has to change. Typically that indicates that the services are tightly coupled. Check if you can loosen the coupling between them. If not, consider merging them into a single service.
+- Heuristic #10 Evaluate the Services "Doors" - If the service public interface is wide and contains many businesses-wide unrelated methods, then it can be split into smaller services. If more methods were added for integration, it might signify a distributed monolith. Consider reevaluating service boundaries.
 
 # Considering the UI in the Domain Design
 
