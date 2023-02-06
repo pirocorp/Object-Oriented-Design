@@ -38,3 +38,7 @@ Although originally developed for desktop computing, MVC has been widely adopted
 
 Some web MVC frameworks take a thin client approach that places almost the entire model, view and controller logic on the server. In this approach, the client sends either hyperlink requests or form submissions to the controller and then receives a complete and updated web page (or other document) from the view; the model exists entirely on the server.
 
+
+# Example
+
+[Simple ASP .NET App with MVC Architecture](https://github.com/pirocorp/ASP.NET-Core-Playground/tree/main/06.%20Car%20Renting%20System)
