@@ -40,3 +40,8 @@ Declarative data and command-binding are implicit in the MVVM pattern. In the Mi
 MVVM was designed to remove virtually all GUI code ("code-behind") from the view layer, by using data binding functions in WPF (Windows Presentation Foundation) to better facilitate the separation of view layer development from the rest of the pattern. 
 
 The MVVM pattern attempts to gain both advantages of separation of functional development provided by MVC, while leveraging the advantages of data bindings and the framework by binding data as close to the pure application model as possible. It uses the binder, view model, and any business layers' data-checking features to validate incoming data. The result is that the model and framework drive as much of the operations as possible, eliminating or minimizing application logic which directly manipulates the view (e.g., code-behind).
+
+
+# Example
+
+[.NET MAUI with Simple MVVM Architecture](https://github.com/pirocorp/MAUI-Playground/tree/main/MVVM%20Architecture)
