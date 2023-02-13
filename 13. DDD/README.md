@@ -46,3 +46,4 @@ In **DDD**, the main goal is to establish **common language** with the **busines
 - [KanDDDinsky](https://www.youtube.com/@KanDDDinsky)
 - [Explore DDD](https://www.youtube.com/@ExploreDDD)
 - [Virtual DDD Meetup](https://www.youtube.com/@virtualdomain-drivendesign2670)
+- [Domain-Driven Design Europe](https://www.youtube.com/@ddd_eu)
