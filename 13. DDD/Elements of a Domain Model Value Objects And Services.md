@@ -270,6 +270,39 @@ Frequently **Domain Services** serve as orchestrators for operations that requir
   - Process Order
 
 
+## Services in Domain-Driven Design (DDD)
+
+### Domain Services - part of the domain layer
+
+> When a **significant process or transformation** in the domain is **not** a natural **responsibility** of an **ENTITY** or **VALUE OBJECT**, add an **operation** to the model as standalone interface declared as a **SERVICE**. Define the interface in terms of the **language of the model** and make sure the **operation name** is part of the **UBIQUITOUS LANGUAGE**. Make the SERVICE stateless.
+
+Eric Evans
+
+**Domain services** are often overlooked as key building blocks, overshadowed by focus on **entities** and **value objects**. On the other end of the spectrum is **over-utilization** of **domain services** leading to an **anemic domain model** in what essentially becomes a **separation** of **data**, stored in entities, and **behaviors**, provided by the service. This can become an anti-pattern because the information expert aspect of OOP is lost.
+
+**Domain services** are different from infrastructural services because they embed and operate upon domain concepts and are **part** **of** the **ubiquitous language**.
+
+
+### Application service
+
+An **application service** has an important and distinguishing role - it **provides a hosting environment for the execution of domain logic**. As such, it is a convenient point to **inject** various **gateways** such as a **repository** or **wrappers** for **external services**. 
+
+**A common problem in applying DDD is when an entity requires access to data in a repository** or other gateway in order to carry out a business operation. One solution is to **inject repository dependencies directly** into the entity, however this is often **frowned upon**. One reason for this is because it requires the plain-old-(C#, Java, etc…) objects implementing entities to be part of an **application dependency graph**. Another reason is that is makes reasoning about the behavior of entities more difficult since the **Single-Responsibility Principle is violated**. **A better solution is to have an application service retrieve the information required by an entity, effectively setting up the execution environment, and provide it to the entity.**
+
+In addition to **being a host**, the purpose of an **application service** is to **expose** the **functionality** of the domain to other application layers as an **API**. This attributes an **encapsulating** role to the **service** - the service is an instance of the **facade pattern**. Exposing objects directly can be cumbersome and lead to leaky abstractions especially if interactions are distributed in nature. In this way, an application **service** also fulfills a translation role - that of **translating between external commands and the underlying domain object model**. The importance of this translation must not be neglected.
+
+For example, a human requested command can be something like “transfer $5 from account A to account B”. There are a number of steps required for a computer to fulfill that command and we would never expect a human to issue a more specific command such as “load an account entity with id A from account repository, load an account entity with id B from account repository, call the debit method on the account A entity…”. This is a job best suited for an application service.
+
+### Infrastructural services
+
+**Infrastructural services** are **focused** encapsulating the “plumbing” requirements of an application; **usually IO concerns** such as file system access, database access, email, etc. 
+
+For example, a common application requirement is the sending of an email notification informing interested parties about some event. The concept of the **event** **exists** in the **domain layer** and the **domain layer** **determines** when the **event** should be **raised**. An email **infrastructure service** can **handle** a **domain event** by generating and transmitting an appropriate email message.
+
+Another infrastructural service can handle the same event and send a notification via SMS or other channel. The domain layer doesn’t care about the specifics or how an event notification is delivered, it only cares about raising the event.
+
+A **repository** implementation is also an example of an **infrastructural service**. The **interface** is declared **in** the **domain layer** and is an important aspect of the domain. However, the specifics of the communication with durable storage mechanisms are handled in the infrastructure layer.
+
 ## Module Review
 
 - **Immutable** - Refers to a type whose state cannot be changed once the object has been instantiated.
