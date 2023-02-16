@@ -472,11 +472,11 @@ By contrast, the `PurchaseOrderService` application service performs technical t
 
 The differences between a domain service and an application services are subtle but critical:
 
-- Domain services are very granular where as application services are a facade purposed with providing an API.
-- Domain services contain domain logic that can’t naturally be placed in an entity or value object whereas application services orchestrate the execution of domain logic and don’t themselves implement any domain logic.
-- Domain service methods can have other domain elements as operands and return values whereas application services operate upon trivial operands such as identity values and primitive data structures.
-- Application services declare dependencies on infrastructural services required to execute domain logic.
-- Command handlers are a flavor of application services which focus on handling a single command typically in a CQRS architecture.
+- **Domain services** are very **granular** where as **application services** are a **facade** purposed with providing an **API**.
+- **Domain services** contain **domain logic** that can’t naturally be placed in an entity or value object whereas **application services** **orchestrate the execution of domain logic** and don’t themselves implement any domain logic.
+- **Domain service** methods can have **other domain elements** as **operands** and **return values** whereas **application services** operate upon **trivial operands** such as **identity** values and **primitive data** structures.
+- **Application services** declare **dependencies** on **infrastructural services** required **to execute domain logic**.
+- **Command handlers** are a **flavor** of **application services** which focus on **handling** a **single command** typically **in a CQRS architecture**.
 
 ## Module Review
 
