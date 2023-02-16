@@ -89,8 +89,6 @@ Vaughn Vernon’s guidance:
   1. Is this a value object?
   2. Otherwise, an entity
 
-
-
 Value Objects Can Be Used for Identifiers 
 
 `ClientIdValueObject.cs`
@@ -302,6 +300,177 @@ For example, a common application requirement is the sending of an email notific
 Another infrastructural service can handle the same event and send a notification via SMS or other channel. The domain layer doesn’t care about the specifics or how an event notification is delivered, it only cares about raising the event.
 
 A **repository** implementation is also an example of an **infrastructural service**. The **interface** is declared **in** the **domain layer** and is an important aspect of the domain. However, the specifics of the communication with durable storage mechanisms are handled in the infrastructure layer.
+
+
+### Example application service from a purchase order domain
+
+```csharp
+// A repository.
+public interface IPurchaseOrderRepository
+{
+    PurchaseOrder Get(string id);
+}
+
+// A markup interface for aggregate root
+public interface IAggregateRoot
+{  }
+
+// A marker interface for a domain event.
+public interface IDomainEvent { }
+
+// Entity is responsible for adding events to event collection
+public abstract class BaseEntity<TId>
+{
+    public List<IDomainEvent> Events = new List<IDomainEvent>();
+
+    public TId Id { get; set; }
+}
+
+// The root entity of the PO aggregate - aggregate root.
+public class PurchaseOrder : BaseEntity<Guid>, IAggregateRoot
+{
+    public Guid Id { get; private set; }
+    public string VendorId { get; private set; }
+    public string PONumber { get; private set; }
+    public string Description { get; private set; }
+    public decimal Total { get; private set; }
+    public DateTime SubmissionDate { get; private set; }
+    public ICollection<Invoice> Invoices { get; private set; }
+
+    public decimal InvoiceTotal
+    {
+        get { return this.Invoices.Select(x => x.Amount).Sum(); }
+    }
+
+    public bool IsFullyInvoiced
+    {
+        get { return this.Total <= this.InvoiceTotal; }
+    }
+
+    bool ContainsInvoice(string vendorInvoiceNumber)
+    {
+        return this.Invoices.Any(x => x.VendorInvoiceNumber.Equals(vendorInvoiceNumber, StringComparison.OrdinalIgnoreCase));
+    }
+
+    public Invoice Invoice(IInvoiceNumberGenerator generator, string vendorInvoiceNumber, DateTime date, decimal amount)
+    {
+        // These guards maintain business integrity of the PO.
+        if (this.IsFullyInvoiced)
+            throw new Exception("The PO is fully invoiced.");
+        if (ContainsInvoice(vendorInvoiceNumber))
+            throw new Exception("Duplicate invoice!");
+
+        var invoiceNumber = generator.GenerateInvoiceNumber(this.VendorId, vendorInvoiceNumber, date);
+
+        var invoice = new Invoice(invoiceNumber, vendorInvoiceNumber, date, amount);
+        this.Invoices.Add(invoice);
+        
+        // New Events are added to the Events collection.
+        this.Events.Add(new PurchaseOrderInvoicedEvent(this.Id, invoice.InvoiceNumber));
+        
+        return invoice;
+    }
+}
+
+// A domain event.
+public class PurchaseOrderInvoicedEvent : IDomainEvent
+{
+    public PurchaseOrderInvoicedEvent(string purchaseOrderId, string invoiceNumber)
+    {
+        this.PurchaseOrderId = purchaseOrderId;
+        this.InvoiceNumber = invoiceNumber;
+    }
+
+    public string PurchaseOrderId { get; private set; }
+    public string InvoiceNumber { get; private set; }
+}
+
+// A value object. In production scenarios this would likely be an entity or even an aggregate.
+public class Invoice
+{
+    public Invoice(string vendorInvoiceNumber, string invoiceNumber, DateTime date, decimal amount)
+    {
+        this.VendorInvoiceNumber = vendorInvoiceNumber;
+        this.InvoiceNumber = invoiceNumber;
+        this.InvoiceDate = date;
+        this.Amount = amount;
+    }
+
+    // The invoice number provided by the vendor. 
+    public string VendorInvoiceNumber { get; private set; }
+    // The internal invoice number is used for internal lookups and is ensured to be unique and readable.
+    public string InvoiceNumber { get; private set; }
+    public DateTime InvoiceDate { get; private set; }
+    public decimal Amount { get; private set; }
+}
+
+
+// A domain service used for generating unique and user-friendly invoice numbers.
+public interface IInvoiceNumberGenerator
+{
+    string GenerateInvoiceNumber(string vendorId, string vendorInvoiceNumber, DateTime invoiceDate);
+}
+
+// The application service. Can either delegate to a domain model, as in this example, or a transaction script.
+public class PurchaseOrderService
+{
+    public PurchaseOrderService(IPurchaseOrderRepository repository, IInvoiceNumberGenerator invoiceNumberGenerator)
+    {
+        this.repository = repository;
+        this.invoiceNumberGenerator = invoiceNumberGenerator;
+    }
+
+    readonly IPurchaseOrderRepository repository;
+    readonly IInvoiceNumberGenerator invoiceNumberGenerator;
+
+    public void Invoice(string purchaseOrderId, string vendorInvoiceNumber, DateTime date, decimal amount)
+    {
+        // Transaction management, along with committing the unit of work can be moved to ambient infrastructure.
+        using (var ts = new TransactionScope())
+        {
+            var purchaseOrder = this.repository.Get(purchaseOrderId);
+            if (purchaseOrder == null)
+                throw new Exception("PO not found!");
+            purchaseOrder.Invoice(this.invoiceNumberGenerator, vendorInvoiceNumber, date, amount);
+            this.repository.Commit();
+            ts.Complete();
+        }
+    }
+}
+
+// Events are rised in AppDbContext
+public class AppDbContext : DbContext
+{
+    ...
+    // https://docs.microsoft.com/en-us/ef/core/logging-events-diagnostics/events
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        ...
+        var entitiesWithEvents = ChangeTracker
+            .Entries()
+            .Select(e => e.Entity as BaseEntity<Guid>)
+            .Where(e => e?.Events != null && e.Events.Any())
+            .ToArray();
+
+        foreach (var entity in entitiesWithEvents)
+        {
+            var events = entity.Events.ToArray();
+            entity.Events.Clear();
+
+            foreach (var domainEvent in events)
+            {
+                // Using MediatR for rising and handling the events
+                await _mediator.Publish(domainEvent, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        return result;
+    }
+    ...
+}
+```
+
+
 
 ## Module Review
 
