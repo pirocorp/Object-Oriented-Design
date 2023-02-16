@@ -425,16 +425,12 @@ public class PurchaseOrderService
 
     public void Invoice(string purchaseOrderId, string vendorInvoiceNumber, DateTime date, decimal amount)
     {
-        // Transaction management, along with committing the unit of work can be moved to ambient infrastructure.
-        using (var ts = new TransactionScope())
-        {
-            var purchaseOrder = this.repository.Get(purchaseOrderId);
-            if (purchaseOrder == null)
-                throw new Exception("PO not found!");
-            purchaseOrder.Invoice(this.invoiceNumberGenerator, vendorInvoiceNumber, date, amount);
-            this.repository.Commit();
-            ts.Complete();
-        }
+        var purchaseOrder = this.repository.Get(purchaseOrderId);
+
+        if (purchaseOrder == null)
+            throw new Exception("PO not found!");
+
+        purchaseOrder.Invoice(this.invoiceNumberGenerator, vendorInvoiceNumber, date, amount);
     }
 }
 
@@ -470,7 +466,17 @@ public class AppDbContext : DbContext
 }
 ```
 
+The interface `IInvoiceNumberGenerator` is indeed a **domain service** because it encapsulates domain logic, namely the generation of invoice numbers. **This process is something that can be discussed with domain experts** and users of the system. After all, the purpose of the generator is to make use of invoice numbers of palatable.
 
+By contrast, the `PurchaseOrderService` application service performs technical tasks which domain experts aren’t interested in.
+
+The differences between a domain service and an application services are subtle but critical:
+
+- Domain services are very granular where as application services are a facade purposed with providing an API.
+- Domain services contain domain logic that can’t naturally be placed in an entity or value object whereas application services orchestrate the execution of domain logic and don’t themselves implement any domain logic.
+- Domain service methods can have other domain elements as operands and return values whereas application services operate upon trivial operands such as identity values and primitive data structures.
+- Application services declare dependencies on infrastructural services required to execute domain logic.
+- Command handlers are a flavor of application services which focus on handling a single command typically in a CQRS architecture.
 
 ## Module Review
 
