@@ -297,6 +297,12 @@ The context map is a visual representation of the system’s bounded contexts an
 
 ## Addressing the Question of Separate Databases per Bounded Context
 
+### Database strategies with Bounded Contexts
+
+- Different databases for every **Bounded Context** - This allows you to scale easily to microservices, but it may be an overengineering at the beginning. **Foreign keys are fictional** without any relationship (like in a microservice approach).
+- One database, different interfaces for each **Bounded Context** - This way, you will have the architecture and need to migrate the data if you need to go into microservices. Just make sure not to mix the interfaces. **Foreign keys are real**, but you **cannot use domain classes from another context**.
+- One database for the whole application - This approach is easier, but the code complexity and business logic may become so mixed up that it will be difficult to extract later. **Foreign keys are real**, and you are **allowed to use domain classes from another context**.
+
 > If you’re in a company where you share your database and it gets updated by hundreds of different processes, it's very hard to create the kind of models that we're talking about and then write software that does anything interesting with those models.
 
 Eric Evans
@@ -320,18 +326,15 @@ Publish-subscribe aligns with the principles of DDD that require these two syste
 
 This operator is a message queue. System A will send messages to the queue. System B will retrieve messages from the queue.
 
-
 ### What’s in the Event Message?
 
 When the event being published is the CustomerCreated event, System A will send a message that says, “A customer has been inserted. Here’s the customer’s identity and name.” That’s the full message except that it’s represented in data, not in nice English sentences. The interesting part about publishing an event to a message queue is that the publisher doesn’t care what systems are retrieving the message or what they’ll do in response.
 
 System B will respond to that message by inserting or updating the customer in its database. In the end, System B, the ordering system, will have a complete list of customers it can use.
 
-
 ### Communicating with the Message Queue
 
 A system that allows you to communicate messages in an asynchronous way is called an event bus. An event bus contains the infrastructure to store messages and provide them to whoever needs to retrieve them. It also provides an API for interacting with it.
-
 
 ![image](https://user-images.githubusercontent.com/34960418/211546239-124ace5c-0574-4da2-a911-9d470b44effe.png)
 
