@@ -28,13 +28,51 @@ If I know a field will contain a whole value or nil, I do not have to be concern
 
 Worth is a **Value Object**
 
-![image](https://user-images.githubusercontent.com/34960418/212072662-88b8f086-4990-41f9-a569-f850b7abe265.png)
+```mermaid
+classDiagram
+  direction LR
+  Company *-- Worth 
+
+  class Company {
+    - Id
+    - Worth
+  }
+  
+  class Worth {
+    - Unit
+    - Amount
+  }
+```
 
 GeoCoordinate are another example of whole value.
 
 DateTimeRange as **Value Object**.
 
-![image](https://user-images.githubusercontent.com/34960418/212073850-9f92fcea-8ef7-4649-981e-43de22b268b5.png)
+```mermaid
+classDiagram
+  direction LR
+  Appointment *-- DateTimeRange 
+  Meeting *-- DateTimeRange 
+
+  class Appointment {
+    - ClientId
+    - DoctorId
+    - PatientId
+    - DateTimeRange
+  }
+  
+    class Meeting {
+    - RoomId
+    - StaffAttending
+    - DateTimeRange
+  }
+  
+  class DateTimeRange {
+    Start
+    End
+    DateTimeRange(start, end)
+  }
+```
 
 > It may surprise you to learn that we should strive to model using Value Objects instead of Entities wherever possible. Even when a domain concept must be modeled as an Entity, the Entity’s design should be biased toward serving as a value container rather than a child Entity container.
 
@@ -50,8 +88,6 @@ Our Instinct:
 Vaughn Vernon’s guidance:
   1. Is this a value object?
   2. Otherwise, an entity
-
-
 
 Value Objects Can Be Used for Identifiers 
 
@@ -231,6 +267,216 @@ Frequently **Domain Services** serve as orchestrators for operations that requir
   - Transfer Between Accounts
   - Process Order
 
+
+## Services in Domain-Driven Design (DDD)
+
+### Domain Services - part of the domain layer
+
+> When a **significant process or transformation** in the domain is **not** a natural **responsibility** of an **ENTITY** or **VALUE OBJECT**, add an **operation** to the model as standalone interface declared as a **SERVICE**. Define the interface in terms of the **language of the model** and make sure the **operation name** is part of the **UBIQUITOUS LANGUAGE**. Make the SERVICE stateless.
+
+Eric Evans
+
+**Domain services** are often overlooked as key building blocks, overshadowed by focus on **entities** and **value objects**. On the other end of the spectrum is **over-utilization** of **domain services** leading to an **anemic domain model** in what essentially becomes a **separation** of **data**, stored in entities, and **behaviors**, provided by the service. This can become an anti-pattern because the information expert aspect of OOP is lost.
+
+**Domain services** are different from infrastructural services because they embed and operate upon domain concepts and are **part** **of** the **ubiquitous language**.
+
+
+### Application service
+
+An **application service** has an important and distinguishing role - it **provides a hosting environment for the execution of domain logic**. As such, it is a convenient point to **inject** various **gateways** such as a **repository** or **wrappers** for **external services**. 
+
+**A common problem in applying DDD is when an entity requires access to data in a repository** or other gateway in order to carry out a business operation. One solution is to **inject repository dependencies directly** into the entity, however this is often **frowned upon**. One reason for this is because it requires the plain-old-(C#, Java, etc…) objects implementing entities to be part of an **application dependency graph**. Another reason is that is makes reasoning about the behavior of entities more difficult since the **Single-Responsibility Principle is violated**. **A better solution is to have an application service retrieve the information required by an entity, effectively setting up the execution environment, and provide it to the entity.**
+
+In addition to **being a host**, the purpose of an **application service** is to **expose** the **functionality** of the domain to other application layers as an **API**. This attributes an **encapsulating** role to the **service** - the service is an instance of the **facade pattern**. Exposing objects directly can be cumbersome and lead to leaky abstractions especially if interactions are distributed in nature. In this way, an application **service** also fulfills a translation role - that of **translating between external commands and the underlying domain object model**. The importance of this translation must not be neglected.
+
+For example, a human requested command can be something like “transfer $5 from account A to account B”. There are a number of steps required for a computer to fulfill that command and we would never expect a human to issue a more specific command such as “load an account entity with id A from account repository, load an account entity with id B from account repository, call the debit method on the account A entity…”. This is a job best suited for an application service.
+
+### Infrastructural services
+
+**Infrastructural services** are **focused** encapsulating the “plumbing” requirements of an application; **usually IO concerns** such as file system access, database access, email, etc. 
+
+For example, a common application requirement is the sending of an email notification informing interested parties about some event. The concept of the **event** **exists** in the **domain layer** and the **domain layer** **determines** when the **event** should be **raised**. An email **infrastructure service** can **handle** a **domain event** by generating and transmitting an appropriate email message.
+
+Another infrastructural service can handle the same event and send a notification via SMS or other channel. The domain layer doesn’t care about the specifics or how an event notification is delivered, it only cares about raising the event.
+
+A **repository** implementation is also an example of an **infrastructural service**. The **interface** is declared **in** the **domain layer** and is an important aspect of the domain. However, the specifics of the communication with durable storage mechanisms are handled in the infrastructure layer.
+
+
+### Example application service from a purchase order domain
+
+```csharp
+// A repository.
+public interface IPurchaseOrderRepository
+{
+    PurchaseOrder Get(string id);
+}
+
+// A markup interface for aggregate root
+public interface IAggregateRoot
+{  }
+
+// A marker interface for a domain event.
+public interface IDomainEvent { }
+
+// Entity is responsible for adding events to event collection
+public abstract class BaseEntity<TId>
+{
+    public List<IDomainEvent> Events = new List<IDomainEvent>();
+
+    public TId Id { get; set; }
+}
+
+// The root entity of the PO aggregate - aggregate root.
+public class PurchaseOrder : BaseEntity<Guid>, IAggregateRoot
+{
+    public Guid Id { get; private set; }
+    public string VendorId { get; private set; }
+    public string PONumber { get; private set; }
+    public string Description { get; private set; }
+    public decimal Total { get; private set; }
+    public DateTime SubmissionDate { get; private set; }
+    public ICollection<Invoice> Invoices { get; private set; }
+
+    public decimal InvoiceTotal
+    {
+        get { return this.Invoices.Select(x => x.Amount).Sum(); }
+    }
+
+    public bool IsFullyInvoiced
+    {
+        get { return this.Total <= this.InvoiceTotal; }
+    }
+
+    bool ContainsInvoice(string vendorInvoiceNumber)
+    {
+        return this.Invoices.Any(x => x.VendorInvoiceNumber.Equals(vendorInvoiceNumber, StringComparison.OrdinalIgnoreCase));
+    }
+
+    public Invoice Invoice(IInvoiceNumberGenerator generator, string vendorInvoiceNumber, DateTime date, decimal amount)
+    {
+        // These guards maintain business integrity of the PO.
+        if (this.IsFullyInvoiced)
+            throw new Exception("The PO is fully invoiced.");
+        if (ContainsInvoice(vendorInvoiceNumber))
+            throw new Exception("Duplicate invoice!");
+
+        var invoiceNumber = generator.GenerateInvoiceNumber(this.VendorId, vendorInvoiceNumber, date);
+
+        var invoice = new Invoice(invoiceNumber, vendorInvoiceNumber, date, amount);
+        this.Invoices.Add(invoice);
+        
+        // New Events are added to the Events collection.
+        this.Events.Add(new PurchaseOrderInvoicedEvent(this.Id, invoice.InvoiceNumber));
+        
+        return invoice;
+    }
+}
+
+// A domain event.
+public class PurchaseOrderInvoicedEvent : IDomainEvent
+{
+    public PurchaseOrderInvoicedEvent(string purchaseOrderId, string invoiceNumber)
+    {
+        this.PurchaseOrderId = purchaseOrderId;
+        this.InvoiceNumber = invoiceNumber;
+    }
+
+    public string PurchaseOrderId { get; private set; }
+    public string InvoiceNumber { get; private set; }
+}
+
+// A value object. In production scenarios this would likely be an entity or even an aggregate.
+public class Invoice
+{
+    public Invoice(string vendorInvoiceNumber, string invoiceNumber, DateTime date, decimal amount)
+    {
+        this.VendorInvoiceNumber = vendorInvoiceNumber;
+        this.InvoiceNumber = invoiceNumber;
+        this.InvoiceDate = date;
+        this.Amount = amount;
+    }
+
+    // The invoice number provided by the vendor. 
+    public string VendorInvoiceNumber { get; private set; }
+    // The internal invoice number is used for internal lookups and is ensured to be unique and readable.
+    public string InvoiceNumber { get; private set; }
+    public DateTime InvoiceDate { get; private set; }
+    public decimal Amount { get; private set; }
+}
+
+
+// A domain service used for generating unique and user-friendly invoice numbers.
+public interface IInvoiceNumberGenerator
+{
+    string GenerateInvoiceNumber(string vendorId, string vendorInvoiceNumber, DateTime invoiceDate);
+}
+
+// The application service. Can either delegate to a domain model, as in this example, or a transaction script.
+public class PurchaseOrderService
+{
+    public PurchaseOrderService(IPurchaseOrderRepository repository, IInvoiceNumberGenerator invoiceNumberGenerator)
+    {
+        this.repository = repository;
+        this.invoiceNumberGenerator = invoiceNumberGenerator;
+    }
+
+    readonly IPurchaseOrderRepository repository;
+    readonly IInvoiceNumberGenerator invoiceNumberGenerator;
+
+    public void Invoice(string purchaseOrderId, string vendorInvoiceNumber, DateTime date, decimal amount)
+    {
+        var purchaseOrder = this.repository.Get(purchaseOrderId);
+
+        if (purchaseOrder == null)
+            throw new Exception("PO not found!");
+
+        purchaseOrder.Invoice(this.invoiceNumberGenerator, vendorInvoiceNumber, date, amount);
+    }
+}
+
+// Events are rised in AppDbContext
+public class AppDbContext : DbContext
+{
+    ...
+    // https://docs.microsoft.com/en-us/ef/core/logging-events-diagnostics/events
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        ...
+        var entitiesWithEvents = ChangeTracker
+            .Entries()
+            .Select(e => e.Entity as BaseEntity<Guid>)
+            .Where(e => e?.Events != null && e.Events.Any())
+            .ToArray();
+
+        foreach (var entity in entitiesWithEvents)
+        {
+            var events = entity.Events.ToArray();
+            entity.Events.Clear();
+
+            foreach (var domainEvent in events)
+            {
+                // Using MediatR for rising and handling the events
+                await _mediator.Publish(domainEvent, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        return result;
+    }
+    ...
+}
+```
+
+The interface `IInvoiceNumberGenerator` is indeed a **domain service** because it encapsulates domain logic, namely the generation of invoice numbers. **This process is something that can be discussed with domain experts** and users of the system. After all, the purpose of the generator is to make use of invoice numbers of palatable.
+
+By contrast, the `PurchaseOrderService` application service performs technical tasks which domain experts aren’t interested in.
+
+The differences between a domain service and an application services are subtle but critical:
+
+- **Domain services** are very **granular** where as **application services** are a **facade** purposed with providing an **API**.
+- **Domain services** contain **domain logic** that can’t naturally be placed in an entity or value object whereas **application services** **orchestrate the execution of domain logic** and don’t themselves implement any domain logic.
+- **Domain service** methods can have **other domain elements** as **operands** and **return values** whereas **application services** operate upon **trivial operands** such as **identity** values and **primitive data** structures.
+- **Application services** declare **dependencies** on **infrastructural services** required **to execute domain logic**.
+- **Command handlers** are a **flavor** of **application services** which focus on **handling** a **single command** typically **in a CQRS architecture**.
 
 ## Module Review
 

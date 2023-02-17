@@ -11,9 +11,18 @@ Value Proposition of DDD
 
 
 ## What does a DDD solution look like?
-
-![image](https://user-images.githubusercontent.com/34960418/211304710-06d0cd40-8eb6-4f42-8e3f-745c9a9ee1fb.png)
-
+```mermaid
+  flowchart 
+  subgraph ide1 [Solve Problems]
+    direction BT
+    id1[Write Code]
+    id2[Design System]
+    id3[Understanding client needs]
+    id4[Full partnership]
+    
+    id4 --> id3 --> id2 --> id1
+  end
+```
 
 ## What is Domain-Driven Design?
 
@@ -40,14 +49,12 @@ Eric Evans's great contribution to this, was developing a vocabulary to talk abo
 - Implementation of subdomains
   - **Separation of Concerns** - plays an important role in implementing subdomains.
 
-
 ## Goals of DDD
 
 - DDD aims to **tackle business complexity**, not technical complexity. 
   > While Domain-Driven Design provides many technical benefits, such as maintainability, it should be applied **only to complex domains** where the model and the linguistic processes **provide clear benefits** in the **communication of complex information**, and in the formulation of a **common understanding of the domain**.
 
-  Eric Evans, Domain-Driven Design
-
+Eric Evans, Domain-Driven Design
 
 ## Benefits and potential drawbacks of DDD
 
@@ -77,39 +84,201 @@ Eric Evans's great contribution to this, was developing a vocabulary to talk abo
 
 ## Inspecting a Mind Map of Domain-Driven Design
 
-![image](https://user-images.githubusercontent.com/34960418/211310896-a1778527-954d-4e62-8037-95935b4ca65b.png)
+```mermaid
+  flowchart LR
+  subgraph ide1 ["Software Implementation"]
+    direction LR
+    id1(Model-Driven Design)
+    id2(Services)
+    id3(Layered Architecture)
+    
+    id4(Domain Events)
+    id5(Entities)
+    id6(Value Objects)
+    
+    id7(Repositories)
+    id8(Aggregates)
+    id9(Factories)
+    
+    id1 -- "express model with" --> id2
+    id1 -- "isolate domain expressions with" --> id3
+    
+    id1 -- "express change with" --> id4
+    id1 -- "express identity with" --> id5
+    id1 -- "express state and computation with" --> id6
+    
+    id5 -- "push state change with" --> id4
+    id5 -- "access with" --> id7
+    id5 -- "encapsulate with" --> id8
+    id5 -- "act as root of" --> id8
+    id5 -- "encapsulate with" --> id9
+    
+    id6 -- "encapsulate with" --> id8
+    id6 -- "encapsulate with" --> id9
+    
+    id8 -- "access with" --> id7
+    id8 -- "encapsulate with" --> id9
+  end
+    
+  subgraph ide4 ["Modeling"]
+    direction TB
+    subgraph ide3 ["Context Map"]
+      id15(Context Map)
+      id16(Shared Kernel)
+      id17(Customer / Supplier)
+      id18(Conformist)
+      id19(Open Host Service)
+      id20(Published Language)
+      id21(Separate Ways)
+      id22(Anti-Corruption Layer)
+      id23(Big Ball of Mud)
 
+      id15 -- "interdependent contexts from" --> id16
+      id15 -- "overlap allied contexts through" --> id16
+      id15 -- "relate allied contexts as" --> id17
+      id15 -- "minimize translation" --> id18
+      id15 -- "support multiple clients through" --> id19 -- "formalize" --> id20
+      id15 -- "loosely couple contexts through" --> id20
+      id15 -- "free teams to go" --> id21
+      id15 -- "translate and insulate unilaterally with" --> id22
+      id15 -- "segregate the conceptual messes" --> id23
+    end
+    
+    subgraph ide2 ["Domain"]
+      id10(Ubiquitous Language)
+      id11(Bounded Context)    
+      id12(Core Domain)
+      id13(Generic Subdomains)    
+      id14(Continuous integration)    
+
+      id12 -- "cultivate rich model with" --> id10
+      id12 -- "work in autonomous, clean" --> id11
+      id12 -- "avoid overinvesting in" --> id13
+
+      id11 -- "name enter" --> id10
+      id11 -- "keep model unified by" --> id14
+    end
+    
+    id11 -- "assess/overview relationships with" --> id15
+  end
+  
+  id1 -- "define model with" --> id11
+  id1 -- "model gives structure to" --> id10  
+```
 - Modeling - Modeling is an intense examination of the problem space. 
   - Core Domain - The key is working with the subject matter experts to identify the core domain and other sub-domains that will be tackled.
   - Bounded Contexts - You focus on modeling a particular sub-domain in each of these bounded contexts.
   - Generic Subdomains - The model also has notes for each element, such as avoiding overinvesting in Generic Subdomains. That can be something like the credit card verification service you can use rather than building yourself.
 
-![image](https://user-images.githubusercontent.com/34960418/211311084-23c46cfe-116a-4f7c-b69b-2ca256b2a818.png)
+```mermaid
+flowchart LR
+  subgraph ide3 ["Context Map"]
+    id15(Context Map)
+    id16(Shared Kernel)
+    id17(Customer / Supplier)
+    id18(Conformist)
+    id19(Open Host Service)
+    id20(Published Language)
+
+    id15 -- "interdependent contexts from" --> id16
+    id15 -- "overlap allied contexts through" --> id16
+    id15 -- "relate allied contexts as" --> id17
+    id15 -- "minimize translation" --> id18
+    id15 -- "support multiple clients through" --> id19 -- "formalize" --> id20
+    id15 -- "loosely couple contexts through" --> id20
+  end
+
+  subgraph ide2 ["Domain"]
+    id10(Ubiquitous Language)
+    id11(Bounded Context)    
+    id12(Core Domain)
+    id13(Generic Subdomains)    
+
+    id12 -- "cultivate rich model with" --> id10
+    id12 -- "work in autonomous, clean" --> id11
+    id12 -- "avoid overinvesting in" --> id13
+
+    id11 -- "name enter" --> id10
+  end
+
+  id11 -- "assess/overview relationships with" --> id15
+```
 
 - Software Implementation - As a result of modeling the bounded context, you'll identify entities, value objects, aggregates, domain events, repositories, and more and how they interact with each other.
-  - Entities
-  - Value Objects
-  - Domain Events
-  - Aggregates
-  - Repositories
+  - **Entities**
+  - **Value Objects**
+  - **Domain Events**
+  - **Aggregates**
+  - **Repositories**
 
-![image](https://user-images.githubusercontent.com/34960418/211311186-01ceda12-53c9-4732-a54d-e8af88eee01b.png)
+```mermaid
+flowchart LR
+  subgraph ide1 ["Software Implementation"]
+    direction LR
+    id1(Model-Driven Design)
+    id2(Services)
+    id3(Layered Architecture)
+    
+    id4(Domain Events)
+    id5(Entities)
+    id6(Value Objects)
+    
+    id7(Repositories)
+    id8(Aggregates)
+    id9(Factories)
+    
+    id1 -- "express model with" --> id2
+    id1 -- "isolate domain expressions with" --> id3
+    
+    id1 -- "express change with" --> id4
+    id1 -- "express identity with" --> id5
+    id1 -- "express state and computation with" --> id6
+    
+    id5 -- "push state change with" --> id4
+    id5 -- "access with" --> id7
+    id5 -- "encapsulate with" --> id8
+    id5 -- "act as root of" --> id8
+    id5 -- "encapsulate with" --> id9
+    
+    id6 -- "encapsulate with" --> id8
+    id6 -- "encapsulate with" --> id9
+    
+    id8 -- "access with" --> id7
+    id8 -- "encapsulate with" --> id9
+  end
+```
 
 - Communication
-  - Ubiquitous Language - to come up with terms that will be commonly used when discussing a particular sub-domain. And they most likely are terms coming from problem space, not the software world. They have to be agreed upon so that as discussions move forward, there is clarity and understanding created by the terminology used by team members.
+  - **Ubiquitous Language** - to come up with terms that will be commonly used when discussing a particular sub-domain. And they most likely are terms coming from problem space, not the software world. They have to be agreed upon so that as discussions move forward, there is clarity and understanding created by the terminology used by team members.
 
-![image](https://user-images.githubusercontent.com/34960418/211311270-ed649daa-5158-4565-95d3-53bb0667d1a8.png)
+```mermaid
+flowchart LR
+  id10(Ubiquitous Language)
+```
 
 - Development Process
-  - Anti-corruption Layer - Anti-corruption layer allows sub-domains to communicate with one another from behind their boundaries.
+  - **Anti-corruption Layer** - Anti-corruption layer allows sub-domains to communicate with one another from behind their boundaries.
   - Separate Ways - The model also has notes for each element, such as free teams to go separate ways. This is something that can be accomplished once you identify the boundaries of each subdomain.
   
-![image](https://user-images.githubusercontent.com/34960418/211311377-db0035b1-e4a9-4b41-97df-6bdc9f7c3e57.png)
-
+```mermaid
+flowchart TB
+  id1(Layered Architecture)
+  id2(Continuous integration)   
+  id3(Separate Ways)
+  id4(Anti-Corruption Layer)
+  id5(Big Ball of Mud)
+```
 
 ## Exploring the Sample App’s High-Level Structure
 
-![image](https://user-images.githubusercontent.com/34960418/211518407-61ed5ede-ab62-4597-b320-fb1c4904a192.png)
+```mermaid
+  flowchart 
+  subgraph ide1 [Distributed Web Apps]
+    direction BT
+    id1["Single Page App (SPA) using Blazor Web Assembly (Front End)"]
+    id2["APIs built with ASP.NET Core (Back End)"]
+  end
+```
 
 ![image](https://user-images.githubusercontent.com/34960418/211518589-bb161b49-9a94-4432-addc-fca038568a63.png)
 

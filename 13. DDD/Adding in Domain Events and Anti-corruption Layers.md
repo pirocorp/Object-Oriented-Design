@@ -91,7 +91,7 @@ public AppointmentScheduledEvent()
 }
 ```
 
-## Applying Domain Events to a Simple App
+## Applying Domain Events to a [Simple App](Domain%20Events)
 
 **Aggregates** should work whether accessed directly or through services. The **Domain Model** should work with either workflow. **Aggregate** doesn’t need to know what actions must be performed. Inform the app about an event. App triggers the needed actions. Consider the order of operations (E.g., persistence should succeed before notifications are sent). Your **Domain Events** and **Handlers** should never fail. Don't build your behavior around exceptions that might be thrown from event handlers.
 
@@ -99,169 +99,61 @@ public AppointmentScheduledEvent()
 
 Putting all logic into services leads to anemic domain models.
 
-Each **Entity** has a collection of **Events**.
+
+## Integration Events - Events Between Apps, Services or BCs
+
+Integration Event Message Types Must Match - Class names can differ; property names and types must match
+
+`AppA.SomeEvent.cs`
 
 ```csharp
-public interface IEntity
+// Publishing app
+// Changes to this type must also be
+// made in all consuming apps.
+public class SomeEvent
 {
-    List<IDomainEvent> Events { get; }
-    . . .
-}
-
-public class Appointment : IEntity
-{
-    . . .
-    public List<IDomainEvent> Events { get; set; }
-    . . .
+    public Guid CustomerId { get; set; }
+    public string Fullname { get; set; }
+    public string Email { get; set; }
 }
 ```
 
-**Events** implement the `IDomainEvent` interface.
+`AppB.SomethingEvent.cs`
 
 ```csharp
-public interface IDomainEvent : INotification 
+// Consuming app
+// Class name can differ; props match
+// (a shared class would sync easily)
+public class SomethingEvent
 {
-    DateTime DateOccurred { get; }
+    public Guid CustomerId { get; set; }
+    public string Fullname { get; set; }
+    public string Email { get; set; }
 }
 ```
 
-**Event Handlers** implement the `IHandle` interface.
+Don’t expect integration events to match your domain events.
 
-```csharp
-public interface IHandle<TEvent> : INotificationHandler<TEvent>
-    where TEvent : IDomainEvent
-{
-    Task Handle(TNotification notification, CancellationToken cancellationToken);
-}
-```
 
-`AppointmentCreated` and `AppointmentConfirmed` events.
+## Introducing Anti-Corruption Layers
 
-```csharp
-public class AppointmentCreated : IDomainEvent
-{
-    public AppointmentCreated(Appointment appointment, DateTime dateCreated)
-    {
-        this.Appointment = appointment;
-        this.DateOccurred = dateCreated;
-    }
+**Anti-Corruption Layer** helps you prevent corruption in your **Domain Model** and provides security to your **Model** when it needs to interact with other systems or **Bounded Contexts**.
 
-    public AppointmentCreated(Appointment appointment) : this(appointment, DateTime.Now)
-    {
-    }
+![image](https://user-images.githubusercontent.com/34960418/213866396-1f079b11-2a67-4de1-a7c6-ae80cb3ee030.png)
 
-    public Appointment Appointment { get; set; }
+Translate between foreign systems’ models and our own using design patterns, e.g. Façade, Adapter, or custom translation classes or services. Simplifies communication between systems. May employ design atterns such as façade or adapter.
 
-    public DateTime DateOccurred { get; private set; }
-}   
+> Even when the other system is well designed, it is not based on the same model as the client.
 
-public class AppointmentConfirmed : IDomainEvent
-{
-    public AppointmentConfirmed(Appointment appointment, DateTime dateConfirmed)
-    {
-        this.Appointment = appointment;
-        this.DateOccurred = dateConfirmed;
-    }
+Eric Evans
 
-    public AppointmentConfirmed(Appointment appointment) 
-        : this(appointment, DateTime.Now)
-    {
-    }
+![image](https://user-images.githubusercontent.com/34960418/213866658-82ea81b7-9249-4920-b71a-07d95b66ecd8.png)
 
-    public Appointment Appointment { get; set; }
+Whatever you need to insulate your system from the systems it works with is what you should put inside this layer. This should allow you to simplify how you interact with the other systems and ensure that their domain decisions do not bleed into your design. And ensure any necessary translation is done along the way.
 
-    public DateTime DateOccurred { get; private set; }
-}
-```
 
-`NotifyUIAppointmentConfirmed`, `NotifyUIAppointmentCreated`, and `NotifyUserAppointmentCreated` events handlers.
+## Module Review
 
-```csharp
-public class NotifyUiAppointmentConfirmed : INotificationHandler<AppointmentConfirmed>
-{
-    public Task Handle(AppointmentConfirmed notification, CancellationToken cancellationToken)
-    {
-        ConsoleWriter.FromUiEventHandlers(
-            "[UI] User Interface informed appointment for {0} confirmed at {1}",
-            notification.Appointment.EmailAddress,
-            notification.Appointment.ConfirmationReceivedDate.ToString());
+- **Domain Event** - A class that captures the occurrence of an event in a domain object.
+- **Anti-Corruption Layer** - Functionality that insulates a bounded context and handles interaction with foreign systems or contexts. Anti-corruption layers protect your models while interacting with other systems.
 
-        return Task.CompletedTask;
-    }
-}
-
-public class NotifyUiAppointmentCreated : INotificationHandler<AppointmentCreated>
-{
-    public Task Handle(AppointmentCreated notification, CancellationToken cancellationToken)
-    {
-        var emailAddress = notification.Appointment.EmailAddress;
-
-        ConsoleWriter.FromUiEventHandlers(
-            "[UI] User Interface informed appointment created for {0}", 
-            emailAddress);
-
-        return Task.CompletedTask;
-    }
-}
-
-public class NotifyUserAppointmentCreated : INotificationHandler<AppointmentCreated>
-{
-    public Task Handle(AppointmentCreated notification, CancellationToken cancellationToken)
-    {
-        var emailAddress = notification.Appointment.EmailAddress;
-
-        ConsoleWriter.FromEmailEventHandlers(
-            "[EMAIL] Notification email sent to {0}", 
-            emailAddress);
-
-        return Task.CompletedTask;
-    }
-}
-```
-
-`Appointment` **Entity** adds an event to its event list after completing the `Create` operation and before the return statement.
-
-```csharp
-public static Appointment Create(string emailAddress)
-{
-    Console.WriteLine("Appointment::Create()");
-
-    var appointment = new Appointment
-    {
-        EmailAddress = emailAddress
-    };
-
-    appointment.Events.Add(new AppointmentCreated(appointment));
-
-    return appointment;
-}
-```
-
-`Appointment` **Entity** adds an event to its event list after completing the `Confirm` operation.
-
-```csharp
-public void Confirm(DateTime dateConfirmed)
-{
-    this.ConfirmationReceivedDate = dateConfirmed;
-
-    this.Events.Add(new AppointmentConfirmed(this, dateConfirmed));
-}
-```
-
-The actual dispatching of the events is done in the **Repository** **Save** method after the save is successful `await this.mediator.Publish(domainEvent).ConfigureAwait(false);`
-
-```csharp
-public async Task Save(TEntity entity)
-{
-    this.entities[entity.Id] = entity;
-    ConsoleWriter.FromRepositories("[DATABASE] Saved entity {0}", entity.Id.ToString());
-
-    var eventsCopy = entity.Events.ToArray();
-    entity.Events.Clear();
-
-    foreach (var domainEvent in eventsCopy)
-    {
-        await this.mediator.Publish(domainEvent).ConfigureAwait(false);
-    }
-}
-```

@@ -68,6 +68,9 @@ In **DDD**, the main goal is to establish **common language** with the **busines
 - [Elements of a Domain Model: Value Objects & Services](13.%20DDD/Elements%20of%20a%20Domain%20Model%20Value%20Objects%20And%20Services.md)
 - [Applying Aggregates and Associations](13.%20DDD/Applying%20Aggregates%20and%20Associations.md)
 - [Working with Repositories](13.%20DDD/Working%20with%20Repositories.md)
+- [Adding in Domain Events and Anti-corruption Layers](13.%20DDD/Adding%20in%20Domain%20Events%20and%20Anti-corruption%20Layers.md)
+- [Message Queues](13.%20DDD/Message%20Queues.md)
+- [Considerations](13.%20DDD/Considerations.md)
 
 # License
 

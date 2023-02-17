@@ -2,7 +2,21 @@
 
 Entity & Context are Common Software Terms
 
-![image](https://user-images.githubusercontent.com/34960418/211572523-4a4d4eb6-aa30-49d6-a35d-4db043007b31.png)
+|         | Entity Framework Core                                                                      | Domain-Driven Design                                                       |
+|---------|--------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| Entity  | A data model class with a key that is mapped to a table in a database                      | A domain class with an identity for tracking                               |
+| Context | A DbContext class provides access to entities and defines how entities map to the database | A Bounded Context defines the scope and boundaries of a subset of a domain |
+
+
+## Entity
+
+> Entities (a.k.a. Reference Objects) ... are not fundamentally defined by their properties, but rather by a thread of continuity and identity.
+>
+> An object defined primarily by its identity is called an ENTITY.
+>
+> An ENTITY is anything that has continuity through a life cycle and distinctions independent of attributes that are important to the application's user.
+
+Eric Evans
 
 
 ## Focusing on the Domain
@@ -17,13 +31,25 @@ Eric Evans
 
 In the typical data-driven app, we focus on properties. Sometimes, we are all about editing properties and the state of our objects. However, when we are modeling the domain, we need to focus on the behaviors of that domain, not simply on changing the state of objects.
 
+Behavior Examples:
 
-![image](https://user-images.githubusercontent.com/34960418/211576996-8e1d2a02-d791-43ab-adec-78d0f5d27379.png)
+- **Schedule** an appointment for a checkup
+- **Book** a room
+- **Add** item to vet’s calendar
+- **Note** a pet’s weight
+- **Request** lab work
+- **Notify** pet owner of vaccinations due
+- **Accept** a new patient
 
+Behavior Examples as Events:
 
-### Identifying Events Leads to Understanding Behaviors
-
-![image](https://user-images.githubusercontent.com/34960418/211577440-5c610fca-f196-44f0-8873-20d453ebe580.png)
+- **Scheduled** - an appointment for a checkup
+- **Booked** - a room
+- **Added** - item to vet’s calendar
+- **Noted** - a pet’s weight
+- **Requested** - lab work
+- **Notified** - pet owner of vaccinations due
+- **Accepted** - a new patient
 
 
 ## Comparing Anemic and Rich Domain Models
@@ -54,7 +80,11 @@ Eric Evans
 
 ## Understanding Entities
 
-![image](https://user-images.githubusercontent.com/34960418/211597475-f9671ada-f12b-4e85-9008-e42398366f95.png)
+Two Types of Objects in DDD:
+
+- Defined by an **identity**
+- Defined by its **values**
+
 
 > Many objects are not fundamentally defined by their attributes, but rather by a thread of continuity and identity.
 
@@ -62,10 +92,66 @@ Eric Evans
 
 Entities Have Identity And Are Mutable. An Entity is something that we can be able to **track**, **locate**, **retrieve** and **store**. And we do that with an identity key. Its properties may change, so we cant use its properties to identify the object.
 
-![image](https://user-images.githubusercontent.com/34960418/211599421-5846d559-6d80-4ac4-818e-93eff2a34644.png)
 
-![image](https://user-images.githubusercontent.com/34960418/211600794-6c51c409-2b14-4a14-87cd-3aec64c8de6a.png)
+```mermaid
+  flowchart LR
+    id5(Entities)
+    id6(Value Objects)
+    
+    id7(Repositories)
+    id8(Aggregates)
+    id9(Factories)
+       
+    id5 -- "access with" --> id7
+    id5 -- "maintain integrity with" --> id8
+    id5 -- "act as root of" --> id8
+    id5 -- "encapsulate with" --> id9
+    
+    id6 -- "encapsulate with" --> id8
+    id6 -- "encapsulate with" --> id9
+    
+    id8 -- "access with" --> id7
+    id8 -- "encapsulate with" --> id9
+```
 
+### Entities in the Appointment Scheduling Context
+
+```mermaid
+classDiagram
+  BaseEntity~T~ <|-- Client
+  BaseEntity~T~ <|-- Patient
+  BaseEntity~T~ <|-- Doctor
+  BaseEntity~T~ <|-- Room
+  BaseEntity~T~ <|-- Appointment
+  
+  class Client {
+    - FullName
+    - Patients
+  }
+  
+  class Patient {
+    - AnimalType
+    - ClientId
+    - Gender
+    - Name
+    - PreferredDoctor
+  }
+  
+  class Doctor {
+    - Name
+  }
+  
+  class Room {
+    - Name
+  }
+  
+  class Appointment {
+    - ClientId
+    - DoctorId
+    - PatientId
+    - RoomId
+  }
+```
 
 ## Differentiating CRUD from Complex Problems that Benefit from DDD
 

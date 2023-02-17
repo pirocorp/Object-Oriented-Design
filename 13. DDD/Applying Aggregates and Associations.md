@@ -43,29 +43,47 @@ Eric Evans
 The One-Way Client -> Patient Relationship in the Scheduling Bounded Context
 
 ```mermaid
-  classDiagram
-      Client "1" --> "*" Patient
+classDiagram
+  direction RL
   
-      Entity~int~ <|-- Client
-      Entity~int~ <|-- Patient
+  Client "1" --> "*" Patient
+  
+  Entity~int~ <|-- Client
+  Entity~int~ <|-- Patient
       
-      class Client
-      Client : -FullName
-      Client : -Patients
+  class Client
+  Client : -FullName
+  Client : -Patients
       
-      class Patient
-      Patient : -AnimalType
-      Patient : -ClientId
-      Patient : -Gender
-      Patient : -Name
-      Patient : -PreferedDoctor
+  class Patient
+  Patient : -AnimalType
+  Patient : -ClientId
+  Patient : -Gender
+  Patient : -Name
+  Patient : -PreferedDoctor
 ```
 
 Navigation Property - Property that allows navigation from one end of an association to another. A navigation property does not carry data, but acts as a pointer.
 
 Uni-Directional Associations in the Scheduling Bounded Context
 
-![image](https://user-images.githubusercontent.com/34960418/212628320-576683f9-651b-4f9b-9454-4ab038c47d31.png)
+```mermaid
+flowchart LR
+  id1(Appointment)
+  id2(Client)
+  id3(Doctor)
+  id4(Patient)
+  id5(Client)
+  id6(Patient)
+  
+  id1 --> id3
+  id1 --> id4
+  id1 --> id5
+  
+  id2 --> id6
+  id2 --> id6
+  id2 --> id6
+```
 
 ## Handling Relationships that Span Aggregates
 
