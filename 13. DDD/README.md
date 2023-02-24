@@ -16,7 +16,7 @@ In **DDD**, the main goal is to establish **common language** with the **busines
 - [Adding in Domain Events and Anti-corruption Layers](Adding%20in%20Domain%20Events%20and%20Anti-corruption%20Layers.md)
 - [Message Queues](Message%20Queues.md)
 - [Considerations](Considerations.md)
-
+- [DDD Workshop](https://github.com/pirocorp/DDD-Workshop)
 
 # Patterns Of DDD
 
